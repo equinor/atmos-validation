@@ -1,0 +1,16 @@
+  {
+    "python.languageServer": "Pylance",
+    "isort.args":["--profile", "black"],
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+        },
+        "editor.defaultFormatter": "ms-python.black-formatter",
+    },
+    "files.insertFinalNewline": true,
+    "python.testing.pytestArgs": ["atmos_validation"],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "autoDocstring.docstringFormat": "google-notypes"
+}

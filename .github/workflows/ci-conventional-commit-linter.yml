@@ -1,0 +1,29 @@
+name: Lint conventional commits
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+
+jobs:
+  lint-pr:
+    name: Lint pull request title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR is from SNYK
+        id: check
+        env:
+          title: ${{ github.event.pull_request.title }}
+        run: |
+          echo $title
+          if [[ $title == [Snyk* ]]; then
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Lint pull request title
+        if: '!steps.check.outputs.skip'
+        uses: jef/conventional-commits-pr-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
