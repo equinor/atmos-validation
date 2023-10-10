@@ -1,0 +1,28 @@
+name: Doctest
+
+on:
+  pull_request:
+    branches: ['main']
+  push:
+    branches: ['main']
+
+jobs:
+  verify_userguide:
+    name: Check documentation <--> code consistency
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: |
+          npm install embedme -g
+          shopt -s globstar
+          for file in docs/**
+          do
+              if [[ $file == *.md ]]
+              then
+                  echo $file
+                  npx embedme $file --verify
+              fi
+          done

@@ -1,0 +1,52 @@
+# Runs coverage tests. Will stage a comment to be posted with coverage result as PR comment
+# On push to main uploads result files (e.g. badge) to orphan branch "python-coverage-mds-toolkit-data" 
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches: ['main']
+
+jobs:
+  test:
+    name: Run tests & display coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        id: setup-python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          poetry install
+
+      - name: Check formatting
+        run: poetry run black atmos_validation --check --verbose
+
+      - name: Static type checking
+        run: poetry run pyright atmos_validation
+
+      - name: Check linting
+        run: poetry run pylint atmos_validation
+
+      - name: Test with coverage
+        run: poetry run coverage run -m pytest atmos_validation
+
+      - name: Coverage comment
+        id: coverage_comment
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: ${{ github.token }}
+          MINIMUM_GREEN: 90
+
+      - name: Store Pull Request comment to be posted
+        uses: actions/upload-artifact@v3
+        if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
+        with:
+          name: python-coverage-comment-action
+          path: python-coverage-comment-action.txt

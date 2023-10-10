@@ -1,0 +1,16 @@
+{
+  "comments": "Comments",
+  "contractor": "Contractor/Data Responsible",
+  "data_history": "Data history",
+  "final_reports": "Final Reports",
+  "project_name": "Project name",
+  "qc_provider": "QC provider",
+  "averaging_period": "Averaging period",
+  "data_usability": "Data Usability Level",
+  "instrument_types": "Type of Instrument",
+  "instrument_specifications": "Specification of instrument",
+  "installation_type": "Measurement installation type",
+  "location": "Location",
+  "mooring_name": "Mooring Name",
+  "total_water_depth": "TotalWaterDepth"
+}

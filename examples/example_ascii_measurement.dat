@@ -1,0 +1,47 @@
+% ***
+% Contractor/Data Responsible:                                                                      Example Contractor
+% Project name:                                                                                     Example Project Name
+% Location:                                                                                         32.8826°N 63.9245°W, WGS84
+% Duration of data:                                                                                 01.05.2021 - 01.05.2021
+% Averaging period:                                                                                 10 min
+% TotalWaterDepth:                                                                                  53.2 m
+% Mooring Name:                                                                                     Example mooring name
+% Type of Instrument:                                                                               Propeller anemometer, Sonic anemometer
+% Specification of instruments:                                                                     RM Young 05103-45 Alpine, Gill WindSonic
+% Measurement installation type:                                                                    Platform
+% QC provider:                                                                                      Example QC provider
+% Data Usability Level:                                                                             Processed
+% Data history:                                                                                     Some info about where the data came from (link is good)
+% Missing data:                                                                                     -999.99
+% Final Reports:                                                                                    comma.pdf, separated.pdf, list.docx
+% Contract_No:                                                                                      NA
+% Comments:                                                                                         Some comment that describes context for the data 
+% 
+% Parameters                                                                                        Abbrev              Unit                Height              Base                Instrument                                        Instrument Specification      
+% Year                                                                                              YY
+% Month                                                                                             MM
+% Day                                                                                               DD
+% Hour                                                                                              HH
+% Minute                                                                                            Min
+% Wind direction                                                                                    WD400                degrees             400                  WD                  Propeller anemometer                              NA
+% Wind speed                                                                                        WS400                m/s                 400                  WS                  Propeller anemometer                              NA                                                
+% Wind direction                                                                                    WD3.7               degrees             3.7                 WD                  Sonic anemometer                                  NA                                              
+% Wind speed                                                                                        WS3.7               m/s                 3.7                 WS                  Sonic anemometer                                  NA                                              
+% Wind gust                                                                                         WG3.7               m/s                 3.7                 WG                  Sonic anemometer                                  NA                                              
+%YY	MM	DD	HH	Min     WD400	WS400	WD3.7	WS3.7	WG3.7	
+2021	05	01	00	00	132.00	1.99	131.00	1.83	3.21	
+2021	05	01	00	10	143.00	1.78	144.00	1.45	4.10	
+2021	05	01	00	20	151.00	2.12	152.00	2.02	3.21	
+2021	05	01	00	30	149.00	1.76	147.00	1.54	4.12	
+2021	05	01	00	40	189.00	1.56	187.00	1.55	5.21	
+2021	05	01	00	50	123.00	1.45	121.00	1.43	1.23	
+2021	05	01	01	00	154.00	2.42	152.00	2.45	1.52	
+2021	05	01	01	10	175.00	-999.99 177.00	2.42	4.52	
+2021	05	01	01	20	167.00	2.62	169.00	3.12	5.12	
+2021	05	01	01	30	179.00	3.32	189.00	1.23	4.12	
+2021	05	01	01	40	181.00	3.64	180.00	0.42	3.21	
+2021	05	01	01	50	159.00	3.21	154.00	1.02	3.33	
+2021	05	01	02	00	152.00	3.43	150.00	3.52	3.11
+2021	05	01	02	10	203.00	3.64	200.00	3.21	3.36	
+2021	05	01	02	20	202.00	3.67	201.00	3.52	3.78	
+2021	05	01	02	30	199.00	3.87	198.00	3.12	5.23	
