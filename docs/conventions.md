@@ -163,7 +163,7 @@ class HindcastMetadata(CommonMetadata):
     calibration: str
     delivery_date: str
     forcing_data: str
-    memos: str
+    memos: Union[str, List[str]]
     modelling_software: str
     model_name: str
     nests: Union[str, List[str]]
