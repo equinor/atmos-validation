@@ -51,12 +51,12 @@
 | atmos\_validation/validate\_netcdf/validators/file\_attributes.py                 |      110 |       13 |     88% |42-43, 83-88, 111-114, 132-133, 166-167 |
 | atmos\_validation/validate\_netcdf/validators/root\_validator.py                  |       17 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/validators/variables/\_\_init\_\_.py           |        0 |        0 |    100% |           |
-| atmos\_validation/validate\_netcdf/validators/variables/sig\_dig\_validator.py    |       33 |        2 |     94% |    27, 53 |
+| atmos\_validation/validate\_netcdf/validators/variables/sig\_dig\_validator.py    |       33 |        1 |     97% |        53 |
 | atmos\_validation/validate\_netcdf/validators/variables/varattrs\_validator.py    |       68 |        3 |     96% |38, 53, 58 |
 | atmos\_validation/validate\_netcdf/validators/variables/vardims\_validator.py     |       10 |        1 |     90% |        21 |
 | atmos\_validation/validate\_netcdf/validators/variables/variables\_validator.py   |       31 |        1 |     97% |        37 |
 | atmos\_validation/validate\_netcdf/validators/variables/varinterval\_validator.py |       85 |       10 |     88% |56, 67, 72, 84, 87, 108, 114-116, 119 |
-|                                                                         **TOTAL** | **1310** |  **111** | **92%** |           |
+|                                                                         **TOTAL** | **1310** |  **110** | **92%** |           |
 
 
 ## Setup coverage badge
