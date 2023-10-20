@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, Field
 
@@ -48,7 +48,9 @@ class HindcastMetadata(CommonMetadata):
 class MeasurementMetadata(CommonMetadata):
     """Extra global attributes required if data_type == "Measurement"."""
 
+    asset: Optional[str]
     averaging_period: str
+    country: str
     data_usability: str
     instrument_types: str
     instrument_specifications: str
