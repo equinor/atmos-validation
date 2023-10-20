@@ -1,6 +1,6 @@
 # Repository Coverage
 
-
+[Full report](https://htmlpreview.github.io/?https://github.com/equinor/atmos-validation/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
 | Name                                                                              |    Stmts |     Miss |   Cover |   Missing |
 |---------------------------------------------------------------------------------- | -------: | -------: | ------: | --------: |
@@ -51,12 +51,12 @@
 | atmos\_validation/validate\_netcdf/validators/file\_attributes.py                 |      110 |       13 |     88% |42-43, 83-88, 111-114, 132-133, 166-167 |
 | atmos\_validation/validate\_netcdf/validators/root\_validator.py                  |       17 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/validators/variables/\_\_init\_\_.py           |        0 |        0 |    100% |           |
-| atmos\_validation/validate\_netcdf/validators/variables/sig\_dig\_validator.py    |       33 |        1 |     97% |        53 |
+| atmos\_validation/validate\_netcdf/validators/variables/sig\_dig\_validator.py    |       33 |        2 |     94% |    27, 53 |
 | atmos\_validation/validate\_netcdf/validators/variables/varattrs\_validator.py    |       68 |        3 |     96% |38, 53, 58 |
 | atmos\_validation/validate\_netcdf/validators/variables/vardims\_validator.py     |       10 |        1 |     90% |        21 |
 | atmos\_validation/validate\_netcdf/validators/variables/variables\_validator.py   |       31 |        1 |     97% |        37 |
 | atmos\_validation/validate\_netcdf/validators/variables/varinterval\_validator.py |       85 |       10 |     88% |56, 67, 72, 84, 87, 108, 114-116, 119 |
-|                                                                         **TOTAL** | **1310** |  **110** | **92%** |           |
+|                                                                         **TOTAL** | **1310** |  **111** | **92%** |           |
 
 
 ## Setup coverage badge
@@ -65,11 +65,22 @@ Below are examples of the badges you can use in your main branch `README` file.
 
 ### Direct image
 
-[![Coverage badge](https://github.com/equinor/atmos-validation/raw/python-coverage-comment-action-data/badge.svg)](https://github.com/equinor/atmos-validation/tree/python-coverage-comment-action-data)
+[![Coverage badge](https://raw.githubusercontent.com/equinor/atmos-validation/python-coverage-comment-action-data/badge.svg)](https://htmlpreview.github.io/?https://github.com/equinor/atmos-validation/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
 This is the one to use if your repository is private or if you don't want to customize anything.
 
+### [Shields.io](https://shields.io) Json Endpoint
 
+[![Coverage badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/equinor/atmos-validation/python-coverage-comment-action-data/endpoint.json)](https://htmlpreview.github.io/?https://github.com/equinor/atmos-validation/blob/python-coverage-comment-action-data/htmlcov/index.html)
+
+Using this one will allow you to [customize](https://shields.io/endpoint) the look of your badge.
+It won't work with private repositories. It won't be refreshed more than once per five minutes.
+
+### [Shields.io](https://shields.io) Dynamic Badge
+
+[![Coverage badge](https://img.shields.io/badge/dynamic/json?color=brightgreen&label=coverage&query=%24.message&url=https%3A%2F%2Fraw.githubusercontent.com%2Fequinor%2Fatmos-validation%2Fpython-coverage-comment-action-data%2Fendpoint.json)](https://htmlpreview.github.io/?https://github.com/equinor/atmos-validation/blob/python-coverage-comment-action-data/htmlcov/index.html)
+
+This one will always be the same color. It won't work for private repos. I'm not even sure why we included it.
 
 ## What is that?
 
