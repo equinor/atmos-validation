@@ -7,15 +7,15 @@
 
 A library containing validation checks to be run on hindcast or measurement data to ensure API compliance and standardization.
 
-Atmos is a project to streamline discoverability and data access for weather data sources through APIs. First step to build a lean and efficient API is converting data to standard format.
+Atmos is a project to streamline discoverability and data access for weather data sources through APIs. The first step to building a lean and efficient API is converting data to the standard format.
 
 ## Data Validation
 
-In order to ingest measurement or hindcast data into the Atmos Data Store, every source file needs to pass validation. Validation makes sure that the file is compliant with the data conventions specified in [Conventions](https://github.com/equinor/atmos-validation/blob/main/docs/conventions.md). The standard file formats for source files are NetCDF files for hindcasts and ASCII or NetCDF for measurements.
+In order to ingest measurement or hindcast data into the Atmos Data Store, each source file needs to pass validation. Validation ensures that the file is compliant with the data conventions specified in [Conventions](https://github.com/equinor/atmos-validation/blob/main/docs/conventions.md). The standard file formats for source files are NetCDF files for hindcasts and ASCII or NetCDF for measurements.
 
-Measurements by definition contains data for a single geographical location, where as hindcasts are bigger models containing time series for a multitude of locations in (possibly rotated) grids. Measurement files are therefore expected to contain all its data in a single file. A hindcast is comprised of a set of NetCDF files - all with the same coordinates, attributes and variables - where a single file contains data for a unique time period. Depending on the size of the files, the time separation should be either monthly or yearly. A rule-of-thumb is that if file size grows more than 4 GB it should be split into smaller files. See [docs](https://github.com/equinor/atmos-validation/blob/main/docs/conventions.md#11-time) or [example](https://github.com/equinor/atmos-validation/tree/main/examples/hindcast_example) for how to name hindcast files.
+Measurements by definition contain data for a single geographical location, whereas hindcasts are bigger models containing time series for a multitude of locations in (possibly rotated) grids. A measurement file is therefore expected to contain all of its data in a single file. A hindcast is comprised of a set of NetCDF files - all with the same coordinates, attributes, and variables, - where a single file contains data for a unique time period. Depending on the size of the files, the time separation should be either monthly or yearly. A rule-of-thumb is that if the file size grows more than 4 GB, it should be split into smaller files. See [docs](https://github.com/equinor/atmos-validation/blob/main/docs/conventions.md#11-time) or [example](https://github.com/equinor/atmos-validation/tree/main/examples/hindcast_example) for how to name hindcast files.
 
-To run validation on NetCDF and ASCII source files, we have built the atmos_validation CLI/library. The documentation will describe these checks and the standard format, and how to run validation using the CLI tool.
+To run validation on NetCDF and ASCII source files, we have built the atmos_validation CLI/library. The documentation below describes these checks, the standard format, and how to run validation using the CLI tool.
 
 ## Documentation
 
@@ -30,4 +30,4 @@ To run validation on NetCDF and ASCII source files, we have built the atmos_vali
 
 ## Contributing
 
-We welcome all kinds of contributions, including code, bug reports, issues, feature requests, and documentation. The preferred way of submitting a contribution is to either make an issue on GitHub or by forking the project on GitHub and making a pull requests. In case of bug reports, please provide a detailed explanation for how to reproduce before submitting.
+We welcome different types of contributions, including code, bug reports, issues, feature requests, and documentation. The preferred method of submitting a contribution is either to make an issue on GitHub or to fork the project on GitHub and make a pull request. In the case of bug reports, please provide a detailed explanation describing how to reproduce before submitting.
