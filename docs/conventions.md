@@ -212,7 +212,7 @@ class MeasurementMetadata(CommonMetadata):
 
     asset: Optional[str]
     averaging_period: str
-    country: str
+    country: str = Field(default="NA")
     data_usability: str
     instrument_types: str
     instrument_specifications: str
