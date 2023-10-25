@@ -14,7 +14,7 @@
 | atmos\_validation/schemas/installation\_types.py                                  |       11 |        0 |    100% |           |
 | atmos\_validation/schemas/instrument\_type.py                                     |        4 |        0 |    100% |           |
 | atmos\_validation/schemas/instrument\_types.py                                    |       11 |        0 |    100% |           |
-| atmos\_validation/schemas/metadata.py                                             |       41 |        0 |    100% |           |
+| atmos\_validation/schemas/metadata.py                                             |       43 |        0 |    100% |           |
 | atmos\_validation/schemas/parameter\_config.py                                    |       33 |        0 |    100% |           |
 | atmos\_validation/schemas/parameter\_configs.py                                   |       23 |        0 |    100% |           |
 | atmos\_validation/schemas/tests/\_\_init\_\_.py                                   |        0 |        0 |    100% |           |
@@ -56,7 +56,7 @@
 | atmos\_validation/validate\_netcdf/validators/variables/vardims\_validator.py     |       10 |        1 |     90% |        21 |
 | atmos\_validation/validate\_netcdf/validators/variables/variables\_validator.py   |       31 |        1 |     97% |        37 |
 | atmos\_validation/validate\_netcdf/validators/variables/varinterval\_validator.py |       85 |       10 |     88% |56, 67, 72, 84, 87, 108, 114-116, 119 |
-|                                                                         **TOTAL** | **1310** |  **110** | **92%** |           |
+|                                                                         **TOTAL** | **1312** |  **110** | **92%** |           |
 
 
 ## Setup coverage badge
