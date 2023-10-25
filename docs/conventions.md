@@ -205,12 +205,14 @@ class HindcastMetadata(CommonMetadata):
 ### 3.3 Measurement
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L48-L59
+# ../atmos_validation/schemas/metadata.py#L48-L61
 
 class MeasurementMetadata(CommonMetadata):
-    """Extra global attributes required if data_type == "Measurement"."""
+    """Extra global attributes if data_type == "Measurement"."""
 
+    asset: Optional[str]
     averaging_period: str
+    country: str = Field(default="NA")
     data_usability: str
     instrument_types: str
     instrument_specifications: str
@@ -221,7 +223,11 @@ class MeasurementMetadata(CommonMetadata):
     total_water_depth: Union[str, float]
 ```
 
+*asset*: Name of the asset which paid for the data.  In case of sharing data to the third party, permission from the asset is required.
+
 *averaging_period*: Averaging period of measurements in minutes
+
+*country*: Country name on which territory data are acquired. In case of sharing data to the third party, one need obey to country regulation rules related to data sharing.
 
 *data_usability*: Level of the data readiness
 
