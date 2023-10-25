@@ -208,7 +208,7 @@ class HindcastMetadata(CommonMetadata):
 # ../atmos_validation/schemas/metadata.py#L48-L61
 
 class MeasurementMetadata(CommonMetadata):
-    """Extra global attributes required if data_type == "Measurement"."""
+    """Extra global attributes if data_type == "Measurement"."""
 
     asset: Optional[str]
     averaging_period: str
