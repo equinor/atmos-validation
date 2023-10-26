@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "atmos_validation"
-version = "1.1.0"
+version = "1.2.0"
 description = "A python library containing automated data validation tools for the Atmos Data Service"
 authors = ["Team Atmos (Equinor)"]
 readme = ["README.md", "docs/conventions.md", "docs/run.md"]
