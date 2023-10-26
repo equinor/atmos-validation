@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/equinor/atmos-validation/compare/v1.1.0...v1.2.0) (2023-10-26)
+
+
+### Features
+
+* Add metadata tags for country and asset ([#6](https://github.com/equinor/atmos-validation/issues/6)) ([95b70a9](https://github.com/equinor/atmos-validation/commit/95b70a9bef97d70a2e5b920965417de9ddcc2a75))
+
 ## [1.1.0](https://github.com/equinor/atmos-validation/compare/v1.0.0...v1.1.0) (2023-10-20)
 
 
