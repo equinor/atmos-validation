@@ -36,7 +36,8 @@ def required_global_attributes_validator(ds: xr.Dataset):
     """Validates that all required global attributes are present"""
     data_model = MeasurementMetadata if is_measurement(ds) else HindcastMetadata
     result = []
-    for attribute in data_model.schema()["required"]:
+    extra_non_optional = ["country"]
+    for attribute in data_model.schema()["required"] + extra_non_optional:
         try:
             ds.attrs[attribute]
         except KeyError:
