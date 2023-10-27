@@ -5,6 +5,7 @@ import xarray as xr
 from pydantic import parse_raw_as
 
 from ...schemas import (
+    ClassificationLevel,
     HindcastMetadata,
     InstallationType,
     InstallationTypes,
@@ -28,6 +29,7 @@ def file_attributes_validator(ds: xr.Dataset):
         + data_type_validator(ds)
         + installation_type_validator(ds)
         + data_usability_validator(ds)
+        + classification_level_validator(ds)
     )
 
 
@@ -177,3 +179,22 @@ def load_valid_data_usability_levels() -> List[str]:
             configs=parse_raw_as(List[DataUsabilityLevel], data)
         ).configs
         return [entry.level for entry in parsed_response]
+
+
+@validation_node(severity=Severity.ERROR)
+def classification_level_validator(ds: xr.Dataset) -> List[str]:
+    """Checks that "classification_level" is compliant with the enum values"""
+    result = []
+    try:
+        classification_level = ds.attrs["classification_level"]
+        valids = list(ClassificationLevel)
+        if classification_level not in valids:
+            result += [
+                f"""Classification Level "{classification_level}" is not in the allowed list. """
+                f"""Allowed values: {valids}"""
+            ]
+    except KeyError:
+        pass  # required attributes is validated in 'required_global_attributes_validator'
+    except Exception:
+        result += ["Could not validate classification_level on global attributes"]
+    return result
