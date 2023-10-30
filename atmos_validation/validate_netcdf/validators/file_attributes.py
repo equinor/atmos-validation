@@ -34,10 +34,14 @@ def file_attributes_validator(ds: xr.Dataset):
 @validation_node(severity=Severity.ERROR)
 def required_global_attributes_validator(ds: xr.Dataset):
     """Validates that all required global attributes are present"""
-    data_model = MeasurementMetadata if is_measurement(ds) else HindcastMetadata
+    if is_measurement(ds):
+        data_model = MeasurementMetadata
+        extra_requireds = ["country"] if is_measurement(ds) else []
+    else:
+        data_model = HindcastMetadata
+        extra_requireds = []
     result = []
-    extra_non_optional = ["country"]
-    for attribute in data_model.schema()["required"] + extra_non_optional:
+    for attribute in data_model.schema()["required"] + extra_requireds:
         try:
             ds.attrs[attribute]
         except KeyError:
