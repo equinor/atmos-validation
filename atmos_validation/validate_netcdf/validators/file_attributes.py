@@ -36,7 +36,7 @@ def required_global_attributes_validator(ds: xr.Dataset):
     """Validates that all required global attributes are present"""
     if is_measurement(ds):
         data_model = MeasurementMetadata
-        extra_requireds = ["country"] if is_measurement(ds) else []
+        extra_requireds = ["country"]
     else:
         data_model = HindcastMetadata
         extra_requireds = []
