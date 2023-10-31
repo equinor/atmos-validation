@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/equinor/atmos-validation/compare/v1.2.0...v1.3.0) (2023-10-31)
+
+
+### Features
+
+* Add classification level validation ([#10](https://github.com/equinor/atmos-validation/issues/10)) ([2d1c22f](https://github.com/equinor/atmos-validation/commit/2d1c22f88e71eda48a5e22372326163228f47454))
+* Add country as non-optional attribute ([#9](https://github.com/equinor/atmos-validation/issues/9)) ([c26c83c](https://github.com/equinor/atmos-validation/commit/c26c83ccd4afa4d6bb887e8994da6d9fbd5c7e9e))
+
 ## [1.2.0](https://github.com/equinor/atmos-validation/compare/v1.1.0...v1.2.0) (2023-10-26)
 
 
