@@ -13,7 +13,6 @@ from .utils import (
     get_config_for_key,
     get_encoding,
     get_heights_for_key,
-    natural_sort_key,
     store_netcdf,
 )
 
@@ -65,7 +64,7 @@ def df_to_ds(df: pd.DataFrame, parameter_meta: Dict[str, Any]) -> xr.Dataset:
         attrs = get_attrs_for_key(key, instruments=str(key_meta["instruments"]))
         heights = get_heights_for_key(key, key_meta)
 
-        columns = sorted(key_meta.get("key_columns"), key=natural_sort_key)
+        columns = key_meta.get("key_columns")
         data = df.filter(columns).to_numpy()
         coords = {
             "Time": df["datetime"].values.astype("datetime64"),
@@ -82,7 +81,10 @@ def df_to_ds(df: pd.DataFrame, parameter_meta: Dict[str, Any]) -> xr.Dataset:
             dims = ("Time", "south_north", "west_east")
 
         data = data.reshape(shape)
-        data_arrays[key] = xr.DataArray(data, dims=dims, coords=coords, attrs=attrs)
+        data_array = xr.DataArray(data, dims=dims, coords=coords, attrs=attrs)
+        if heights:
+            data_array = data_array.sortby(f"height_{key}")
+        data_arrays[key] = data_array
 
     ds = xr.Dataset(data_arrays)
     ds = enrich_coord_attrs(ds)
