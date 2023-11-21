@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/equinor/atmos-validation/compare/v1.3.0...v1.3.1) (2023-11-21)
+
+
+### Bug Fixes
+
+* Fix height sorting for data array  ([#12](https://github.com/equinor/atmos-validation/issues/12)) ([4b13e81](https://github.com/equinor/atmos-validation/commit/4b13e818af52b91360f083f115396b02904939dc))
+
 ## [1.3.0](https://github.com/equinor/atmos-validation/compare/v1.2.0...v1.3.0) (2023-10-31)
 
 
