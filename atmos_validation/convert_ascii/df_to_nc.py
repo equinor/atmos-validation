@@ -86,9 +86,7 @@ def df_to_ds(df: pd.DataFrame, parameter_meta: Dict[str, Any]) -> xr.Dataset:
             data_array = data_array.sortby(f"height_{key}")
         data_arrays[key] = data_array
 
-    ds = xr.Dataset(data_arrays)
-    ds = enrich_coord_attrs(ds)
-    return ds
+    return enrich_coord_attrs(xr.Dataset(data_arrays))
 
 
 def enrich_coord_attrs(ds: xr.Dataset) -> xr.Dataset:
