@@ -1,5 +1,4 @@
 import json
-import re
 from functools import lru_cache
 from typing import Any, Dict, List, Tuple, Union
 
@@ -102,6 +101,7 @@ def store_netcdf(source_file: str, ds: xr.Dataset) -> str:
             },
         },
         unlimited_dims="Time",
+        engine="netcdf4",
     )
     return nc_filename
 
@@ -145,10 +145,6 @@ def get_heights_for_key(
         is_depth = -1
     heights = key_meta.get("heights")
     if heights:
-        heights = is_depth * np.sort(np.abs(heights))
+        heights = is_depth * np.abs(heights)
         return list(heights)
     return heights
-
-
-def natural_sort_key(text: str, _nsre: Any = re.compile("([0-9]+)")):
-    return [int(text) if text.isdigit() else text.lower() for text in _nsre.split(text)]
