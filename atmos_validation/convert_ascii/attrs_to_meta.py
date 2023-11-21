@@ -39,5 +39,5 @@ def parse_measurement_attrs(file_name: str, attrs_map_path: str):
         attrs["source_file"] = (
             file_name.replace("ø", "oe").replace("æ", "ae").replace("å", "aa")
         )  # NetCDF attrs can not have Norwegian letters
-
+        attrs["asset"] = "NA"
         return MeasurementMetadata(**attrs, data_type=DataType.MEASUREMENT)
