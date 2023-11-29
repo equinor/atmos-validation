@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.2](https://github.com/equinor/atmos-validation/compare/v1.3.1...v1.3.2) (2023-11-29)
+
+
+### Bug Fixes
+
+* Make default classification_level "Internal" str ([#14](https://github.com/equinor/atmos-validation/issues/14)) ([fa02ee9](https://github.com/equinor/atmos-validation/commit/fa02ee93360d4ec48d96d92ef8d0cf4d52483252))
+
+
+### Other
+
+* Add security md from template ([#15](https://github.com/equinor/atmos-validation/issues/15)) ([4042db3](https://github.com/equinor/atmos-validation/commit/4042db392425853a44ee58042667f3fffd2bb265))
+
 ## [1.3.1](https://github.com/equinor/atmos-validation/compare/v1.3.0...v1.3.1) (2023-11-21)
 
 
