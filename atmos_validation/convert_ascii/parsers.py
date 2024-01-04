@@ -25,7 +25,7 @@ def parse_location_text(line_content: str) -> Tuple[float, float]:
     is_east = 1
     is_north = 1
     if "S" in location_text:
-        is_east = -1
+        is_north = -1
     if "W" in location_text:
         is_east = -1
     return (float(match[0]) * is_north, float(match[1]) * is_east)
