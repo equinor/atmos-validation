@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.3](https://github.com/equinor/atmos-validation/compare/v1.3.2...v1.3.3) (2024-01-04)
+
+
+### Bug Fixes
+
+* Fix location parsing for south hemisphere locations ([#17](https://github.com/equinor/atmos-validation/issues/17)) ([1d42213](https://github.com/equinor/atmos-validation/commit/1d422131287aa959858d7606aecab0f803107928))
+
 ## [1.3.2](https://github.com/equinor/atmos-validation/compare/v1.3.1...v1.3.2) (2023-11-29)
 
 
