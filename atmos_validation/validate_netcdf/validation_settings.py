@@ -13,7 +13,7 @@ URL_TO_PARAMETERS: str = "--set-url-to-parameters="
 DEFAULT_URL_TO_PARAMETERS: str = "https://atmos.app.radix.equinor.com/config/parameters"
 BATCH_SIZE: str = "--batch-size="
 DEFAULT_BATCH_SIZE = 50
-NO_OF_BATCHES = None
+NO_OF_BATCHES: int
 SETTINGS = set()
 
 
