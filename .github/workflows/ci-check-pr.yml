@@ -27,6 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install poetry
+          pip install setuptools
           poetry install
 
       - name: Check formatting
