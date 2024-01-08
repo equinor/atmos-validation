@@ -48,8 +48,8 @@ def get_batch_size() -> int:
         if str(arg).startswith(BATCH_SIZE):
             try:
                 batch_size = int(str(arg).split(BATCH_SIZE, 1)[1].strip())
-            except ValueError:
-                raise TypeError("Batch size must be an integer")
+            except ValueError as e:
+                raise TypeError("Batch size must be an integer") from e
     print(f"using batch_size = {batch_size}")
     return batch_size
 
