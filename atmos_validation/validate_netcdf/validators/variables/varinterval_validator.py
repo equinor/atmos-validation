@@ -1,4 +1,5 @@
 import random
+import sys
 from typing import List, Tuple, Union
 
 import xarray as xr
@@ -15,25 +16,26 @@ from ... import validation_settings
 from ...utils import Severity, validation_node
 from ...validation_logger import log
 
+SEED = random.randrange(sys.maxsize)
+print(f"using random seed: {SEED}")
+
 
 def _get_random_time_slice(actual: xr.DataArray, rand: random.Random) -> slice:
-    """To save processing time we only take 500 timestamps
-    per batch from a random starting time
-    """
+    """To save processing time we only check 5000 timestamps random samples"""
     len_time = len(actual.Time)
-    if len_time > 1000:
-        start = rand.randint(0, len_time - 500)
+    sample_size = 5000 // validation_settings.NO_OF_BATCHES
+    if len_time > sample_size * 2:
+        start = rand.randint(0, len_time - sample_size - 1)
         time_slice = slice(
             start,
-            start + 500,
+            start + sample_size,
         )
     else:
-        start = rand.randint(0, len_time)
+        start = rand.randint(0, len_time // 2)
         time_slice = slice(
             start,
-            start + len_time,
+            start + len_time // 2,
         )
-
     return time_slice
 
 
@@ -123,7 +125,7 @@ def varinterval_validator(actual: xr.DataArray, expected: ParameterConfig) -> Li
 def _check_randomly_selected_intervals_min_max(
     actual: xr.DataArray, expected: ParameterConfig, dims: List[str]
 ):
-    rand = random.Random(1)
+    rand = random.Random(SEED)
     result = []
 
     slice_tuple = _get_slice_tuple(dims, actual, rand)
