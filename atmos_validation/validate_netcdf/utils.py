@@ -1,7 +1,7 @@
 import os
 import traceback
 from enum import Enum
-from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple, TypeVar, Union
+from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple, TypeVar
 
 import pandas as pd
 import xarray as xr
