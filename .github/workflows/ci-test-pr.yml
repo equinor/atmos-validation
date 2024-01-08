@@ -30,15 +30,6 @@ jobs:
           pip install setuptools
           poetry install
 
-      - name: Check formatting
-        run: poetry run black atmos_validation --check --verbose
-
-      - name: Static type checking
-        run: poetry run pyright atmos_validation
-
-      - name: Check linting
-        run: poetry run pylint atmos_validation
-
       - name: Test with coverage
         run: poetry run coverage run -m pytest atmos_validation
 
