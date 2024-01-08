@@ -1,6 +1,5 @@
 # Runs lint, style (black) and type checks
-name: Build
-
+name: Style
 on:
   pull_request:
   push:
