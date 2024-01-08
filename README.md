@@ -1,6 +1,6 @@
 # atmos-validation
 
-[![Build](https://github.com/equinor/atmos-validation/actions/workflows/ci-check-pr.yml/badge.svg)](https://github.com/equinor/atmos-validation/actions/workflows/ci-check-pr.yml)
+[![Build](https://github.com/equinor/atmos-validation/actions/workflows/ci-test-pr.yml/badge.svg)](https://github.com/equinor/atmos-validation/actions/workflows/ci-test-pr.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/licenses/mit)
 [![Coverage badge](https://github.com/equinor/atmos-validation/raw/python-coverage-comment-action-data/badge.svg)](https://github.com/equinor/atmos-validation/tree/python-coverage-comment-action-data)
