@@ -37,6 +37,7 @@ Options:
     \t\t\t\t\t Can be extremely slow for large datasets. Default behaviour is taking random samples.
     --{validation_settings.SKIP_MIN_MAX_CHECK} \t Skip random sample check for min/max values.
     --{validation_settings.SKIP_WARNINGS} \t\t\t Skip all checks that would only output a "WARNING".
+    --{validation_settings.BATCH_SIZE} \t\t\t Set the amount of .nc files per batch to validate. Defaults to 50.
 """
 
 
@@ -70,7 +71,7 @@ def validate(
     path: str,
     injected_logger: Optional[logging.Logger] = None,
     additional_args: Optional[List[str]] = None,
-    batch_size: int = 50,
+    batch_size: Optional[int] = None,
 ) -> ValidationResult:
     """
     Execute validation on a directory or file.
@@ -90,10 +91,13 @@ def validate(
     log.create_or_update_logger(injected_logger)
     if additional_args:
         validation_settings.apply_settings(additional_args)
+    if batch_size:
+        validation_settings.set_batch_size(override=batch_size)
 
     try:
         log.info("load dataset from path %s", path)
-        batches = load_paths(path, batch_size)
+        batches = load_paths(path, batch_size=validation_settings.get_batch_size())
+        validation_settings.NO_OF_BATCHES = len(batches)
         if not batches:
             raise OSError("No NetCDF files in dir")
     except Exception as err:
