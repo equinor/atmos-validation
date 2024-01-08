@@ -73,7 +73,7 @@ class RowParser:
             keys = group_columns_df.groups.keys()
             for year in keys:
                 periods, values = self.get_dataframe_values(
-                    str(year), parameter.key, group_columns_df, columns_date_values
+                    str(year), parameter.key, group_columns_df, columns_date_values  # type: ignore
                 )
                 files_to_add.append(
                     self.create_file(

@@ -122,7 +122,7 @@ def assign_datetime(df: pd.DataFrame) -> pd.DataFrame:
     if "Min" in df:
         columns.append("Min")
         column_map["Min"] = "m"
-    df["datetime"] = pd.to_datetime(df[columns].rename(columns=column_map))
+    df["datetime"] = pd.to_datetime(df[columns].rename(columns=column_map))  # type: ignore
     return df
 
 
