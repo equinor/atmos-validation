@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/equinor/atmos-validation/compare/v1.3.3...v1.4.0) (2024-01-08)
+
+
+### Features
+
+* Make batch size a CLI argument ([#19](https://github.com/equinor/atmos-validation/issues/19)) ([270c97c](https://github.com/equinor/atmos-validation/commit/270c97cd49aa8e6e434eabe32a1fa108848b9f26))
+
 ## [1.3.3](https://github.com/equinor/atmos-validation/compare/v1.3.2...v1.3.3) (2024-01-04)
 
 
