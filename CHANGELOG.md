@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/equinor/atmos-validation/compare/v1.4.0...v1.4.1) (2024-01-09)
+
+
+### Other
+
+* Python 3.12 support ([#21](https://github.com/equinor/atmos-validation/issues/21)) ([0571ea8](https://github.com/equinor/atmos-validation/commit/0571ea8e086a5af6df649184725de406ffcc26b9))
+
 ## [1.4.0](https://github.com/equinor/atmos-validation/compare/v1.3.3...v1.4.0) (2024-01-08)
 
 
