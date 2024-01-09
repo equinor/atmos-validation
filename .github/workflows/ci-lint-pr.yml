@@ -1,0 +1,32 @@
+# Runs lint, style (black) and type checks
+name: Style
+on:
+  pull_request:
+  push:
+    branches: ['main']
+
+jobs:
+  test:
+    name: Run linting, style and type checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          poetry install
+
+      - name: Check formatting
+        run: poetry run black atmos_validation --check --verbose
+
+      - name: Static type checking
+        run: poetry run pyright atmos_validation
+
+      - name: Check linting
+        run: poetry run pylint atmos_validation

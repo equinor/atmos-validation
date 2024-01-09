@@ -1,7 +1,7 @@
 import os
 import traceback
 from enum import Enum
-from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple, TypeVar, Union
+from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple, TypeVar
 
 import pandas as pd
 import xarray as xr
@@ -114,7 +114,7 @@ def almost_equal(first: Any, second: Any, diff: float = 0e-6) -> bool:
     num_b = to_number_if_possible(second)
     if isinstance(num_a, int) and isinstance(num_b, int):
         return num_a == num_b
-    if isinstance(first, (float, int)) and isinstance(second, Union[float, int]):
+    if isinstance(first, (float, int)) and isinstance(second, (float, int)):
         return abs(first - second) <= diff
     return first == second
 
