@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="d_1e1afd6ba6b2c480_validation_logger_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.4.0">coverage.py v7.4.0</a>,
-            created at 2024-01-09 09:24 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.4.3">coverage.py v7.4.3</a>,
+            created at 2024-03-13 08:28 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -153,7 +153,7 @@
     <p class="run"><span class="n"><a id="t71" href="#t71">71</a></span><span class="t">                <span class="nam">errors</span> <span class="op">=</span> <span class="nam">func</span><span class="op">(</span><span class="op">*</span><span class="nam">args</span><span class="op">,</span> <span class="op">**</span><span class="nam">kwargs</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">            <span class="key">except</span> <span class="nam">Exception</span> <span class="key">as</span> <span class="nam">e</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t">                <span class="nam">traceback</span><span class="op">.</span><span class="nam">print_exc</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">                <span class="nam">message</span> <span class="op">=</span> <span class="str">f"Exception while executing validator {repr(e)}"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">                <span class="nam">message</span> <span class="op">=</span> <span class="fst">f"</span><span class="fst">Exception while executing validator </span><span class="op">{</span><span class="nam">repr</span><span class="op">(</span><span class="nam">e</span><span class="op">)</span><span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t75" href="#t75">75</a></span><span class="t">                <span class="nam">errors</span> <span class="op">=</span> <span class="op">[</span><span class="nam">message</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t76" href="#t76">76</a></span><span class="t">                <span class="nam">log</span><span class="op">.</span><span class="nam">error</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t77" href="#t77">77</a></span><span class="t">                    <span class="str">"Exception while executing validator %s"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -172,8 +172,8 @@
     <p class="run"><span class="n"><a id="t90" href="#t90">90</a></span><span class="t"><span class="key">def</span> <span class="nam">inject_severity</span><span class="op">(</span><span class="nam">local_name</span><span class="op">:</span> <span class="nam">str</span><span class="op">,</span> <span class="nam">error</span><span class="op">:</span> <span class="nam">str</span><span class="op">,</span> <span class="nam">severity</span><span class="op">:</span> <span class="nam">Severity</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t91" href="#t91">91</a></span><span class="t">    <span class="key">if</span> <span class="nam">any</span><span class="op">(</span><span class="op">(</span><span class="nam">severity_token</span><span class="op">.</span><span class="nam">value</span> <span class="key">in</span> <span class="nam">error</span> <span class="key">for</span> <span class="nam">severity_token</span> <span class="key">in</span> <span class="nam">Severity</span><span class="op">)</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t92" href="#t92">92</a></span><span class="t">        <span class="com"># return without injecting if string already contains a token</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t93" href="#t93">93</a></span><span class="t">        <span class="key">return</span> <span class="str">f"{local_name}{error}"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t94" href="#t94">94</a></span><span class="t">    <span class="key">return</span> <span class="str">f"{local_name}{severity}:{error}"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t93" href="#t93">93</a></span><span class="t">        <span class="key">return</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">local_name</span><span class="op">}</span><span class="op">{</span><span class="nam">error</span><span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t94" href="#t94">94</a></span><span class="t">    <span class="key">return</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">local_name</span><span class="op">}</span><span class="op">{</span><span class="nam">severity</span><span class="op">}</span><span class="fst">:</span><span class="op">{</span><span class="nam">error</span><span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t95" href="#t95">95</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t96" href="#t96">96</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t97" href="#t97">97</a></span><span class="t"><span class="key">def</span> <span class="nam">to_number_if_possible</span><span class="op">(</span><span class="nam">maybe_number</span><span class="op">:</span> <span class="nam">Any</span><span class="op">)</span> <span class="op">-></span> <span class="nam">Any</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -244,8 +244,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="d_1e1afd6ba6b2c480_validation_logger_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.4.0">coverage.py v7.4.0</a>,
-            created at 2024-01-09 09:24 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.4.3">coverage.py v7.4.3</a>,
+            created at 2024-03-13 08:28 +0000
         </p>
     </div>
 </footer>
