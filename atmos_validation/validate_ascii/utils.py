@@ -3,7 +3,7 @@ from functools import lru_cache
 from typing import Dict, List, Set
 
 import requests
-from pydantic import parse_raw_as
+from pydantic import TypeAdapter
 
 from ..schemas import ParameterConfig, ParameterConfigs
 from .header_names import Headers
@@ -39,7 +39,6 @@ def load_parameter_configs() -> List[ParameterConfig]:
     response = requests.get(
         "https://atmos.app.radix.equinor.com/config/parameters", timeout=10
     )
-    cfgs = ParameterConfigs(
-        configs=parse_raw_as(List[ParameterConfig], json.dumps(response.json()))
-    )
+    adapter = TypeAdapter(List[ParameterConfig])
+    cfgs = ParameterConfigs(configs=adapter.validate_json(json.dumps(response.json())))
     return cfgs.configs

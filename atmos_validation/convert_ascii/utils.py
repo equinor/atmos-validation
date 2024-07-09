@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import requests
 import xarray as xr
-from pydantic import parse_raw_as
+from pydantic import TypeAdapter
 
 from ..schemas import ParameterConfig, ParameterConfigs
 
@@ -72,9 +72,8 @@ def get_config_for_key(key: str) -> ParameterConfig:
 @lru_cache()
 def load_parameter_config_from_endpoint() -> List[ParameterConfig]:
     response = requests.get(DEFAULT_URL_TO_PARAMETERS, timeout=10)
-    cfgs = ParameterConfigs(
-        configs=parse_raw_as(List[ParameterConfig], json.dumps(response.json()))
-    )
+    adapter = TypeAdapter(List[ParameterConfig])
+    cfgs = ParameterConfigs(configs=adapter.validate_json(json.dumps(response.json())))
     return cfgs.configs
 
 

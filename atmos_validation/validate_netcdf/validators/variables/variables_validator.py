@@ -2,7 +2,7 @@ import urllib.request
 from typing import List
 
 import xarray as xr
-from pydantic import parse_raw_as
+from pydantic import TypeAdapter
 
 from ....schemas import ParameterConfig, ParameterConfigs
 from ...utils import Severity, is_measurement, validation_node
@@ -25,7 +25,8 @@ def load_parameter_config_from_endpoint():
     log.debug("download parameters config")
     with urllib.request.urlopen(url) as response:
         data = response.read()
-        return ParameterConfigs(configs=parse_raw_as(List[ParameterConfig], data))
+        adapter = TypeAdapter(List[ParameterConfig])
+        return ParameterConfigs(configs=adapter.validate_json(data))
 
 
 @validation_node(severity=Severity.ERROR)
