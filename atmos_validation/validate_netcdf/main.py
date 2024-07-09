@@ -9,7 +9,7 @@ To use as library:
 from atmos_validation.main import validate.
 validate(path_to_dataset_directory) or validate(path_to_dataset_file)
 
-To use as CLI, see docstring. 
+To use as CLI, see docstring.
 """
 
 import logging

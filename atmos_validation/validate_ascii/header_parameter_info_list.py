@@ -90,7 +90,7 @@ class HeaderParameterInfoList:
                 tokens = self.get_tokens(line)
                 if len(tokens) == 2:
                     keys = ["YY", "MM", "DD", "HH", "Min"]
-                    if not tokens[1] in keys:
+                    if tokens[1] not in keys:
                         messages.append(
                             "Wrong date keys, " + tokens[1] + " not supported"
                         )
