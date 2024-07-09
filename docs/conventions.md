@@ -153,10 +153,13 @@ class ClassificationLevel(OrderedEnum):
 ### 3.2 Hindcast
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L27-L43
+# ../atmos_validation/schemas/metadata.py#L27-L46
 
 class HindcastMetadata(CommonMetadata):
     """Extra global attributes required if data_type == "Hindcast"."""
+
+    # to avoid "model_name" warning raised in pydantic V2
+    model_config = ConfigDict(protected_namespaces=())
 
     calibration: str
     delivery_date: str
@@ -203,7 +206,7 @@ class HindcastMetadata(CommonMetadata):
 ### 3.3 Measurement
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L46-L59
+# ../atmos_validation/schemas/metadata.py#L49-L62
 
 class MeasurementMetadata(CommonMetadata):
     """Extra global attributes if data_type == "Measurement"."""
