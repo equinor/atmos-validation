@@ -2,7 +2,7 @@ import urllib.request
 from typing import List
 
 import xarray as xr
-from pydantic import parse_raw_as
+from pydantic import TypeAdapter
 
 from ...schemas import (
     ClassificationLevel,
@@ -147,7 +147,7 @@ def load_valid_installation_types() -> List[str]:
     with urllib.request.urlopen(url) as response:
         data = response.read()
         parsed_response = InstallationTypes(
-            configs=parse_raw_as(List[InstallationType], data)
+            configs=TypeAdapter(List[InstallationType]).validate_json(data)
         ).configs
         return [entry.installation_type for entry in parsed_response]
 
@@ -181,7 +181,7 @@ def load_valid_data_usability_levels() -> List[str]:
     with urllib.request.urlopen(url) as response:
         data = response.read()
         parsed_response = DataUsabilityLevels(
-            configs=parse_raw_as(List[DataUsabilityLevel], data)
+            configs=TypeAdapter(List[DataUsabilityLevel]).validate_json(data)
         ).configs
         return [entry.level for entry in parsed_response]
 

@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import List, Optional, Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from .classification_level import ClassificationLevel
 
@@ -9,6 +9,11 @@ from .classification_level import ClassificationLevel
 class DataType(str, Enum):
     HINDCAST = "Hindcast"
     MEASUREMENT = "Measurement"
+
+
+class UnprotectedNamespaceModel(BaseModel):
+    # to avoid "model_name" warning raised in pydantic V2
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class CommonMetadata(BaseModel, use_enum_values=True):
@@ -24,7 +29,7 @@ class CommonMetadata(BaseModel, use_enum_values=True):
     qc_provider: str
 
 
-class HindcastMetadata(CommonMetadata):
+class HindcastMetadata(CommonMetadata, UnprotectedNamespaceModel):
     """Extra global attributes required if data_type == "Hindcast"."""
 
     calibration: str
