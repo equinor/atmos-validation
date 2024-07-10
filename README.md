@@ -14,7 +14,7 @@
 | atmos\_validation/schemas/installation\_types.py                                  |       11 |        0 |    100% |           |
 | atmos\_validation/schemas/instrument\_type.py                                     |        4 |        0 |    100% |           |
 | atmos\_validation/schemas/instrument\_types.py                                    |       11 |        0 |    100% |           |
-| atmos\_validation/schemas/metadata.py                                             |       43 |        0 |    100% |           |
+| atmos\_validation/schemas/metadata.py                                             |       45 |        0 |    100% |           |
 | atmos\_validation/schemas/parameter\_config.py                                    |       33 |        0 |    100% |           |
 | atmos\_validation/schemas/parameter\_configs.py                                   |       23 |        0 |    100% |           |
 | atmos\_validation/schemas/tests/\_\_init\_\_.py                                   |        0 |        0 |    100% |           |
@@ -55,9 +55,9 @@
 | atmos\_validation/validate\_netcdf/validators/variables/sig\_dig\_validator.py    |       33 |        1 |     97% |        53 |
 | atmos\_validation/validate\_netcdf/validators/variables/varattrs\_validator.py    |       68 |        3 |     96% |38, 53, 58 |
 | atmos\_validation/validate\_netcdf/validators/variables/vardims\_validator.py     |       10 |        1 |     90% |        21 |
-| atmos\_validation/validate\_netcdf/validators/variables/variables\_validator.py   |       31 |        1 |     97% |        37 |
+| atmos\_validation/validate\_netcdf/validators/variables/variables\_validator.py   |       32 |        1 |     97% |        38 |
 | atmos\_validation/validate\_netcdf/validators/variables/varinterval\_validator.py |       89 |       12 |     87% |28-29, 58, 69, 74, 86, 89, 110, 116-118, 121 |
-|                                                                         **TOTAL** | **1371** |  **125** | **91%** |           |
+|                                                                         **TOTAL** | **1374** |  **125** | **91%** |           |
 
 
 ## Setup coverage badge
