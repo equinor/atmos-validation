@@ -11,6 +11,11 @@ class DataType(str, Enum):
     MEASUREMENT = "Measurement"
 
 
+class UnprotectedNamespaceModel(BaseModel):
+    # to avoid "model_name" warning raised in pydantic V2
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class CommonMetadata(BaseModel, use_enum_values=True):
     """Common required attributes for all data types"""
 
@@ -24,11 +29,8 @@ class CommonMetadata(BaseModel, use_enum_values=True):
     qc_provider: str
 
 
-class HindcastMetadata(CommonMetadata):
+class HindcastMetadata(CommonMetadata, UnprotectedNamespaceModel):
     """Extra global attributes required if data_type == "Hindcast"."""
-
-    # to avoid "model_name" warning raised in pydantic V2
-    model_config = ConfigDict(protected_namespaces=())
 
     calibration: str
     delivery_date: str

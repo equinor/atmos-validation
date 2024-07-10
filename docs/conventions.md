@@ -96,7 +96,7 @@ General instruction: When information is not available "NA" shall be used in pla
 The required common attributes can be seen underneath,
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L14-L24
+# ../atmos_validation/schemas/metadata.py#L19-L29
 
 class CommonMetadata(BaseModel, use_enum_values=True):
     """Common required attributes for all data types"""
@@ -153,13 +153,10 @@ class ClassificationLevel(OrderedEnum):
 ### 3.2 Hindcast
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L27-L46
+# ../atmos_validation/schemas/metadata.py#L32-L48
 
-class HindcastMetadata(CommonMetadata):
+class HindcastMetadata(CommonMetadata, UnprotectedNamespaceModel):
     """Extra global attributes required if data_type == "Hindcast"."""
-
-    # to avoid "model_name" warning raised in pydantic V2
-    model_config = ConfigDict(protected_namespaces=())
 
     calibration: str
     delivery_date: str
@@ -206,7 +203,7 @@ class HindcastMetadata(CommonMetadata):
 ### 3.3 Measurement
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L49-L62
+# ../atmos_validation/schemas/metadata.py#L51-L64
 
 class MeasurementMetadata(CommonMetadata):
     """Extra global attributes if data_type == "Measurement"."""
