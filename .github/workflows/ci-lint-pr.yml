@@ -23,10 +23,10 @@ jobs:
           poetry install
 
       - name: Check formatting
-        run: poetry run black atmos_validation --check --verbose
+        run: poetry run ruff format atmos_validation --check
+
+      - name: Check linting
+        run: poetry run ruff check atmos_validation
 
       - name: Static type checking
         run: poetry run pyright atmos_validation
-
-      - name: Check linting
-        run: poetry run pylint atmos_validation

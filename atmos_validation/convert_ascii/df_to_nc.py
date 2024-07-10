@@ -107,9 +107,9 @@ def enrich_coord_attrs(ds: xr.Dataset) -> xr.Dataset:
         if str(coord).startswith(dim_constants.HEIGHT_DIM_PREFIX):
             ds[coord].attrs["units"] = "m"
             ds[coord].attrs["CF_standard_name"] = "height"
-            ds[coord].attrs[
-                "long_name"
-            ] = f"Height for parameter {str(coord).replace(dim_constants.HEIGHT_DIM_PREFIX, '')}"
+            ds[coord].attrs["long_name"] = (
+                f"Height for parameter {str(coord).replace(dim_constants.HEIGHT_DIM_PREFIX, '')}"
+            )
 
     return ds
 

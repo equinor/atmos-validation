@@ -31,9 +31,9 @@ def test_data_usability_validations_ok_multi():
 def test_data_usability_validations_not_ok_multi():
     """Tests when several of many data usability levels are invalid"""
     with xr.open_dataset("examples/example_netcdf_measurement.nc") as ds:
-        ds.attrs[
-            "data_usability"
-        ] = "RAW, INVALID, PROCESSED, ALSO INVALID, GENERIC STUDY"
+        ds.attrs["data_usability"] = (
+            "RAW, INVALID, PROCESSED, ALSO INVALID, GENERIC STUDY"
+        )
         errors = data_usability_validator(ds)
         assert len(errors) == 2
         assert """Data usability "INVALID" is not in the allowed list.""" in errors[0]

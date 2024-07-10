@@ -1,8 +1,7 @@
 {
     "recommendations": [
-        "ms-python.black-formatter",
-        "ms-python.pylint",
         "ms-python.python",
-        "njpwerner.autodocstring"
+        "njpwerner.autodocstring",
+        "charliermarsh.ruff"
     ]
 }

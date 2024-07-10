@@ -73,7 +73,10 @@ class RowParser:
             keys = group_columns_df.groups.keys()
             for year in keys:
                 periods, values = self.get_dataframe_values(
-                    str(year), parameter.key, group_columns_df, columns_date_values  # type: ignore
+                    str(year),
+                    parameter.key,
+                    group_columns_df,  # type: ignore
+                    columns_date_values,
                 )
                 files_to_add.append(
                     self.create_file(
@@ -249,7 +252,8 @@ class RowParser:
         group_by_year = group_columns_df.get_group(year)
         if self.remove_duplicates:
             group_by_year = group_by_year.drop_duplicates(
-                subset=columns_date_values, keep="first"  # type:ignore
+                subset=columns_date_values,
+                keep="first",  # type:ignore
             )
 
         periods = group_by_year["period"].values.tolist()  # type:ignore

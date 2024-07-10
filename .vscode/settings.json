@@ -1,12 +1,11 @@
   {
     "python.languageServer": "Pylance",
-    "isort.args":["--profile", "black"],
     "[python]": {
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.organizeImports": true,
+            "source.organizeImports.ruff": "explicit"
         },
-        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.defaultFormatter": "charliermarsh.ruff",
     },
     "files.insertFinalNewline": true,
     "python.testing.pytestArgs": ["atmos_validation"],

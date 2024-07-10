@@ -2,8 +2,6 @@ import xarray as xr
 
 from ..validators.variables.varinterval_validator import (
     _check_randomly_selected_intervals_min_max,  # type: ignore
-)
-from ..validators.variables.varinterval_validator import (
     none_larger_than_max_validator,
     none_less_than_min_validator,
 )
