@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.4.2](https://github.com/equinor/atmos-validation/compare/v1.4.1...v1.4.2) (2024-07-10)
+
+
+### Other
+
+* Upgrade to Pydantic v2 using TypeAdapters ([#24](https://github.com/equinor/atmos-validation/issues/24)) ([74c3e04](https://github.com/equinor/atmos-validation/commit/74c3e04e16a2e771c2ddd1e6eee8dc398f564255))
+* Use ruff formatter ([#25](https://github.com/equinor/atmos-validation/issues/25)) ([c0ef09e](https://github.com/equinor/atmos-validation/commit/c0ef09e5c435fcfe75ab5d83336afe336f6c003a))
+
+
+### CI/CD
+
+* Add build to "Other" section for release docs ([#27](https://github.com/equinor/atmos-validation/issues/27)) ([865b752](https://github.com/equinor/atmos-validation/commit/865b752fe7782f0e62058f96c4e219b1f52cb28f))
+* Fix release-please typo in config ([#28](https://github.com/equinor/atmos-validation/issues/28)) ([fd2b51e](https://github.com/equinor/atmos-validation/commit/fd2b51e7446ff2716f8f296577157186bf9339e7))
+
 ## [1.4.1](https://github.com/equinor/atmos-validation/compare/v1.4.0...v1.4.1) (2024-01-09)
 
 
