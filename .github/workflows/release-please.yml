@@ -22,5 +22,5 @@ jobs:
             {"type":"test", "section":"Other","hidden":false},
             {"type":"ci", "section":"CI/CD","hidden":false},
             {"type":"chore", "section":"Other","hidden":false},
-            {"type":"revert", "section":"Other","hidden":false}]
+            {"type":"revert", "section":"Other","hidden":false},
             {"type":"build", "section":"Other","hidden":false}]
