@@ -208,7 +208,7 @@ class HindcastMetadata(CommonMetadata, UnprotectedNamespaceModel):
 class MeasurementMetadata(CommonMetadata):
     """Extra global attributes if data_type == "Measurement"."""
 
-    asset: Optional[str]
+    asset: Optional[str] = Field(default=None)
     averaging_period: str
     country: str = Field(default="NA")
     data_usability: str
