@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.0](https://github.com/equinor/atmos-validation/compare/v1.4.2...v1.5.0) (2024-10-07)
+
+
+### Features
+
+* Update/add final_report validation to validation pipe ([#30](https://github.com/equinor/atmos-validation/issues/30)) ([5b10596](https://github.com/equinor/atmos-validation/commit/5b1059683b2ee01ac4b93650b8e592ee856efc51))
+
+
+### Bug Fixes
+
+* Set default asset to None ([#29](https://github.com/equinor/atmos-validation/issues/29)) ([08eb62f](https://github.com/equinor/atmos-validation/commit/08eb62fe20ebec817f7b6970cd62eb28ed628e71))
+
 ## [1.4.2](https://github.com/equinor/atmos-validation/compare/v1.4.1...v1.4.2) (2024-07-10)
 
 
