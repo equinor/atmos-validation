@@ -17,6 +17,8 @@ from ...schemas.metadata import DataType
 from ..utils import Severity, is_measurement, validation_node
 from ..validation_logger import log
 
+VALID_FINAL_REPORT_EXTENSIONS = ["docx", "pdf", "ppt", "pptx"]
+
 
 @validation_node(severity=Severity.ERROR)
 def file_attributes_validator(ds: xr.Dataset):
@@ -30,6 +32,7 @@ def file_attributes_validator(ds: xr.Dataset):
         + installation_type_validator(ds)
         + data_usability_validator(ds)
         + classification_level_validator(ds)
+        + final_reports_validator(ds)
     )
 
 
@@ -102,19 +105,23 @@ def final_reports_validator(ds: xr.Dataset):
     result = []
     try:
         final_reports = ds.attrs["final_reports"]
-        if not (
-            isinstance(final_reports, list)
-            and all(isinstance(item, str) for item in final_reports)
+        if isinstance(final_reports, list) and all(
+            isinstance(item, str) for item in final_reports
         ):
-            final_reports_types = []
-            if not isinstance(final_reports, list):
-                final_reports_types += type(final_reports).__name__
-            else:
-                for item in final_reports:
-                    final_reports_types += type(item).__name__
+            pass
+        elif isinstance(final_reports, str):
+            final_reports = [rep for rep in final_reports.split(",") if rep]
+        else:
             result += [
-                f"""Global attribute "final_reports" must be a list of strings. Found types: {final_reports_types}"""
+                'Global attribute "final_reports" is not comma-separated string or string list.'
             ]
+            return result
+        for item in final_reports:
+            file_extension = item.split(".")[-1]
+            if file_extension not in VALID_FINAL_REPORT_EXTENSIONS:
+                result += [
+                    f"File extension for final_reports must be one of {VALID_FINAL_REPORT_EXTENSIONS}"
+                ]
     except KeyError:
         pass  # missing "field_reports" is reported by "required_global_attributes_validator"
     except Exception:
