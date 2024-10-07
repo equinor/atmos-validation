@@ -62,3 +62,9 @@ class MeasurementMetadata(CommonMetadata):
     mooring_name: str
     source_file: str
     total_water_depth: Union[str, float]
+
+
+class SinglePointHindcastMetadata(HindcastMetadata):
+    """Extra global attributes required is data_type == "SinglePointHindcast"."""
+
+    pass
