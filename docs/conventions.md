@@ -33,7 +33,7 @@
 - Timestamps shall appear in increasing order
 - Shall only contain unique values
 - The "units" attribute shall be "microseconds since 1900-01-01"
-- If source data is a hindcast, then:
+- If source data is a hindcast or single point hindcast, then:
   - The file shall be named according to the time values it contains and contain the length of the time index, in the following format: "datasetName_startTime_endTime_TtimeLenght.nc" with the corresponding time format: "YYYYMMDD". For example, a Nora10 file
   covering the whole year of 1982 and containing 2920 timestamps (a whole year with 3hr resolution) will be named e.g.: "Nora10_19820101_19821231_T2920.nc". Not adhering to startTime and endTime convention would yield a WARNING.
   - Strictly enforced: The files must be named such that they can be sorted in chronological order by timestamp values. For example, naming two files "Nora10_part1.nc" and "Nora10_part2.nc" would yield an error IF part2 contains data for a period before part1. The time-length marker "T[time_length]" is non-optional and not adhering to this convention also yields an error.
@@ -117,7 +117,7 @@ class CommonMetadata(BaseModel, use_enum_values=True):
 
 *classification_level*: Signifies data access according to classification level
 
-*data_type*: If source data is hindcast or measurement
+*data_type*: If source data is hindcast, single point hindcast, or measurement
 
 *data_history*: Any information about the origin of the data (if not measured directly by the contractor) or changes made to the data (if there has been previous versions of the same data) shall be stated here. If the data has been measured/created directly by the contractor and it is the first version delivered “Original data” shall be stated
 
@@ -130,11 +130,12 @@ class CommonMetadata(BaseModel, use_enum_values=True):
 where data_type should take either value from the enum:
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L9-L11
+# ../atmos_validation/schemas/metadata.py#L9-L12
 
 class DataType(str, Enum):
     HINDCAST = "Hindcast"
     MEASUREMENT = "Measurement"
+    SP_HINDCAST = "SinglePointHindcast"
 ```
 
 The data_type value defines secondary requirements on the global attributes on the data file.
@@ -152,11 +153,13 @@ class ClassificationLevel(OrderedEnum):
 
 ### 3.2 Hindcast
 
+Single point hindcast and hindcast both use the hindcast metadata schema.
+
 ```py
 # ../atmos_validation/schemas/metadata.py#L32-L48
 
 class HindcastMetadata(CommonMetadata, UnprotectedNamespaceModel):
-    """Extra global attributes required if data_type == "Hindcast"."""
+    """Extra global attributes required if data_type == "Hindcast" or data_type == "SinglePointHindcast"."""
 
     calibration: str
     delivery_date: str
