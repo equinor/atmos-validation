@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/equinor/atmos-validation/compare/v1.5.0...v1.6.0) (2024-10-08)
+
+
+### Features
+
+* creates data_type for single point hindcast ([#32](https://github.com/equinor/atmos-validation/issues/32)) ([9b12c56](https://github.com/equinor/atmos-validation/commit/9b12c56877472d0df9871ade71126e630bfa788e))
+
 ## [1.5.0](https://github.com/equinor/atmos-validation/compare/v1.4.2...v1.5.0) (2024-10-07)
 
 
