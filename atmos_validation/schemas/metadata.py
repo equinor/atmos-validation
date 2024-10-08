@@ -9,6 +9,7 @@ from .classification_level import ClassificationLevel
 class DataType(str, Enum):
     HINDCAST = "Hindcast"
     MEASUREMENT = "Measurement"
+    SP_HINDCAST = "SinglePointHindcast"
 
 
 class UnprotectedNamespaceModel(BaseModel):
@@ -30,7 +31,7 @@ class CommonMetadata(BaseModel, use_enum_values=True):
 
 
 class HindcastMetadata(CommonMetadata, UnprotectedNamespaceModel):
-    """Extra global attributes required if data_type == "Hindcast"."""
+    """Extra global attributes required if data_type == "Hindcast" or data_type == "SinglePointHindcast"."""
 
     calibration: str
     delivery_date: str
