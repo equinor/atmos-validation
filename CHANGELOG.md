@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.0](https://github.com/equinor/atmos-validation/compare/v1.5.0...v1.6.0) (2024-10-17)
+
+
+### Features
+
+* Accept 5d spectral dimensions ([#34](https://github.com/equinor/atmos-validation/issues/34)) ([5787e5c](https://github.com/equinor/atmos-validation/commit/5787e5c480e3f1740a4be0c9f4b02a1e8a224a75))
+* creates data_type for single point hindcast ([#32](https://github.com/equinor/atmos-validation/issues/32)) ([9b12c56](https://github.com/equinor/atmos-validation/commit/9b12c56877472d0df9871ade71126e630bfa788e))
+
 ## [1.5.0](https://github.com/equinor/atmos-validation/compare/v1.4.2...v1.5.0) (2024-10-07)
 
 
