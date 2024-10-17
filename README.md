@@ -9,7 +9,7 @@
 | atmos\_validation/schemas/classification\_level.py                                |       26 |        4 |     85% |15, 20, 25, 30 |
 | atmos\_validation/schemas/data\_usability\_level.py                               |        4 |        0 |    100% |           |
 | atmos\_validation/schemas/data\_usability\_levels.py                              |       11 |        0 |    100% |           |
-| atmos\_validation/schemas/dim\_constants.py                                       |       10 |        0 |    100% |           |
+| atmos\_validation/schemas/dim\_constants.py                                       |       12 |        0 |    100% |           |
 | atmos\_validation/schemas/installation\_type.py                                   |        4 |        0 |    100% |           |
 | atmos\_validation/schemas/installation\_types.py                                  |       11 |        0 |    100% |           |
 | atmos\_validation/schemas/instrument\_type.py                                     |        4 |        0 |    100% |           |
@@ -57,7 +57,7 @@
 | atmos\_validation/validate\_netcdf/validators/variables/vardims\_validator.py     |       10 |        1 |     90% |        21 |
 | atmos\_validation/validate\_netcdf/validators/variables/variables\_validator.py   |       32 |        1 |     97% |        38 |
 | atmos\_validation/validate\_netcdf/validators/variables/varinterval\_validator.py |       89 |       12 |     87% |28-29, 58, 69, 74, 86, 89, 110, 116-118, 121 |
-|                                                                         **TOTAL** | **1389** |  **125** | **91%** |           |
+|                                                                         **TOTAL** | **1391** |  **125** | **91%** |           |
 
 
 ## Setup coverage badge
