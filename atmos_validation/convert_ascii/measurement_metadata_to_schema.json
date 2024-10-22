@@ -1,6 +1,8 @@
 {
+  "asset": "Asset",
   "comments": "Comments",
   "contractor": "Contractor/Data Responsible",
+  "country": "Country",
   "data_history": "Data history",
   "final_reports": "Final Reports",
   "project_name": "Project name",
