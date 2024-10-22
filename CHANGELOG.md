@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/equinor/atmos-validation/compare/v1.6.0...v1.6.1) (2024-10-22)
+
+
+### Documentation
+
+* Update ASCII documentation ([#35](https://github.com/equinor/atmos-validation/issues/35)) ([f082780](https://github.com/equinor/atmos-validation/commit/f0827803569ce439b7083c453d5b5830be2a9583))
+
 ## [1.6.0](https://github.com/equinor/atmos-validation/compare/v1.5.0...v1.6.0) (2024-10-17)
 
 
