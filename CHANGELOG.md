@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/equinor/atmos-validation/compare/v1.6.1...v1.6.2) (2024-11-12)
+
+
+### Other
+
+* Allow final_reports attribute to be "NA" ([#37](https://github.com/equinor/atmos-validation/issues/37)) ([ecf4a99](https://github.com/equinor/atmos-validation/commit/ecf4a995bf4a8216775ba3f8313438194b4d04c3))
+
 ## [1.6.1](https://github.com/equinor/atmos-validation/compare/v1.6.0...v1.6.1) (2024-10-22)
 
 
