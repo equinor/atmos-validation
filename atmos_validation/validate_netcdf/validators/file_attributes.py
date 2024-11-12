@@ -109,6 +109,8 @@ def final_reports_validator(ds: xr.Dataset):
             isinstance(item, str) for item in final_reports
         ):
             pass
+        elif final_reports == "NA":
+            return []
         elif isinstance(final_reports, str):
             final_reports = [rep for rep in final_reports.split(",") if rep]
         else:

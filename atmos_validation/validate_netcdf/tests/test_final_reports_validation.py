@@ -29,6 +29,14 @@ def test_final_reports_empty_string_ok():
         assert len(errors) == 0
 
 
+def test_final_reports_NA_ok():
+    """Tests when final_reports is NA"""
+    with xr.open_dataset(PATH_TO_TEST_DATA) as ds:
+        ds.attrs["final_reports"] = "NA"
+        errors = final_reports_validator(ds)
+        assert len(errors) == 0
+
+
 def test_final_reports_list_of_non_strings_not_ok():
     """Tests when final_reports is not valid (wrong type in list)"""
     with xr.open_dataset(PATH_TO_TEST_DATA) as ds:
