@@ -9,7 +9,7 @@ from .classification_level import ClassificationLevel
 class DataType(str, Enum):
     HINDCAST = "Hindcast"
     MEASUREMENT = "Measurement"
-    SP_HINDCAST = "SinglePointHindcast"
+    SP_HINDCAST = "Hindcast_Single_Point"
 
 
 class UnprotectedNamespaceModel(BaseModel):
