@@ -135,7 +135,7 @@ where data_type should take either value from the enum:
 class DataType(str, Enum):
     HINDCAST = "Hindcast"
     MEASUREMENT = "Measurement"
-    SP_HINDCAST = "SinglePointHindcast"
+    SP_HINDCAST = "Hindcast_Single_Point"
 ```
 
 The data_type value defines secondary requirements on the global attributes on the data file.
