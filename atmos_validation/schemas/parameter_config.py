@@ -1,8 +1,14 @@
-from typing import Any, Dict, List, Literal, Union
+from typing import Any, Dict, List, Literal, Tuple, Union
 
-from pydantic import BaseModel, Extra, validator
+from pydantic import BaseModel, Extra, Field, validator
 
 from .dim_constants import get_acceptable_dims_from_parameter_key
+
+
+class QCTest(BaseModel):
+    test_name: str = Field(default="")
+    metocean_package_re: str = Field(default="")
+    default_parameters: List[Tuple[str, int]] = Field(defaut_list=list)
 
 
 class ParameterConfig(BaseModel, arbitrary_types_allowed=True, extra=Extra.allow):
@@ -19,6 +25,7 @@ class ParameterConfig(BaseModel, arbitrary_types_allowed=True, extra=Extra.allow
     max: Union[float, int, Literal["NA"]]
     CF_standard_name: str
     dims: List[str]
+    qc_tests: List[QCTest] = Field(default_factory=list)
 
     @validator("dims")
     @classmethod
