@@ -16,7 +16,7 @@ class QCTest(BaseModel):
         default_parameters: a list of tuples, each denoting a parameter and it's default value.
     """
 
-    test_id: int = uuid.uuid4().hex
+    test_id: str = uuid.uuid4().hex
     test_name: str = Field(default="")
     metocean_pkg_ref: str = Field(default="")
     default_parameters: List[Tuple[str, int]] = Field(default_factory=list)
