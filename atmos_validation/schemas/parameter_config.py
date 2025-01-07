@@ -8,15 +8,11 @@ from .dim_constants import get_acceptable_dims_from_parameter_key
 
 class QCTest(BaseModel):
     """Describes a test to be run on a given parameter. QC tests are defined by metocean.
-       The default parameters are configured by those with admins access.
-
-    Args:
-        test_name: test name in atmos
-        metocean_pkg_ref: test name in the metocean package
-        default_parameters: a list of tuples, each denoting a parameter and it's default value.
+    The default parameters are configured by those with admins access.
     """
 
-    test_id: str = uuid.uuid4().hex
+    description: str = Field(default="")
+    test_id: str = Field(default_factory=lambda: uuid.uuid4().hex)
     test_name: str = Field(default="")
     metocean_pkg_ref: str = Field(default="")
     default_parameters: List[Tuple[str, int]] = Field(default_factory=list)
