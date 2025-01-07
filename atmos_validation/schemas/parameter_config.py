@@ -8,7 +8,7 @@ from .dim_constants import get_acceptable_dims_from_parameter_key
 class QCTest(BaseModel):
     test_name: str = Field(default="")
     metocean_package_re: str = Field(default="")
-    default_parameters: List[Tuple[str, int]] = Field(defaut_list=list)
+    default_parameters: List[Tuple[str, int]] = Field(default_factory=list)
 
 
 class ParameterConfig(BaseModel, arbitrary_types_allowed=True, extra=Extra.allow):
