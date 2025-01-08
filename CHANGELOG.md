@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/equinor/atmos-validation/compare/v1.6.2...v1.7.0) (2025-01-08)
+
+
+### Features
+
+* update parameters config with qc_test ([#40](https://github.com/equinor/atmos-validation/issues/40)) ([c1aac6e](https://github.com/equinor/atmos-validation/commit/c1aac6e9094c14f37a96ec2cd87a767303381c35))
+
 ## [1.6.2](https://github.com/equinor/atmos-validation/compare/v1.6.1...v1.6.2) (2024-11-12)
 
 
