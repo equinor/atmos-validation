@@ -1,8 +1,21 @@
-from typing import Any, Dict, List, Literal, Union
+import uuid
+from typing import Any, Dict, List, Literal, Tuple, Union
 
-from pydantic import BaseModel, Extra, validator
+from pydantic import BaseModel, Extra, Field, validator
 
 from .dim_constants import get_acceptable_dims_from_parameter_key
+
+
+class QCTest(BaseModel):
+    """Describes a test to be run on a given parameter. QC tests are defined by metocean.
+    The default parameters are configured by those with admins access.
+    """
+
+    description: str = Field(default="")
+    test_id: str = Field(default_factory=lambda: uuid.uuid4().hex)
+    test_name: str = Field(default="")
+    metocean_pkg_ref: str = Field(default="")
+    default_parameters: List[Tuple[str, int]] = Field(default_factory=list)
 
 
 class ParameterConfig(BaseModel, arbitrary_types_allowed=True, extra=Extra.allow):
@@ -19,6 +32,7 @@ class ParameterConfig(BaseModel, arbitrary_types_allowed=True, extra=Extra.allow
     max: Union[float, int, Literal["NA"]]
     CF_standard_name: str
     dims: List[str]
+    qc_tests: List[QCTest] = Field(default_factory=list)
 
     @validator("dims")
     @classmethod
