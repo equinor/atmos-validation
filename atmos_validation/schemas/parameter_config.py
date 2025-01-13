@@ -11,11 +11,13 @@ class QCTest(BaseModel):
     The default parameters are configured by those with admins access.
     """
 
-    description: str = Field(default="")
     test_id: str = Field(default_factory=lambda: uuid.uuid4().hex)
-    test_name: str = Field(default="")
-    metocean_pkg_ref: str = Field(default="")
-    default_parameters: List[Tuple[str, int]] = Field(default_factory=list)
+    long_name: str = Field(default="")
+    metocean_pkg_ref: str = Field(default="")  # standard_name field
+    default_variables: List[Tuple[str, str, Union[int, float, Tuple], str]] = Field(
+        default_factory=list
+    )
+    description: str = Field(default="")
 
 
 class ParameterConfig(BaseModel, arbitrary_types_allowed=True, extra=Extra.allow):
