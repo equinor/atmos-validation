@@ -34,7 +34,7 @@ class ParameterConfig(BaseModel, arbitrary_types_allowed=True, extra=Extra.allow
     max: Union[float, int, Literal["NA"]]
     CF_standard_name: str
     dims: List[str]
-    qc_tests: List[QCTest] = Field(default_factory=list)
+    qc_tests: Dict[str:QCTest] = Field(default_factory=list)
 
     @validator("dims")
     @classmethod
