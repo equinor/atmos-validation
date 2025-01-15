@@ -6,6 +6,15 @@ from pydantic import BaseModel, Extra, Field, validator
 from .dim_constants import get_acceptable_dims_from_parameter_key
 
 
+class DefaultVariable(BaseModel):
+    """Describes a default variable for a QC Test."""
+
+    name: str
+    description: str = Field(default="")
+    value: Union[int, float, Tuple, str]
+    unit_description = str = Field(default="")
+
+
 class QCTest(BaseModel):
     """Describes a test to be run on a given parameter. QC tests are defined by metocean.
     The default parameters are configured by those with admins access.
@@ -14,9 +23,7 @@ class QCTest(BaseModel):
     test_id: str = Field(default_factory=lambda: uuid.uuid4().hex)
     long_name: str = Field(default="")
     metocean_pkg_ref: str = Field(default="")  # standard_name field
-    default_variables: List[Tuple[str, str, Union[int, float, Tuple], str]] = Field(
-        default_factory=list
-    )
+    default_variables: List[DefaultVariable] = Field(default_factory=list)
     description: str = Field(default="")
 
 
