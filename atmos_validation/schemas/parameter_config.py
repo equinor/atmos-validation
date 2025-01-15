@@ -12,7 +12,7 @@ class DefaultVariable(BaseModel):
     name: str
     description: str = Field(default="")
     value: Union[int, float, Tuple, str]
-    unit_description = str = Field(default="")
+    unit_description: str = Field(default="")
 
 
 class QCTest(BaseModel):
