@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.9.0](https://github.com/equinor/atmos-validation/compare/v1.8.0...v1.9.0) (2025-01-16)
+
+
+### Features
+
+* add default variable schema for qc test ([#44](https://github.com/equinor/atmos-validation/issues/44)) ([efafe0b](https://github.com/equinor/atmos-validation/commit/efafe0bb93c161a23a3c584754bb96aaada21ddc))
+
+
+### Bug Fixes
+
+* update parameter config file ([#46](https://github.com/equinor/atmos-validation/issues/46)) ([b6e604b](https://github.com/equinor/atmos-validation/commit/b6e604b09dda8dfdf1fa214212e456fd7248e06e))
+
 ## [1.8.0](https://github.com/equinor/atmos-validation/compare/v1.7.0...v1.8.0) (2025-01-14)
 
 
