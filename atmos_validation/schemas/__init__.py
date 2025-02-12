@@ -8,3 +8,4 @@ from .instrument_types import *
 from .metadata import *
 from .parameter_config import *
 from .parameter_configs import *
+from .qc_tests import *
