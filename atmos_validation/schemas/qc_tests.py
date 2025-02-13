@@ -14,5 +14,5 @@ class QCTests(BaseModel, arbitrary_types_allowed=True):
     @classmethod
     def validate_unique_keys(cls, qc_tests: List[QCTest]):
         """All qc_tests in a config should be unique"""
-        validate_unique(key_name="long_name", entities=qc_tests)
+        validate_unique(key_name="metocean_pkg_ref", entities=qc_tests)
         return qc_tests
