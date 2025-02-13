@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.10.0](https://github.com/equinor/atmos-validation/compare/v1.9.0...v1.10.0) (2025-02-13)
+
+
+### Features
+
+* add qc_tests schema for GET qc_test config api ([#47](https://github.com/equinor/atmos-validation/issues/47)) ([83fecb2](https://github.com/equinor/atmos-validation/commit/83fecb26941957f590c4405dd6d55783b4d7f6db))
+
+
+### Bug Fixes
+
+* update ci-test-pr.yml ([#48](https://github.com/equinor/atmos-validation/issues/48)) ([140b58f](https://github.com/equinor/atmos-validation/commit/140b58fe9b3e02871c570699e66b06f1ebdec7f4))
+
 ## [1.9.0](https://github.com/equinor/atmos-validation/compare/v1.8.0...v1.9.0) (2025-01-16)
 
 
