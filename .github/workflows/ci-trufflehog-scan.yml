@@ -1,5 +1,5 @@
 # Runs a scan for secrets in the repository using TruffleHog.
-# This workflow is triggered on pushes to origin/feature-branch and on pull requests to origin/main.
+# This workflow is triggered on pushes to remote feature branches (i.e., not main) and on pull requests to origin/main.
 # It scans for secrets that have been added since the last commit on the branch or PR base.
 name: TruffleHog secret scan
 
@@ -9,7 +9,7 @@ on:
       - main        
   pull_request:
     branches:
-      - main              
+      - main      
 
 jobs:
   trufflehog:
