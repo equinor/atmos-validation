@@ -1,0 +1,36 @@
+# Runs a scan for secrets in the repository using TruffleHog.
+# This workflow is triggered on pushes to origin/feature-branch and on pull requests to origin/main.
+# It scans for secrets that have been added since the last commit on the branch or PR base.
+name: TruffleHog secret scan
+
+on:
+  push:
+    branches-ignore:
+      - main        
+  pull_request:
+    branches:
+      - main              
+
+jobs:
+  trufflehog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # needed for commit comparisons
+
+      - name: Run TruffleHog on push (non-main branches)
+        if: github.event_name == 'push'
+        uses: trufflesecurity/trufflehog@v3
+        with:
+           scan: >-
+            git file://. --since-commit=${{ github.event.before }}
+      
+      - name: Run TruffleHog on PR to main
+        if: github.event_name == 'pull_request'
+        uses: trufflesecurity/trufflehog@v3
+        with:
+          scan: >-
+            git file://. --since-commit=${{ github.event.pull_request.base.sha }}
