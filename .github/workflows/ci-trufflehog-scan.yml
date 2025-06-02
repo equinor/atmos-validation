@@ -23,14 +23,14 @@ jobs:
 
       - name: Run TruffleHog on push (non-main branches)
         if: github.event_name == 'push'
-        uses: trufflesecurity/trufflehog@v3
+        uses: trufflesecurity/trufflehog@main
         with:
            scan: >-
             git file://. --since-commit=${{ github.event.before }}
       
       - name: Run TruffleHog on PR to main
         if: github.event_name == 'pull_request'
-        uses: trufflesecurity/trufflehog@v3
+        uses: trufflesecurity/trufflehog@main
         with:
           scan: >-
             git file://. --since-commit=${{ github.event.pull_request.base.sha }}
