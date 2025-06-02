@@ -29,6 +29,7 @@ pyright = "^1.1.291"
 coverage = "^7.1.0"
 setuptools = "^69.0.3"
 ruff = "^0.5.1"
+pre-commit = "^4.2.0"
 
 [build-system]
 requires = ["poetry-core"]
