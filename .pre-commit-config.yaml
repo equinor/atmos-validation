@@ -3,3 +3,7 @@ repos:
     rev: v3.88.35
     hooks:
       - id: trufflehog
+        name: Trufflehog
+        description: Detect secrets in our data
+        args: ["--only-verified"]
+        stages: ['pre-commit']
