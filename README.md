@@ -33,3 +33,9 @@ To run validation on NetCDF and ASCII source files, we have built the atmos_vali
 ## Contributing
 
 We welcome different types of contributions, including code, bug reports, issues, feature requests, and documentation. The preferred method of submitting a contribution is either to make an issue on GitHub or to fork the project on GitHub and make a pull request. In the case of bug reports, please provide a detailed explanation describing how to reproduce before submitting.
+
+Before making your initial commit, please run:
+
+```pre-commit install```
+
+This sets up a Git hook to automatically run checks (like trufflehog secret scanning) every time you commit. You only need to run this command once — after that, the checks will run automatically.
