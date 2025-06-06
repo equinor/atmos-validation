@@ -4,6 +4,6 @@ repos:
       - id: trufflehog
         name: TruffleHog
         description: Detect secrets in your data.
-        entry: bash -c "docker run --rm -v './:/workdir' -i --rm trufflesecurity/trufflehog:latest git file:///workdir --since-commit HEAD --results=unverified,unknown,verified --fail"
+        entry: bash -c "docker run -v './:/workdir' -i --rm trufflesecurity/trufflehog:latest git file:///workdir --since-commit HEAD --results=unverified,unknown,verified --fail"
         language: system
         stages: ["pre-commit"]
