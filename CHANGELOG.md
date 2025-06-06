@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.10.1](https://github.com/equinor/atmos-validation/compare/v1.10.0...v1.10.1) (2025-06-06)
+
+
+### Other
+
+* add GH Action for Trufflehog scans on pull/push to remote branch ([#50](https://github.com/equinor/atmos-validation/issues/50)) ([06b6760](https://github.com/equinor/atmos-validation/commit/06b676004eff983eb8139c407242b06f626afe19))
+* adds trufflehog scan pre commit hook  ([#51](https://github.com/equinor/atmos-validation/issues/51)) ([d09fb89](https://github.com/equinor/atmos-validation/commit/d09fb8968fee118af28e63c39924093ca3d566a6))
+
 ## [1.10.0](https://github.com/equinor/atmos-validation/compare/v1.9.0...v1.10.0) (2025-02-13)
 
 
