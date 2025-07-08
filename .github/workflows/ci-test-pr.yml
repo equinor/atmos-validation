@@ -34,14 +34,14 @@ jobs:
 
       - name: Test with coverage
         env:
-          COVERAGE_FILE: .coverage.${{ matrix.python_version }}
+          COVERAGE_FILE: .coverage.${{ matrix.python-version }}
         run: poetry run coverage run -m pytest atmos_validation
 
       - name: Store coverage file
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-${{ matrix.python_version }}
-          path: .coverage.${{ matrix.python_version }}
+          name: coverage-${{ matrix.python-version }}
+          path: .coverage.${{ matrix.python-version }}
           include-hidden-files: true
 
   coverage:
