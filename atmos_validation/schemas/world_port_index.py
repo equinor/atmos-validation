@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 class WorldPortIndex(BaseModel):
     """World-wide maritime port information."""
 
-    fid: float
+    id: float
     world_port_index_number: float
     region_name: str
     main_port_name: str
