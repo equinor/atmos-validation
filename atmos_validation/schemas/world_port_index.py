@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 
 class WorldPortIndex(BaseModel):
@@ -27,13 +27,15 @@ class WorldPortIndex(BaseModel):
     latitude: float
     longitude: float
 
-    @validator("latitude")
+    @field_validator("latitude")
+    @classmethod
     def validate_latitude(cls, lat):
         if not (-90 <= lat <= 90):
             raise ValueError(f"Invalid latitude: {lat}. It must be between -90 and 90.")
         return lat
 
-    @validator("longitude")
+    @field_validator("longitude")
+    @classmethod
     def validate_longitude(cls, lng):
         if not (-180 <= lng <= 180):
             raise ValueError(
