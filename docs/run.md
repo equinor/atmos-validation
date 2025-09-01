@@ -8,8 +8,6 @@ Run in your preferred environment:
 
 ```pip install atmos_validation```
 
-Or, if using poetry as package manager, replace ```pip install``` with ```poetry add```.
-
 If using conda, run before the pip install command above:
 
 ```conda install git pip```
