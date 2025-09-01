@@ -25,12 +25,12 @@ jobs:
         if: github.event_name == 'push'
         uses: trufflesecurity/trufflehog@main
         with:
-           scan: >-
+           extra_args: >-
             git file://. --since-commit=${{ github.event.before }} --exclude-globs=CHANGELOG.md
 
       - name: Run TruffleHog on PR to main
         if: github.event_name == 'pull_request'
         uses: trufflesecurity/trufflehog@main
         with:
-          scan: >-
+          extra_args: >-
             git file://. --since-commit=${{ github.event.pull_request.base.sha }} --exclude-globs=CHANGELOG.md
