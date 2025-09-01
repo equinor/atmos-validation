@@ -9,4 +9,3 @@ from .metadata import *
 from .parameter_config import *
 from .parameter_configs import *
 from .qc_tests import *
-from .world_port_index import *
