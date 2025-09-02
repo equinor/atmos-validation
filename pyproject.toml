@@ -3,18 +3,17 @@ name = "atmos_validation"
 version = "1.10.0"
 description = "A python library containing automated data validation tools for the Atmos Data Service"
 authors = [{ name = "Team Atmos (Equinor)" }]
-requires-python = ">=3.9"
+requires-python = ">=3.10, <3.14"
 readme = "README.md"
 license = "MIT"
 dependencies = [
     "pydantic>=2.8.2,<3",
-    "numpy>=1.23.3,<2",
-    "xarray>=2022.9.0,<2023",
-    "dask>=2022.11.1,<2023",
-    "h5py>=3.6.0,<4",
-    "h5netcdf>=1.1.0,<2",
-    "requests>=2.31.0,<3",
-    "netcdf4>=1.6.5,<2",
+    "numpy>=2.0.0,<3",
+    "xarray>=2025.0.0,<2026",
+    "dask>=2025.7.0,<2026",
+    "h5py>=3.10.0,<4",
+    "h5netcdf>=1.6.4,<2",
+    "requests>=2.32.5,<3",
 ]
 
 [project.urls]
@@ -41,7 +40,7 @@ build-backend = "hatchling.build"
 relative_files = true
 
 [tool.ruff]
-lint.extend-select = ["I"]
+lint.extend-select = ["I", "NPY201"]
 lint.ignore = [
   "F403", # allows * imports
 ]
