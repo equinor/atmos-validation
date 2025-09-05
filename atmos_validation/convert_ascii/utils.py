@@ -13,7 +13,7 @@ from ..schemas import ParameterConfig, ParameterConfigs
 DEFAULT_URL_TO_PARAMETERS: str = "https://atmos.app.radix.equinor.com/config/parameters"
 
 
-def get_chunksizes(dims: Tuple[str], src: xr.Dataset) -> Union[List[int], None]:
+def get_chunksizes(dims: Tuple[str], src: xr.Dataset) -> Union[tuple[int, ...], None]:
     """Returns chunksizes for 3D or 4D data var.
 
     Args:
@@ -25,14 +25,14 @@ def get_chunksizes(dims: Tuple[str], src: xr.Dataset) -> Union[List[int], None]:
     """
     chunksizes = None
     if len(dims) == 4:
-        chunksizes = [
+        chunksizes = (
             min(10000, len(src[dims[0]])),
             min(10, len(src[dims[1]])),
             1,
             1,
-        ]
+        )
     elif len(dims) == 3:
-        chunksizes = [len(src[dims[0]]), 1, 1]
+        chunksizes = (len(src[dims[0]]), 1, 1)
 
     return chunksizes
 
@@ -100,7 +100,7 @@ def store_netcdf(source_file: str, ds: xr.Dataset) -> str:
             },
         },
         unlimited_dims="Time",
-        engine="netcdf4",
+        engine="h5netcdf",
     )
     return nc_filename
 

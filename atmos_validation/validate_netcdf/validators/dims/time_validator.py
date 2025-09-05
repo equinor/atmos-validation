@@ -14,7 +14,7 @@ from ...utils import Severity, convert_utc_timestamp_to_filename_format, validat
 def time_validator(ds: xr.Dataset, paths: List[str]) -> List[str]:
     result: List[str] = []
     time = ds.variables[TIME].data
-    if not np.all(time[:-1] <= time[1:]):
+    if not np.all(time[:-1] <= time[1:]):  # type: ignore
         result += ["Some timestamps in the dataset are not in sorted order"]
 
     result += filename_validator(paths)
