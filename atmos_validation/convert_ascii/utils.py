@@ -13,7 +13,7 @@ from ..schemas import ParameterConfig, ParameterConfigs
 DEFAULT_URL_TO_PARAMETERS: str = "https://atmos.app.radix.equinor.com/config/parameters"
 
 
-def get_chunksizes(dims: Tuple[str], src: xr.Dataset) -> Union[tuple[int], None]:
+def get_chunksizes(dims: Tuple[str], src: xr.Dataset) -> Union[tuple[int, ...], None]:
     """Returns chunksizes for 3D or 4D data var.
 
     Args:

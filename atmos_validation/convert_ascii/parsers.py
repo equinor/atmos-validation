@@ -44,7 +44,7 @@ def data_frame_parser(header_line: str, data_lines: List[List[str]]) -> pd.DataF
     header_names = header_line.replace("%", "").replace("\t\n", "").split()
     df = pd.DataFrame(
         data=data_lines,
-        columns=header_names,
+        columns=header_names,  # type: ignore
     )
 
     df = df.dropna(how="all")

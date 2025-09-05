@@ -273,7 +273,7 @@ class RowParser:
         df.set_index("period")
 
     def get_dataframe(self, data_rows: List[str], columns: List[str]) -> pd.DataFrame:
-        df = pd.DataFrame(data=[row.split() for row in data_rows], columns=columns)
+        df = pd.DataFrame(data=[row.split() for row in data_rows], columns=columns)  # type: ignore
         return df
 
     def get_columns(
