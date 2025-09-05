@@ -40,15 +40,6 @@ def existence_validator(ds: xr.Dataset, dim_name: str) -> List[str]:
 
 
 @validation_node(severity=Severity.ERROR)
-def place_validator(ds: xr.Dataset, dim_name: str, dim_place: int) -> List[str]:
-    result = []
-    for var in ds.keys():
-        if ds.variables[var].dims[dim_place] != dim_name:
-            result += [f"{var} does not have {dim_name} at dimension index {dim_place}"]
-    return result
-
-
-@validation_node(severity=Severity.ERROR)
 def lat_lon_validator(ds: xr.Dataset) -> List[str]:
     result = []
     lats = ds["LAT"]
@@ -98,19 +89,11 @@ def mandatory_attrs_lat_lon_validator(ds: xr.Dataset) -> List[str]:
 
 @validation_node(severity=Severity.ERROR)
 def south_north_validator(ds: xr.Dataset):
-    """Validate that the dataset has this dim, that it
-    is 1d and that LAT and LON are
-    2d coordinates with this as second axis. Also validate
-    that all data variables has this as the second last axis"""
-    return (
-        [] + existence_validator(ds, SOUTH_NORTH) + place_validator(ds, SOUTH_NORTH, -2)
-    )
+    """Validate that the dataset has south_north as a dim with a length > 0"""
+    return existence_validator(ds, SOUTH_NORTH)
 
 
 @validation_node(severity=Severity.ERROR)
 def west_east_validator(ds: xr.Dataset):
-    """Validate that the dataset has this dim, that it
-    is 1d and that LAT and LON are 2d coordinates with
-    this as first axis. Also validate that all data
-    variables has this as the last axis"""
-    return [] + existence_validator(ds, WEST_EAST) + place_validator(ds, WEST_EAST, -1)
+    """Validate that the dataset has west_east as a dim with a length > 0"""
+    return existence_validator(ds, WEST_EAST)
