@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.11.0](https://github.com/equinor/atmos-validation/compare/v1.10.0...v1.11.0) (2025-09-05)
+
+
+### Features
+
+* add schema for wpi ([#54](https://github.com/equinor/atmos-validation/issues/54)) ([5219086](https://github.com/equinor/atmos-validation/commit/52190869bff082eb3585662591a7cf5f8c2e2398))
+
+
+### Bug Fixes
+
+* **CI:** Merge multiple coverage reports ([#53](https://github.com/equinor/atmos-validation/issues/53)) ([b0c6fa3](https://github.com/equinor/atmos-validation/commit/b0c6fa380e93b2d3b56f388a214e4f4a3b8dfbf5))
+* Fix 5d spectra validation bug ([#57](https://github.com/equinor/atmos-validation/issues/57)) ([087e09b](https://github.com/equinor/atmos-validation/commit/087e09b25a3e966c7bbc5b6631bae20888a428f7))
+
+
+### Other
+
+* add GH Action for Trufflehog scans on pull/push to remote branch ([#50](https://github.com/equinor/atmos-validation/issues/50)) ([06b6760](https://github.com/equinor/atmos-validation/commit/06b676004eff983eb8139c407242b06f626afe19))
+* adds trufflehog scan pre commit hook  ([#51](https://github.com/equinor/atmos-validation/issues/51)) ([d09fb89](https://github.com/equinor/atmos-validation/commit/d09fb8968fee118af28e63c39924093ca3d566a6))
+* remove wpi schema from validation repo ([#55](https://github.com/equinor/atmos-validation/issues/55)) ([0e5e0d4](https://github.com/equinor/atmos-validation/commit/0e5e0d4aa3f06023650db0e5838ec76a27121602))
+* UV migration ([#56](https://github.com/equinor/atmos-validation/issues/56)) ([843f799](https://github.com/equinor/atmos-validation/commit/843f799501b10cdbe98bd15f1ea5257a333c9762))
+
 ## [1.10.0](https://github.com/equinor/atmos-validation/compare/v1.9.0...v1.10.0) (2025-02-13)
 
 
