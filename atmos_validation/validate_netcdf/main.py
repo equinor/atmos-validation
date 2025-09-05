@@ -37,7 +37,7 @@ Options:
     \t\t\t\t\t Can be extremely slow for large datasets. Default behaviour is taking random samples.
     --{validation_settings.SKIP_MIN_MAX_CHECK} \t Skip random sample check for min/max values.
     --{validation_settings.SKIP_WARNINGS} \t\t\t Skip all checks that would only output a "WARNING".
-    --{validation_settings.BATCH_SIZE} \t\t\t Set the amount of .nc files per batch to validate. Defaults to 50.
+    --{validation_settings.BATCH_SIZE} \t\t\t Set the amount of .nc files per batch to validate. Defaults to 1000.
 """
 
 
@@ -110,7 +110,7 @@ def validate(
     try:
         warnings = []
         for i, batch in enumerate(batches):
-            print(f"validating batch: {i} of {len(batches)}")
+            print(f"validating batch: {i+1} of {len(batches)}")
             ds = open_mf_dataset(batch)
             batch_result = root_validator(ds, batch)
             warnings += batch_result.warnings
@@ -147,12 +147,14 @@ def load_paths(path: str, batch_size: int) -> List[List[str]]:
 
 
 def open_mf_dataset(paths: List[str]) -> xr.Dataset:
+    xr.set_options(use_new_combine_kwarg_defaults=True)
     return xr.open_mfdataset(
         paths,
         compat="equals",
         engine="h5netcdf",
-        cache=False,
-        data_vars="minimal",
+        concat_dim="Time",
+        combine="nested",
+        parallel=True,
     )
 
 
