@@ -1,6 +1,6 @@
 [project]
 name = "atmos_validation"
-version = "1.10.0"
+version = "1.11.0"
 description = "A python library containing automated data validation tools for the Atmos Data Service"
 authors = [{ name = "Team Atmos (Equinor)" }]
 requires-python = ">=3.9"
