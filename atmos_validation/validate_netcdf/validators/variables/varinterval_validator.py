@@ -5,6 +5,8 @@ from typing import List, Tuple, Union
 import xarray as xr
 
 from ....schemas import (
+    DIRECTION,
+    FREQUENCY,
     SOUTH_NORTH,
     TIME,
     WEST_EAST,
@@ -53,6 +55,10 @@ def _get_slice_tuple(
         elif dim == WEST_EAST:
             result += (slice(None, None),)
         elif dim == height_dim:
+            result += (slice(None, None),)
+        elif dim == FREQUENCY:
+            result += (slice(None, None),)
+        elif dim == DIRECTION:
             result += (slice(None, None),)
         else:
             raise ValueError(

@@ -3,7 +3,15 @@ from typing import List, Tuple, Union
 
 import xarray as xr
 
-from ....schemas import HEIGHT_DIM_PREFIX, SOUTH_NORTH, TIME, WEST_EAST, ParameterConfig
+from ....schemas import (
+    DIRECTION,
+    FREQUENCY,
+    HEIGHT_DIM_PREFIX,
+    SOUTH_NORTH,
+    TIME,
+    WEST_EAST,
+    ParameterConfig,
+)
 from ...utils import Severity, validation_node
 
 
@@ -49,6 +57,10 @@ def _get_random_index(data: xr.DataArray) -> Tuple[Union[int, slice], ...]:
             random_index += (randint(0, len(data[SOUTH_NORTH]) - 1),)
         elif dim == WEST_EAST:
             random_index += (randint(0, len(data[WEST_EAST]) - 1),)
+        elif dim == FREQUENCY:
+            random_index += (randint(0, len(data[FREQUENCY]) - 1),)
+        elif dim == DIRECTION:
+            random_index += (randint(0, len(data[DIRECTION]) - 1),)
         else:
             raise ValueError(
                 f"Invalid dimension {dim}, cannot validate interval of {data.name}"
