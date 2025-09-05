@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.0](https://github.com/equinor/atmos-validation/compare/v1.11.0...v2.0.0) (2025-09-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* Upgrade dependencies and supported python versions ([#58](https://github.com/equinor/atmos-validation/issues/58))
+
+### Features
+
+* Upgrade dependencies and supported python versions ([#58](https://github.com/equinor/atmos-validation/issues/58)) ([2de41ee](https://github.com/equinor/atmos-validation/commit/2de41ee8300810d4199f181b9a688e654f09fdd3))
+
+
+### Optimization
+
+* Increase default batch size ([#63](https://github.com/equinor/atmos-validation/issues/63)) ([512b23b](https://github.com/equinor/atmos-validation/commit/512b23b1f063c323f232c8188e3456703fa903c5))
+
 ## [1.11.0](https://github.com/equinor/atmos-validation/compare/v1.10.0...v1.11.0) (2025-09-05)
 
 
