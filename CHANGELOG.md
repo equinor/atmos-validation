@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/equinor/atmos-validation/compare/v2.0.0...v2.0.1) (2025-09-09)
+
+
+### Optimization
+
+* Adjust compatibility settings for open_mfdataset ([#64](https://github.com/equinor/atmos-validation/issues/64)) ([9e5825f](https://github.com/equinor/atmos-validation/commit/9e5825f0d666d135f32d06242514258b8288ba9e))
+
 ## [2.0.0](https://github.com/equinor/atmos-validation/compare/v1.11.0...v2.0.0) (2025-09-05)
 
 
