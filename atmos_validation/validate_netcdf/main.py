@@ -83,7 +83,7 @@ def validate(
         injected_logger: pass a logger to be used for validation
         additional_args: see docstring "Options" for available additional_args.
         batch_size: Since open_mfdataset is slow for opening large amount of files,
-        validation can be run in batches. Defaults to 50 files per open_mfdataset/batch.
+        validation can be run in batches. Defaults to 1000 files per open_mfdataset/batch.
 
     Returns:
         ValidationResult containing errors and warning from running validation
@@ -150,9 +150,10 @@ def open_mf_dataset(paths: List[str]) -> xr.Dataset:
     xr.set_options(use_new_combine_kwarg_defaults=True)
     return xr.open_mfdataset(
         paths,
-        compat="equals",
         engine="h5netcdf",
         concat_dim="Time",
+        compat="override",
+        data_vars="minimal",
         combine="nested",
         parallel=True,
     )
