@@ -23,7 +23,7 @@
 | atmos\_validation/schemas/tests/test\_parameter\_configs.py                       |        8 |        0 |    100% |           |
 | atmos\_validation/schemas/tests/test\_unique\_configs.py                          |       13 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/\_\_init\_\_.py                                |        1 |        0 |    100% |           |
-| atmos\_validation/validate\_netcdf/main.py                                        |       73 |       21 |     71% |45-67, 95, 162-165 |
+| atmos\_validation/validate\_netcdf/main.py                                        |       73 |       21 |     71% |45-67, 95, 163-166 |
 | atmos\_validation/validate\_netcdf/tests/\_\_init\_\_.py                          |        0 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_blacklisted\_globals.py            |       12 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_data\_usability\_validation.py     |       25 |        0 |    100% |           |

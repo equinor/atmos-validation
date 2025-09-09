@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_814165303785b402_test_blacklisted_globals_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.10.5">coverage.py v7.10.5</a>,
-            created at 2025-09-05 13:45 +0000
+            created at 2025-09-09 12:12 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -165,7 +165,7 @@
     <p class="pln"><span class="n"><a id="t83" href="#t83">83</a></span><span class="t"><span class="str">        injected_logger: pass a logger to be used for validation</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t84" href="#t84">84</a></span><span class="t"><span class="str">        additional_args: see docstring "Options" for available additional_args.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t85" href="#t85">85</a></span><span class="t"><span class="str">        batch_size: Since open_mfdataset is slow for opening large amount of files,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t"><span class="str">        validation can be run in batches. Defaults to 50 files per open_mfdataset/batch.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t"><span class="str">        validation can be run in batches. Defaults to 1000 files per open_mfdataset/batch.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t"><span class="str">    Returns:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t89" href="#t89">89</a></span><span class="t"><span class="str">        ValidationResult containing errors and warning from running validation</span>&nbsp;</span><span class="r"></span></p>
@@ -232,19 +232,20 @@
     <p class="run"><span class="n"><a id="t150" href="#t150">150</a></span><span class="t">    <span class="nam">xr</span><span class="op">.</span><span class="nam">set_options</span><span class="op">(</span><span class="nam">use_new_combine_kwarg_defaults</span><span class="op">=</span><span class="key">True</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t151" href="#t151">151</a></span><span class="t">    <span class="key">return</span> <span class="nam">xr</span><span class="op">.</span><span class="nam">open_mfdataset</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t152" href="#t152">152</a></span><span class="t">        <span class="nam">paths</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t153" href="#t153">153</a></span><span class="t">        <span class="nam">compat</span><span class="op">=</span><span class="str">"equals"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t154" href="#t154">154</a></span><span class="t">        <span class="nam">engine</span><span class="op">=</span><span class="str">"h5netcdf"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t155" href="#t155">155</a></span><span class="t">        <span class="nam">concat_dim</span><span class="op">=</span><span class="str">"Time"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t156" href="#t156">156</a></span><span class="t">        <span class="nam">combine</span><span class="op">=</span><span class="str">"nested"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t157" href="#t157">157</a></span><span class="t">        <span class="nam">parallel</span><span class="op">=</span><span class="key">True</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t158" href="#t158">158</a></span><span class="t">    <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t159" href="#t159">159</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t153" href="#t153">153</a></span><span class="t">        <span class="nam">engine</span><span class="op">=</span><span class="str">"h5netcdf"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t154" href="#t154">154</a></span><span class="t">        <span class="nam">concat_dim</span><span class="op">=</span><span class="str">"Time"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t155" href="#t155">155</a></span><span class="t">        <span class="nam">compat</span><span class="op">=</span><span class="str">"override"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t156" href="#t156">156</a></span><span class="t">        <span class="nam">data_vars</span><span class="op">=</span><span class="str">"minimal"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t157" href="#t157">157</a></span><span class="t">        <span class="nam">combine</span><span class="op">=</span><span class="str">"nested"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t158" href="#t158">158</a></span><span class="t">        <span class="nam">parallel</span><span class="op">=</span><span class="key">True</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t159" href="#t159">159</a></span><span class="t">    <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t160" href="#t160">160</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t161" href="#t161">161</a></span><span class="t"><span class="key">def</span> <span class="nam">pretty_print_result</span><span class="op">(</span><span class="nam">results</span><span class="op">:</span> <span class="nam">List</span><span class="op">[</span><span class="nam">str</span><span class="op">]</span><span class="op">,</span> <span class="nam">description</span><span class="op">:</span> <span class="nam">str</span><span class="op">,</span> <span class="nam">width</span><span class="op">:</span> <span class="nam">int</span> <span class="op">=</span> <span class="num">150</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t162" href="#t162">162</a></span><span class="t">    <span class="nam">print</span><span class="op">(</span><span class="str">"-"</span> <span class="op">*</span> <span class="nam">width</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t">    <span class="nam">print</span><span class="op">(</span><span class="nam">description</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t">    <span class="nam">print</span><span class="op">(</span><span class="str">"-"</span> <span class="op">*</span> <span class="nam">width</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t">    <span class="nam">pprint</span><span class="op">(</span><span class="nam">results</span><span class="op">,</span> <span class="nam">width</span><span class="op">=</span><span class="nam">width</span><span class="op">,</span> <span class="nam">indent</span><span class="op">=</span><span class="num">4</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t161" href="#t161">161</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t162" href="#t162">162</a></span><span class="t"><span class="key">def</span> <span class="nam">pretty_print_result</span><span class="op">(</span><span class="nam">results</span><span class="op">:</span> <span class="nam">List</span><span class="op">[</span><span class="nam">str</span><span class="op">]</span><span class="op">,</span> <span class="nam">description</span><span class="op">:</span> <span class="nam">str</span><span class="op">,</span> <span class="nam">width</span><span class="op">:</span> <span class="nam">int</span> <span class="op">=</span> <span class="num">150</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t">    <span class="nam">print</span><span class="op">(</span><span class="str">"-"</span> <span class="op">*</span> <span class="nam">width</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t">    <span class="nam">print</span><span class="op">(</span><span class="nam">description</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t">    <span class="nam">print</span><span class="op">(</span><span class="str">"-"</span> <span class="op">*</span> <span class="nam">width</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t166" href="#t166">166</a></span><span class="t">    <span class="nam">pprint</span><span class="op">(</span><span class="nam">results</span><span class="op">,</span> <span class="nam">width</span><span class="op">=</span><span class="nam">width</span><span class="op">,</span> <span class="nam">indent</span><span class="op">=</span><span class="num">4</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -254,7 +255,7 @@
             <a class="nav" href="z_814165303785b402_test_blacklisted_globals_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.10.5">coverage.py v7.10.5</a>,
-            created at 2025-09-05 13:45 +0000
+            created at 2025-09-09 12:12 +0000
         </p>
     </div>
 </footer>
