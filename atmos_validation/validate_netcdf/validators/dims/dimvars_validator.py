@@ -17,7 +17,7 @@ def dimvars_validator(
     Incidentally, this also verifies that height/depth dimensions are
     correctly attached
     """
-    alldims = {str(key) for key in ds.dims.keys()}
+    alldims = {str(key) for key in ds.sizes.keys()}
     result = []
     for var in ds.keys():
         var = str(var)
