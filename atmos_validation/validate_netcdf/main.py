@@ -148,15 +148,22 @@ def load_paths(path: str, batch_size: int) -> List[List[str]]:
 
 def open_mf_dataset(paths: List[str]) -> xr.Dataset:
     xr.set_options(use_new_combine_kwarg_defaults=True)
-    return xr.open_mfdataset(
-        paths,
-        engine="h5netcdf",
-        concat_dim="Time",
-        compat="override",
-        data_vars="minimal",
-        combine="nested",
-        parallel=True,
-    )
+    if len(paths) > 1:
+        log.info("Running open mfdataset for %s files", len(paths))
+        ds = xr.open_mfdataset(
+            paths,
+            engine="h5netcdf",
+            concat_dim="Time",
+            compat="override",
+            data_vars="minimal",
+            combine="nested",
+            chunks="auto",
+            parallel=True,
+        )
+    else:
+        log.info("Running open dataset for single file %s", paths[0])
+        ds = xr.open_dataset(paths[0], engine="h5netcdf")
+    return ds
 
 
 def pretty_print_result(results: List[str], description: str, width: int = 150):

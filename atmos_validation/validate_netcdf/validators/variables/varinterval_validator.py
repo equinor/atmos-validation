@@ -136,6 +136,7 @@ def _check_randomly_selected_intervals_min_max(
 
     slice_tuple = _get_slice_tuple(dims, actual, rand)
     vals = actual[slice_tuple]
+    vals.load()
     result += undermin_validator(actual, expected, slice_tuple, vals)
     result += overmax_validator(actual, expected, slice_tuple, vals)
 
