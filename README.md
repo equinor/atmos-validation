@@ -23,7 +23,7 @@
 | atmos\_validation/schemas/tests/test\_parameter\_configs.py                       |        8 |        0 |    100% |           |
 | atmos\_validation/schemas/tests/test\_unique\_configs.py                          |       13 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/\_\_init\_\_.py                                |        1 |        0 |    100% |           |
-| atmos\_validation/validate\_netcdf/main.py                                        |       73 |       21 |     71% |45-67, 95, 163-166 |
+| atmos\_validation/validate\_netcdf/main.py                                        |       78 |       21 |     73% |45-67, 95, 170-173 |
 | atmos\_validation/validate\_netcdf/tests/\_\_init\_\_.py                          |        0 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_blacklisted\_globals.py            |       12 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_data\_usability\_validation.py     |       25 |        0 |    100% |           |
@@ -57,8 +57,8 @@
 | atmos\_validation/validate\_netcdf/validators/variables/varattrs\_validator.py    |       68 |        3 |     96% |38, 53, 58 |
 | atmos\_validation/validate\_netcdf/validators/variables/vardims\_validator.py     |       10 |        1 |     90% |        21 |
 | atmos\_validation/validate\_netcdf/validators/variables/variables\_validator.py   |       32 |        1 |     97% |        38 |
-| atmos\_validation/validate\_netcdf/validators/variables/varinterval\_validator.py |       93 |       16 |     83% |30-31, 59-64, 75, 80, 92, 95, 116, 122-124, 127 |
-|                                                                         **TOTAL** | **1416** |  **134** | **91%** |           |
+| atmos\_validation/validate\_netcdf/validators/variables/varinterval\_validator.py |       94 |       16 |     83% |30-31, 59-64, 75, 80, 92, 95, 116, 122-124, 127 |
+|                                                                         **TOTAL** | **1422** |  **134** | **91%** |           |
 
 
 ## Setup coverage badge
