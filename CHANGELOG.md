@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.2](https://github.com/equinor/atmos-validation/compare/v2.0.1...v2.0.2) (2025-09-10)
+
+
+### Bug Fixes
+
+* Fix xarray future warnings ([#66](https://github.com/equinor/atmos-validation/issues/66)) ([2b8ef08](https://github.com/equinor/atmos-validation/commit/2b8ef08248e7f74cf097d179c7dd8d9522bacfe7))
+
+
+### Optimization
+
+* Fix dataset load performance bottlenecks ([#67](https://github.com/equinor/atmos-validation/issues/67)) ([b899558](https://github.com/equinor/atmos-validation/commit/b899558a13dfe3ffa9138f5ef34836d20f9f8fa2))
+
 ## [2.0.1](https://github.com/equinor/atmos-validation/compare/v2.0.0...v2.0.1) (2025-09-09)
 
 
