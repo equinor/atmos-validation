@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/equinor/atmos-validation/compare/v2.0.2...v2.0.3) (2025-09-12)
+
+
+### Other
+
+* relax version requirement for requests ([#69](https://github.com/equinor/atmos-validation/issues/69)) ([3135386](https://github.com/equinor/atmos-validation/commit/3135386c8eff169e35c4b9c7430c8e4c71826df5))
+
 ## [2.0.2](https://github.com/equinor/atmos-validation/compare/v2.0.1...v2.0.2) (2025-09-10)
 
 
