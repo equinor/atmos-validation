@@ -19,7 +19,7 @@ wheels = [
 
 [[package]]
 name = "atmos-validation"
-version = "1.10.0"
+version = "2.0.2"
 source = { editable = "." }
 dependencies = [
     { name = "dask" },
@@ -50,7 +50,7 @@ requires-dist = [
     { name = "h5py", specifier = ">=3.10.0,<4" },
     { name = "numpy", specifier = ">=2.0.0,<3" },
     { name = "pydantic", specifier = ">=2.8.2,<3" },
-    { name = "requests", specifier = ">=2.32.5,<3" },
+    { name = "requests", specifier = ">=2.32.4,<3" },
     { name = "xarray", specifier = ">=2025.0.0,<2026" },
 ]
 
