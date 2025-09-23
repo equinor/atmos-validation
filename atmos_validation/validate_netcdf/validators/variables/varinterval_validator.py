@@ -42,8 +42,7 @@ def _get_random_time_slice(actual: xr.DataArray, rand: random.Random) -> slice:
 
 
 def _get_random_spatial_point(
-    ds: xr.Dataset,
-    rand: random.Random,
+    ds: xr.Dataset, rand: random.Random
 ) -> tuple[slice, slice]:
     """To save processing time we check 1x1 random spatial point where GRID_POINT_MASK == 1"""
     if GRID_POINT_MASK not in ds:
@@ -58,9 +57,7 @@ def _get_random_spatial_point(
 
 
 def _get_slice_tuple(
-    ds: xr.Dataset,
-    actual: xr.DataArray,
-    rand: random.Random,
+    ds: xr.Dataset, actual: xr.DataArray, rand: random.Random
 ) -> Tuple[Union[int, slice], ...]:
     if FREQUENCY in actual.dims and len(actual.dims) == 5:
         result = ()
