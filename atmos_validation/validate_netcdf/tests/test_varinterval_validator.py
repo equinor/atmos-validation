@@ -34,10 +34,7 @@ def test_over_max_interval():
         ds["P"][:, 1, 0, 4] = 2  # pylint: disable=unsupported-assignment-operation
         data_array = ds["P"]
 
-        dims = ["Time", "height_P", "south_north", "west_east"]
-        errors = _check_randomly_selected_intervals_min_max(
-            data_array, test_config, dims
-        )  # type: ignore
+        errors = _check_randomly_selected_intervals_min_max(ds, data_array, test_config)  # type: ignore
         assert len(errors) == 1
         assert "overmax" in errors[0]
 
@@ -49,9 +46,6 @@ def test_under_min_interval():
         ds["P"][:, 2, 3, 2] = -1  # pylint: disable=unsupported-assignment-operation
         data_array = ds["P"]
 
-        dims = ["Time", "height_P", "south_north", "west_east"]
-        errors = _check_randomly_selected_intervals_min_max(
-            data_array, test_config, dims
-        )  # type: ignore
+        errors = _check_randomly_selected_intervals_min_max(ds, data_array, test_config)  # type: ignore
         assert len(errors) == 1
         assert "undermin" in errors[0]

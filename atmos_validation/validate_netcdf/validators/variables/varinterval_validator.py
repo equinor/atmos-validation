@@ -2,11 +2,12 @@ import random
 import sys
 from typing import List, Tuple, Union
 
+import numpy as np
 import xarray as xr
 
 from ....schemas import (
-    DIRECTION,
     FREQUENCY,
+    GRID_POINT_MASK,
     SOUTH_NORTH,
     TIME,
     WEST_EAST,
@@ -19,7 +20,6 @@ from ...utils import Severity, validation_node
 from ...validation_logger import log
 
 SEED = random.randrange(sys.maxsize)
-print(f"using random seed: {SEED}")
 
 
 def _get_random_time_slice(actual: xr.DataArray, rand: random.Random) -> slice:
@@ -41,13 +41,39 @@ def _get_random_time_slice(actual: xr.DataArray, rand: random.Random) -> slice:
     return time_slice
 
 
+def _get_random_spatial_point(
+    ds: xr.Dataset,
+    rand: random.Random,
+) -> tuple[slice, slice]:
+    """To save processing time we check 1x1 random spatial point where GRID_POINT_MASK == 1"""
+    if GRID_POINT_MASK not in ds:
+        ds.assign({GRID_POINT_MASK: xr.DataArray(1, dims=(SOUTH_NORTH, WEST_EAST))})
+
+    mask = ds[GRID_POINT_MASK].values
+    valids = np.where(mask == 1)
+    indices = list(zip(valids[0], valids[1]))
+    sn_index, we_index = rand.choice(indices)
+
+    return (slice(sn_index, sn_index + 1), slice(we_index, we_index + 1))
+
+
 def _get_slice_tuple(
-    dims: List[str], actual: xr.DataArray, rand: random.Random
+    ds: xr.Dataset,
+    actual: xr.DataArray,
+    rand: random.Random,
 ) -> Tuple[Union[int, slice], ...]:
-    result: Tuple[Union[int, slice], ...] = ()
+    if FREQUENCY in actual.dims and len(actual.dims) == 5:
+        result = ()
+        result += (_get_random_time_slice(actual, rand),)
+        result += _get_random_spatial_point(ds, rand)
+        result += (slice(None, None),)
+        result += (slice(None, None),)
+        return result
+
     key = str(actual.name)
     height_dim = get_height_dim_from_parameter_key(key)
-    for dim in dims:
+    result = ()
+    for dim in actual.dims:
         if dim == TIME:
             result += (_get_random_time_slice(actual, rand),)
         elif dim == SOUTH_NORTH:
@@ -55,10 +81,6 @@ def _get_slice_tuple(
         elif dim == WEST_EAST:
             result += (slice(None, None),)
         elif dim == height_dim:
-            result += (slice(None, None),)
-        elif dim == FREQUENCY:
-            result += (slice(None, None),)
-        elif dim == DIRECTION:
             result += (slice(None, None),)
         else:
             raise ValueError(
@@ -100,7 +122,9 @@ def none_larger_than_max_validator(
 
 
 @validation_node(severity=Severity.ERROR)
-def varinterval_validator(actual: xr.DataArray, expected: ParameterConfig) -> List[str]:
+def varinterval_validator(
+    ds: xr.Dataset, actual: xr.DataArray, expected: ParameterConfig
+) -> List[str]:
     """
     Take a bunch of random intervals in
     time, height, south_north, west_east
@@ -109,37 +133,37 @@ def varinterval_validator(actual: xr.DataArray, expected: ParameterConfig) -> Li
     """
     log.info("validating interval for %s", actual.name)
     dims = [str(dim) for dim in actual.dims]
-    accept = get_acceptable_dims_from_parameter_key(str(actual.name))
-
-    result = []
-    if dims not in accept:
+    accepted = get_acceptable_dims_from_parameter_key(str(actual.name))
+    if dims not in accepted:
         return [
             f"Unsupported dimensional layout {dims}. Cannot evaluate interval. Accepted dimensional"
-            f" layouts: {accept}"
+            f" layouts: {accepted}"
         ]
+
+    result = []
     if validation_settings.should_check_min_max_full():
         # Long running operation, so have to explicitly request this in args
         result += none_less_than_min_validator(actual, expected)
         result += none_larger_than_max_validator(actual, expected)
         return result
-    # Seed the randomizer. We want what is called here to be reproducible
     if validation_settings.should_skip_min_max_check():
         return []
-    return _check_randomly_selected_intervals_min_max(actual, expected, dims)
+    return _check_randomly_selected_intervals_min_max(ds, actual, expected)
 
 
 def _check_randomly_selected_intervals_min_max(
-    actual: xr.DataArray, expected: ParameterConfig, dims: List[str]
+    ds: xr.Dataset, actual: xr.DataArray, expected: ParameterConfig
 ):
     rand = random.Random(SEED)
-    result = []
+    log.info("using random seed: %s", SEED)
 
-    slice_tuple = _get_slice_tuple(dims, actual, rand)
+    slice_tuple = _get_slice_tuple(ds, actual, rand)
     vals = actual[slice_tuple]
     vals.load()
+
+    result = []
     result += undermin_validator(actual, expected, slice_tuple, vals)
     result += overmax_validator(actual, expected, slice_tuple, vals)
-
     return result
 
 

@@ -60,7 +60,7 @@ def variable_validator(
         + var_allowed_instruments_validator(
             key, ds, parameter_settings.allowed_instruments
         )
-        + varinterval_validator(var, parameter_settings)
+        + varinterval_validator(ds, var, parameter_settings)
         + sig_dig_validator(var, parameter_settings)
         + var_height_longname_validator(key, ds)
         + var_height_depth_validator(key, ds, parameter_settings.parameter_category)
