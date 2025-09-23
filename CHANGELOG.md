@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.4](https://github.com/equinor/atmos-validation/compare/v2.0.3...v2.0.4) (2025-09-23)
+
+
+### Optimization
+
+* Increase 5d validation performance ([#71](https://github.com/equinor/atmos-validation/issues/71)) ([a19f180](https://github.com/equinor/atmos-validation/commit/a19f180e4a385d7b6ac4bcb9844a91c2c1be4b4a))
+
 ## [2.0.3](https://github.com/equinor/atmos-validation/compare/v2.0.2...v2.0.3) (2025-09-12)
 
 
