@@ -49,6 +49,7 @@ def main():
             print(DOCSTRING)
         else:
             result = validate(sys.argv[2], additional_args=sys.argv[2:])
+            log.info("Validation finished")
             if isinstance(result, ValidationResult):
                 if result.errors:
                     pretty_print_result(
