@@ -6,6 +6,7 @@ TIME = "Time"
 HEIGHT_DIM_PREFIX = "height_"
 FREQUENCY = "frequency"
 DIRECTION = "direction"
+GRID_POINT_MASK = "GRID_POINT_MASK"
 
 
 def get_height_dim_from_parameter_key(key: str) -> str:

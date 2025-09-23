@@ -17,7 +17,7 @@ from .varattrs_validator import (
     var_required_attr_values_validator,
 )
 from .vardims_validator import vardims_validator
-from .varinterval_validator import varinterval_validator
+from .varinterval_validator import SEED, varinterval_validator
 
 
 def load_parameter_config_from_endpoint():
@@ -33,6 +33,8 @@ def load_parameter_config_from_endpoint():
 def variables_validator(ds: xr.Dataset) -> List[str]:
     valids = load_parameter_config_from_endpoint().param_dict
     errors = []
+
+    log.info("using random seed: %s", SEED)
     for key in list(ds.keys()):
         if key not in valids:
             errors += [f"{key} is not a valid key"]
@@ -60,7 +62,7 @@ def variable_validator(
         + var_allowed_instruments_validator(
             key, ds, parameter_settings.allowed_instruments
         )
-        + varinterval_validator(var, parameter_settings)
+        + varinterval_validator(ds, var, parameter_settings)
         + sig_dig_validator(var, parameter_settings)
         + var_height_longname_validator(key, ds)
         + var_height_depth_validator(key, ds, parameter_settings.parameter_category)
