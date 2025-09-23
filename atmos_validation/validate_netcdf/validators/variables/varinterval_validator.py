@@ -152,7 +152,6 @@ def _check_randomly_selected_intervals_min_max(
     ds: xr.Dataset, actual: xr.DataArray, expected: ParameterConfig
 ):
     rand = random.Random(SEED)
-    log.info("using random seed: %s", SEED)
 
     slice_tuple = _get_slice_tuple(ds, actual, rand)
     vals = actual[slice_tuple]
