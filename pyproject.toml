@@ -29,7 +29,6 @@ dev = [
     "coverage>=7.1.0,<8",
     "setuptools>=69.0.3,<70",
     "ruff>=0.5.1,<0.6",
-    "pre-commit>=4.2.0,<5",
 ]
 
 [build-system]
