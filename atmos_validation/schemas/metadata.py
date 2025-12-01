@@ -63,4 +63,4 @@ class MeasurementMetadata(CommonMetadata):
     mooring_name: str
     source_file: str
     total_water_depth: Union[str, float]
-    qc_domain: List[str] = Field(default=[])
+    qc_domain: str = Field(default="")
