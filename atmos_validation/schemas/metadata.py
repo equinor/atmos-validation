@@ -24,7 +24,9 @@ class CommonMetadata(BaseModel):
 
     comments: Union[List[str], str]
     contractor: str
-    classification_level: ClassificationLevel = Field(default="Internal")
+    classification_level: ClassificationLevel = Field(
+        default=ClassificationLevel.INTERNAL
+    )
     data_type: DataType
     data_history: str
     final_reports: List[str]
