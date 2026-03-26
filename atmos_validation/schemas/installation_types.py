@@ -1,15 +1,15 @@
 from typing import List
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 
 from .installation_type import InstallationType
 from .parameter_configs import validate_unique
 
 
-class InstallationTypes(BaseModel, arbitrary_types_allowed=True):
+class InstallationTypes(BaseModel):
     configs: List[InstallationType]
 
-    @validator("configs")
+    @field_validator("configs")
     @classmethod
     def validate_unique_keys(cls, installation_types: List[InstallationType]):
         """All instrument_types in a config should be unique"""

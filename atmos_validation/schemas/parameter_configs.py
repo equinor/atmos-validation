@@ -1,14 +1,14 @@
 from typing import Any, List
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 
 from .parameter_config import ParameterConfig
 
 
-class ParameterConfigs(BaseModel, arbitrary_types_allowed=True):
+class ParameterConfigs(BaseModel):
     configs: List[ParameterConfig]
 
-    @validator("configs")
+    @field_validator("configs")
     @classmethod
     def validate_unique_keys(cls, parameters: List[ParameterConfig]):
         """All keys in a config should be unique"""

@@ -1,7 +1,7 @@
 import uuid
 from typing import Any, Dict, List, Literal, Tuple, Union
 
-from pydantic import BaseModel, Extra, Field, validator
+from pydantic import BaseModel, Field, ValidationInfo, field_validator
 
 from .dim_constants import get_acceptable_dims_from_parameter_key
 
@@ -27,7 +27,7 @@ class QCTest(BaseModel):
     description: str = Field(default="")
 
 
-class ParameterConfig(BaseModel, arbitrary_types_allowed=True, extra=Extra.allow):
+class ParameterConfig(BaseModel, extra="allow"):
     key: str
     parameter_category: str
     parameter_type: str
@@ -43,10 +43,10 @@ class ParameterConfig(BaseModel, arbitrary_types_allowed=True, extra=Extra.allow
     dims: List[str]
     qc_tests: Dict[str, QCTest] = Field(default_factory=dict)
 
-    @validator("dims")
+    @field_validator("dims")
     @classmethod
-    def validate_dims(cls, dims: List[str], values: Dict[str, Any]):
-        key = values["key"]
+    def validate_dims(cls, dims: List[str], info: ValidationInfo):
+        key = info.data["key"]
         accept = get_acceptable_dims_from_parameter_key(key)
         for accepted_dims in accept:
             if accepted_dims == dims:

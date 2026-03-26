@@ -17,8 +17,10 @@ class UnprotectedNamespaceModel(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class CommonMetadata(BaseModel, use_enum_values=True):
+class CommonMetadata(BaseModel):
     """Common required attributes for all data types"""
+
+    model_config = ConfigDict(use_enum_values=True)
 
     comments: Union[List[str], str]
     contractor: str

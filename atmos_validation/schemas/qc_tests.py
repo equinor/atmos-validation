@@ -1,16 +1,16 @@
 from typing import List
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 
 from atmos_validation.schemas.parameter_configs import validate_unique
 
 from .parameter_config import QCTest
 
 
-class QCTests(BaseModel, arbitrary_types_allowed=True):
+class QCTests(BaseModel):
     configs: List[QCTest]
 
-    @validator("configs")
+    @field_validator("configs")
     @classmethod
     def validate_unique_keys(cls, qc_tests: List[QCTest]):
         """All qc_tests in a config should be unique"""
