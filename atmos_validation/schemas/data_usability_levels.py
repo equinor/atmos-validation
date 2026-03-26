@@ -1,15 +1,15 @@
 from typing import List
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 
 from .data_usability_level import DataUsabilityLevel
 from .parameter_configs import validate_unique
 
 
-class DataUsabilityLevels(BaseModel, arbitrary_types_allowed=True):
+class DataUsabilityLevels(BaseModel):
     configs: List[DataUsabilityLevel]
 
-    @validator("configs")
+    @field_validator("configs")
     @classmethod
     def validate_unique_keys(cls, usability_levels: List[DataUsabilityLevel]):
         """All instrument_types in a config should be unique"""

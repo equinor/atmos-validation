@@ -96,14 +96,18 @@ General instruction: When information is not available "NA" shall be used in pla
 The required common attributes can be seen underneath,
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L20-L30
+# ../atmos_validation/schemas/metadata.py#L20-L34
 
-class CommonMetadata(BaseModel, use_enum_values=True):
+class CommonMetadata(BaseModel):
     """Common required attributes for all data types"""
+
+    model_config = ConfigDict(use_enum_values=True)
 
     comments: Union[List[str], str]
     contractor: str
-    classification_level: ClassificationLevel = Field(default="Internal")
+    classification_level: ClassificationLevel = Field(
+        default=ClassificationLevel.INTERNAL
+    )
     data_type: DataType
     data_history: str
     final_reports: List[str]
@@ -156,7 +160,8 @@ class ClassificationLevel(OrderedEnum):
 Single point hindcast and hindcast both use the hindcast metadata schema.
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L33-L49
+# ../atmos_validation/schemas/metadata.py#L36-L53
+
 
 class HindcastMetadata(CommonMetadata, UnprotectedNamespaceModel):
     """Extra global attributes required if data_type == "Hindcast" or data_type == "SinglePointHindcast"."""
@@ -206,7 +211,7 @@ class HindcastMetadata(CommonMetadata, UnprotectedNamespaceModel):
 ### 3.3 Measurement
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L52-L65
+# ../atmos_validation/schemas/metadata.py#L56-L69
 
 class MeasurementMetadata(CommonMetadata):
     """Extra global attributes if data_type == "Measurement"."""

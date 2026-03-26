@@ -35,7 +35,7 @@ def variables_validator(ds: xr.Dataset) -> List[str]:
     errors = []
 
     log.info("using random seed: %s", SEED)
-    for key in list(ds.keys()):
+    for key in [str(k) for k in ds.keys()]:
         if key not in valids:
             errors += [f"{key} is not a valid key"]
         else:
