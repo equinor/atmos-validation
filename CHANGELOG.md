@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.5](https://github.com/equinor/atmos-validation/compare/v2.0.4...v2.0.5) (2026-03-27)
+
+
+### Other
+
+* Add support for Python3.14 ([#76](https://github.com/equinor/atmos-validation/issues/76)) ([bfbc377](https://github.com/equinor/atmos-validation/commit/bfbc3776d8ee593355220e19bcbe33d49839680a))
+* **deps-dev:** bump setuptools from 69.5.1 to 78.1.1 in the uv group across 1 directory ([#77](https://github.com/equinor/atmos-validation/issues/77)) ([411cda7](https://github.com/equinor/atmos-validation/commit/411cda7e78faa2a963b616bfcc42751bc207f66b))
+* relax upper limit for xarray and dask ([#79](https://github.com/equinor/atmos-validation/issues/79)) ([c64473c](https://github.com/equinor/atmos-validation/commit/c64473cdf8eeb48fae568bfb9b76551b586d457d))
+* remove trufflehog pre-commit scan and GH action ([#73](https://github.com/equinor/atmos-validation/issues/73)) ([10fd85f](https://github.com/equinor/atmos-validation/commit/10fd85f06b80680184563d9e8d56adda3af85a4a))
+
 ## [2.0.4](https://github.com/equinor/atmos-validation/compare/v2.0.3...v2.0.4) (2025-09-23)
 
 
