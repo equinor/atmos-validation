@@ -43,6 +43,15 @@ class ParameterConfig(BaseModel, extra="allow"):
     dims: List[str]
     qc_tests: Dict[str, QCTest] = Field(default_factory=dict)
 
+    @field_validator("key")
+    @classmethod
+    def validate_key(cls, key: str) -> str:
+        """key should not be empty or contain unnecessary white space"""
+
+        if not key.strip():
+            raise ValueError("key should not be empty or contain only white space")
+        return key.strip()
+
     @field_validator("dims")
     @classmethod
     def validate_dims(cls, dims: List[str], info: ValidationInfo):
