@@ -24,7 +24,7 @@ Changelog = "https://github.com/equinor/atmos-validation/blob/main/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
-    "pytest>=7.1.3,<8",
+    "pytest>=7.1.3,<10",
     "pyright>=1.1.291,<2",
     "coverage>=7.1.0,<8",
     "setuptools>=69.0.3,<79",
