@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.6](https://github.com/equinor/atmos-validation/compare/v2.0.5...v2.0.6) (2026-04-15)
+
+
+### Bug Fixes
+
+* add validator to key fields on config types ([#81](https://github.com/equinor/atmos-validation/issues/81)) ([a5f3978](https://github.com/equinor/atmos-validation/commit/a5f397819899eb27b548fcfc7fda5043a467d6cf))
+
+
+### Other
+
+* **deps-dev:** bump pytest from 7.4.4 to 9.0.3 in the uv group across 1 directory ([#82](https://github.com/equinor/atmos-validation/issues/82)) ([6816641](https://github.com/equinor/atmos-validation/commit/681664146715f54b172fe4fed0d521f76254ea2b))
+
 ## [2.0.5](https://github.com/equinor/atmos-validation/compare/v2.0.4...v2.0.5) (2026-03-27)
 
 
