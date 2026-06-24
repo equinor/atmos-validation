@@ -46,7 +46,14 @@ def _get_random_spatial_point(
 ) -> tuple[slice, slice]:
     """To save processing time we check 1x1 random spatial point where GRID_POINT_MASK == 1"""
     if GRID_POINT_MASK not in ds:
-        ds.assign({GRID_POINT_MASK: xr.DataArray(1, dims=(SOUTH_NORTH, WEST_EAST))})
+        ds = ds.assign(
+            {
+                GRID_POINT_MASK: xr.DataArray(
+                    np.ones((ds.sizes[SOUTH_NORTH], ds.sizes[WEST_EAST])),
+                    dims=(SOUTH_NORTH, WEST_EAST),
+                )
+            }
+        )
 
     mask = ds[GRID_POINT_MASK].values
     valids = np.where(mask == 1)
