@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.7](https://github.com/equinor/atmos-validation/compare/v2.0.6...v2.0.7) (2026-06-25)
+
+
+### Bug Fixes
+
+* initialize GRID_POINT_MASK with proper dimensions ([#88](https://github.com/equinor/atmos-validation/issues/88)) ([d9fd99f](https://github.com/equinor/atmos-validation/commit/d9fd99fbef85d6d4b5114fdd2b8958e6aa41da2a)), closes [#87](https://github.com/equinor/atmos-validation/issues/87)
+
+
+### Other
+
+* **deps:** bump idna from 3.11 to 3.15 in the uv group across 1 directory ([#86](https://github.com/equinor/atmos-validation/issues/86)) ([8e07633](https://github.com/equinor/atmos-validation/commit/8e07633dd853c73277c2026a2847f5c933d369d1))
+* **deps:** bump urllib3 from 2.6.3 to 2.7.0 in the uv group across 1 directory ([#84](https://github.com/equinor/atmos-validation/issues/84)) ([76543cf](https://github.com/equinor/atmos-validation/commit/76543cfc776b60781444e1536f09efdebf3d49c1))
+
 ## [2.0.6](https://github.com/equinor/atmos-validation/compare/v2.0.5...v2.0.6) (2026-04-15)
 
 
