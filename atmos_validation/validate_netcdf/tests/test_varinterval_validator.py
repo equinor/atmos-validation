@@ -1,7 +1,10 @@
+import random
+
 import xarray as xr
 
 from ..validators.variables.varinterval_validator import (
     _check_randomly_selected_intervals_min_max,  # type: ignore
+    _get_random_spatial_point,  # type: ignore
     none_larger_than_max_validator,
     none_less_than_min_validator,
 )
@@ -49,3 +52,15 @@ def test_under_min_interval():
         errors = _check_randomly_selected_intervals_min_max(ds, data_array, test_config)  # type: ignore
         assert len(errors) == 1
         assert "undermin" in errors[0]
+
+
+def test_random_spatial_point_without_grid_point_mask():
+    with xr.open_mfdataset("examples/hindcast_example/*.nc") as ds:
+        assert "GRID_POINT_MASK" not in ds
+
+        sn_slice, we_slice = _get_random_spatial_point(ds, random.Random(0))  # type: ignore
+
+        assert 0 <= sn_slice.start < ds.sizes["south_north"]
+        assert sn_slice.stop == sn_slice.start + 1
+        assert 0 <= we_slice.start < ds.sizes["west_east"]
+        assert we_slice.stop == we_slice.start + 1
