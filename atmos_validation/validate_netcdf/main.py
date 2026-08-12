@@ -139,8 +139,6 @@ def open_mf_dataset(paths: List[str]) -> xr.Dataset:
                 concat_dim="Time",
                 compat="equals",
                 data_vars="minimal",
-                # xarray stub types `coords` as sentinel-only; the literal is valid at runtime
-                coords="minimal",  # pyright: ignore[reportArgumentType]
                 combine="nested",
                 combine_attrs="override",
                 chunks="auto",
