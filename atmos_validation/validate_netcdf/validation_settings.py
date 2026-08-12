@@ -4,7 +4,8 @@ If this ever becomes an issue, an easy refactor would be to make the settings a 
 The other option would be to pass the settings down the entire tree of validators.
 """
 
-from typing import List
+from contextvars import ContextVar
+from typing import FrozenSet, List
 
 CHECK_MIN_MAX_FULL: str = "--check-min-max-full"
 SKIP_MIN_MAX_CHECK: str = "--skip-random-min-max-check"
@@ -12,21 +13,24 @@ SKIP_WARNINGS: str = "--skip-warnings"
 URL_TO_PARAMETERS: str = "https://atmos.app.radix.equinor.com/config/parameters"
 URL_TO_INST_TYPES: str = "https://atmos.app.radix.equinor.com/config/installation-types"
 URL_TO_DATA_USABILITY: str = "https://atmos.app.radix.equinor.com/config/data-usability"
-SETTINGS = set()
+
+# Per-call, thread/async-isolated so options never leak between validate() calls.
+_active_settings: ContextVar[FrozenSet[str]] = ContextVar(
+    "validation_settings", default=frozenset()
+)
 
 
-def apply_settings(optional_args: List[str]):
-    for arg in optional_args:
-        SETTINGS.add(arg)
+def apply_settings(optional_args: List[str]) -> None:
+    _active_settings.set(frozenset(optional_args))
 
 
 def should_skip_min_max_check() -> bool:
-    return SKIP_MIN_MAX_CHECK in SETTINGS
+    return SKIP_MIN_MAX_CHECK in _active_settings.get()
 
 
 def should_check_min_max_full() -> bool:
-    return CHECK_MIN_MAX_FULL in SETTINGS
+    return CHECK_MIN_MAX_FULL in _active_settings.get()
 
 
 def should_skip_warnings() -> bool:
-    return SKIP_WARNINGS in SETTINGS
+    return SKIP_WARNINGS in _active_settings.get()

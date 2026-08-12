@@ -56,8 +56,13 @@ def test_skip_warnings():
         path="examples/hindcast_example",
         additional_args=[validation_settings.SKIP_WARNINGS],
     )
-    # cleanup
-    validation_settings.SETTINGS.remove(validation_settings.SKIP_WARNINGS)
+
+
+def test_settings_do_not_leak_between_calls():
+    validation_settings.apply_settings([validation_settings.SKIP_WARNINGS])
+    assert validation_settings.should_skip_warnings()
+    validation_settings.apply_settings([])
+    assert not validation_settings.should_skip_warnings()
 
 
 def test_conflicting_coordinates_across_files(tmp_path):
