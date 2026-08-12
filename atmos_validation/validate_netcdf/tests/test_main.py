@@ -1,6 +1,8 @@
 import os
 from unittest.mock import MagicMock
 
+import xarray as xr
+
 from atmos_validation.validate_netcdf import validation_settings
 
 from ..main import validate
@@ -10,6 +12,8 @@ from ..validators.root_validator import ValidationResult
 PATH_TO_DUMMY_DATASET = os.path.relpath(
     os.path.join(os.curdir, "api", "dev_storage", "dummy_data")
 )
+
+HINDCAST_EXAMPLE_DIR = "examples/hindcast_example"
 
 
 def test_validate():
@@ -54,3 +58,21 @@ def test_skip_warnings():
     )
     # cleanup
     validation_settings.SETTINGS.remove(validation_settings.SKIP_WARNINGS)
+
+
+def test_conflicting_coordinates_across_files(tmp_path):
+    """A shifted (but same-shape) grid in one file must be reported, not
+    silently discarded in favour of the first file's coordinates."""
+    files = sorted(f for f in os.listdir(HINDCAST_EXAMPLE_DIR) if f.endswith(".nc"))
+    for i, filename in enumerate(files):
+        ds = xr.open_dataset(
+            os.path.join(HINDCAST_EXAMPLE_DIR, filename), engine="h5netcdf"
+        ).load()
+        if i == 1:
+            ds["LON"] = ds["LON"] + 0.5
+        ds.to_netcdf(tmp_path / filename, engine="h5netcdf")
+        ds.close()
+
+    result = validate(str(tmp_path))
+
+    assert any("Conflicting static coordinates" in error for error in result.errors)
