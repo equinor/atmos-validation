@@ -4,11 +4,36 @@ from enum import Enum
 from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple, TypeVar
 
 import pandas as pd
+import requests
 import xarray as xr
 
 from atmos_validation.validate_netcdf import validation_settings
 
 from .validation_logger import log
+
+CONFIG_REQUEST_TIMEOUT_SECONDS = 10
+MAX_CONFIG_RESPONSE_BYTES = 10 * 1024 * 1024  # 10 MB
+
+
+class ConfigDownloadError(Exception):
+    """Raised when a configuration endpoint cannot be downloaded safely."""
+
+
+def fetch_config_bytes(url: str) -> bytes:
+    """Download config JSON with a request timeout and a bounded response size."""
+    with requests.get(
+        url, timeout=CONFIG_REQUEST_TIMEOUT_SECONDS, stream=True
+    ) as response:
+        response.raise_for_status()
+        content = b""
+        for chunk in response.iter_content(chunk_size=65536):
+            content += chunk
+            if len(content) > MAX_CONFIG_RESPONSE_BYTES:
+                raise ConfigDownloadError(
+                    f"Config response from {url} exceeded "
+                    f"{MAX_CONFIG_RESPONSE_BYTES} bytes"
+                )
+        return content
 
 
 class Severity(str, Enum):
