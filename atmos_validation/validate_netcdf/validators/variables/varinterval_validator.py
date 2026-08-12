@@ -22,22 +22,22 @@ from ...validation_logger import log
 SEED = random.randrange(sys.maxsize)
 
 
+def _compression_noise_tolerance(number_of_significant_decimals: int) -> float:
+    """Half a unit in the last significant decimal, bounding lossy-compression jitter."""
+    return 0.5 * 10 ** (-number_of_significant_decimals)
+
+
 def _get_random_time_slice(actual: xr.DataArray, rand: random.Random) -> slice:
     """To save processing time we only check 5000 timestamps random samples"""
     len_time = len(actual.Time)
     sample_size = 5000
     if len_time > sample_size * 2:
         start = rand.randint(0, len_time - sample_size - 1)
-        time_slice = slice(
-            start,
-            start + sample_size,
-        )
+        time_slice = slice(start, start + sample_size)
     else:
-        start = rand.randint(0, len_time // 2)
-        time_slice = slice(
-            start,
-            start + len_time // 2,
-        )
+        sample_len = max(1, len_time // 2)
+        start = rand.randint(0, len_time - sample_len)
+        time_slice = slice(start, start + sample_len)
     return time_slice
 
 
@@ -99,13 +99,13 @@ def none_less_than_min_validator(
 ) -> List[str]:
     if expected.min == "NA":
         return []
-    smallest = round(
-        float(actual.min().load()), expected.number_of_significant_decimals
-    )
-    if smallest < expected.min:
+    smallest = float(actual.min().load())
+    tolerance = _compression_noise_tolerance(expected.number_of_significant_decimals)
+    if smallest < expected.min - tolerance:
         return [
             f"{actual.name} has a value lower than configured minimum: configured min:"
-            f" {expected.min}. Actual min: {smallest}"
+            f" {expected.min}. Actual min:"
+            f" {round(smallest, expected.number_of_significant_decimals)}"
         ]
     return []
 
@@ -116,11 +116,13 @@ def none_larger_than_max_validator(
 ) -> List[str]:
     if expected.max == "NA":
         return []
-    largest = round(float(actual.max().load()), expected.number_of_significant_decimals)
-    if largest > expected.max:
+    largest = float(actual.max().load())
+    tolerance = _compression_noise_tolerance(expected.number_of_significant_decimals)
+    if largest > expected.max + tolerance:
         return [
             f"{actual.name} has a value higher than configured maximum: configured max:"
-            f" {expected.max}. Actual max: {largest}"
+            f" {expected.max}. Actual max:"
+            f" {round(largest, expected.number_of_significant_decimals)}"
         ]
     return []
 
@@ -179,15 +181,16 @@ def undermin_validator(
 ) -> List[str]:
     """Check if any of the values in vals:DataArray retrieved
     from actual:DataArray are below minimum expected"""
-    smallest = None
     if not isinstance(expected.min, str):
-        smallest = round(
-            float(vals.min().values), expected.number_of_significant_decimals
+        smallest = float(vals.min().values)
+        tolerance = _compression_noise_tolerance(
+            expected.number_of_significant_decimals
         )
-        if smallest < expected.min:
+        if smallest < expected.min - tolerance:
             return [
                 f"some values of {actual.name} were less than configured min {expected.min} for the"
-                f" subcube {slice_tuple}. Minimum value was {smallest}"
+                f" subcube {slice_tuple}. Minimum value was"
+                f" {round(smallest, expected.number_of_significant_decimals)}"
             ]
     return []
 
@@ -201,14 +204,15 @@ def overmax_validator(
 ) -> List[str]:
     """Check if any of the values in vals:DataArray retrieved
     from actual:DataArray are below minimum expected"""
-    largest = None
     if not isinstance(expected.max, str):
-        largest = round(
-            float(vals.max().values), expected.number_of_significant_decimals
+        largest = float(vals.max().values)
+        tolerance = _compression_noise_tolerance(
+            expected.number_of_significant_decimals
         )
-        if largest > expected.max:
+        if largest > expected.max + tolerance:
             return [
                 f"some values of {actual.name} were higher than configured max {expected.max} for the"
-                f" subcube {slice_tuple}. Maximum value was {float(largest)}"
+                f" subcube {slice_tuple}. Maximum value was"
+                f" {round(largest, expected.number_of_significant_decimals)}"
             ]
     return []

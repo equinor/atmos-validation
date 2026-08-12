@@ -16,12 +16,8 @@ def test_minimum_rounds_off_compression_noise():
         test_config.min = 856.55  # dummy "expected" min
         test_config.max = 1143.65  # dummy "expected" max
         test_config.number_of_significant_decimals = 2
-        ds["P"][  # pylint: disable=unsupported-assignment-operation
-            0, 0, 0, 1
-        ] = 856.5485
-        ds["P"][  # pylint: disable=unsupported-assignment-operation
-            0, 0, 0, 0
-        ] = 1143.6545
+        ds["P"][0, 0, 0, 1] = 856.5485
+        ds["P"][0, 0, 0, 0] = 1143.6545
         data_array = ds["P"]
 
         errors = none_less_than_min_validator(data_array, test_config)
@@ -34,10 +30,10 @@ def test_over_max_interval():
     with xr.open_mfdataset("examples/hindcast_example/*.nc") as ds:
         test_config.min = -99999  # dummy "expected" max
         test_config.max = 1
-        ds["P"][:, 1, 0, 4] = 2  # pylint: disable=unsupported-assignment-operation
+        ds["P"][:, 1, 0, 4] = 2
         data_array = ds["P"]
 
-        errors = _check_randomly_selected_intervals_min_max(ds, data_array, test_config)  # type: ignore
+        errors = _check_randomly_selected_intervals_min_max(ds, data_array, test_config)
         assert len(errors) == 1
         assert "overmax" in errors[0]
 
@@ -46,10 +42,10 @@ def test_under_min_interval():
     with xr.open_mfdataset("examples/hindcast_example/*.nc") as ds:
         test_config.min = 0  # dummy "expected" max
         test_config.max = 9999999
-        ds["P"][:, 2, 3, 2] = -1  # pylint: disable=unsupported-assignment-operation
+        ds["P"][:, 2, 3, 2] = -1
         data_array = ds["P"]
 
-        errors = _check_randomly_selected_intervals_min_max(ds, data_array, test_config)  # type: ignore
+        errors = _check_randomly_selected_intervals_min_max(ds, data_array, test_config)
         assert len(errors) == 1
         assert "undermin" in errors[0]
 
@@ -58,7 +54,7 @@ def test_random_spatial_point_without_grid_point_mask():
     with xr.open_mfdataset("examples/hindcast_example/*.nc") as ds:
         assert "GRID_POINT_MASK" not in ds
 
-        sn_slice, we_slice = _get_random_spatial_point(ds, random.Random(0))  # type: ignore
+        sn_slice, we_slice = _get_random_spatial_point(ds, random.Random(0))
 
         assert 0 <= sn_slice.start < ds.sizes["south_north"]
         assert sn_slice.stop == sn_slice.start + 1
