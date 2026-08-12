@@ -25,7 +25,7 @@ SEED = random.randrange(sys.maxsize)
 def _get_random_time_slice(actual: xr.DataArray, rand: random.Random) -> slice:
     """To save processing time we only check 5000 timestamps random samples"""
     len_time = len(actual.Time)
-    sample_size = 5000 // validation_settings.NO_OF_BATCHES
+    sample_size = 5000
     if len_time > sample_size * 2:
         start = rand.randint(0, len_time - sample_size - 1)
         time_slice = slice(
