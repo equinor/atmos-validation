@@ -17,14 +17,11 @@ class Severity(str, Enum):
 
 
 def get_file_paths_in_folder(folder_path: str, filetype: str = ".nc") -> List[str]:
-    paths = []
-    for _, _, filenames in os.walk(folder_path):
-        for filename in filenames:
-            if filename.endswith(filetype):
-                filepath = os.path.join(folder_path, filename)
-                paths.append(filepath)
-        break
-    return paths
+    return sorted(
+        os.path.join(folder_path, name)
+        for name in os.listdir(folder_path)
+        if name.endswith(filetype)
+    )
 
 
 def validation_node(

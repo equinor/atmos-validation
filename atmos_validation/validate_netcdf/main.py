@@ -37,7 +37,6 @@ Options:
     \t\t\t\t\t Can be extremely slow for large datasets. Default behaviour is taking random samples.
     --{validation_settings.SKIP_MIN_MAX_CHECK} \t Skip random sample check for min/max values.
     --{validation_settings.SKIP_WARNINGS} \t\t\t Skip all checks that would only output a "WARNING".
-    --{validation_settings.BATCH_SIZE} \t\t\t Set the amount of .nc files per batch to validate. Defaults to 1000.
 """
 
 
@@ -72,7 +71,6 @@ def validate(
     path: str,
     injected_logger: Optional[logging.Logger] = None,
     additional_args: Optional[List[str]] = None,
-    batch_size: Optional[int] = None,
 ) -> ValidationResult:
     """
     Execute validation on a directory or file.
@@ -83,8 +81,6 @@ def validate(
         than the ones included in the set under validation
         injected_logger: pass a logger to be used for validation
         additional_args: see docstring "Options" for available additional_args.
-        batch_size: Since open_mfdataset is slow for opening large amount of files,
-        validation can be run in batches. Defaults to 1000 files per open_mfdataset/batch.
 
     Returns:
         ValidationResult containing errors and warning from running validation
@@ -92,14 +88,11 @@ def validate(
     log.create_or_update_logger(injected_logger)
     if additional_args:
         validation_settings.apply_settings(additional_args)
-    if batch_size:
-        validation_settings.set_batch_size(override=batch_size)
 
     try:
         log.info("load dataset from path %s", path)
-        batches = load_paths(path, batch_size=validation_settings.get_batch_size())
-        validation_settings.NO_OF_BATCHES = len(batches)
-        if not batches:
+        paths = load_paths(path)
+        if not paths:
             raise OSError("No NetCDF files in dir")
     except Exception as err:
         return ValidationResult(
@@ -109,18 +102,12 @@ def validate(
 
     ds = None
     try:
-        warnings = []
-        for i, batch in enumerate(batches):
-            print(f"validating batch: {i+1} of {len(batches)}")
-            ds = open_mf_dataset(batch)
-            batch_result = root_validator(ds, batch)
-            warnings += batch_result.warnings
-            if batch_result.errors:  # early exit if error occurs in batch
-                return ValidationResult(
-                    warnings=list(set(warnings)),
-                    errors=batch_result.errors,
-                )
-        return ValidationResult(warnings=list(set(warnings)), errors=[])
+        ds = open_mf_dataset(paths)
+        result = root_validator(ds, paths)
+        return ValidationResult(
+            warnings=list(set(result.warnings)),
+            errors=result.errors,
+        )
     except Exception as err:
         return ValidationResult(errors=[repr(err)], warnings=[])
     finally:
@@ -128,7 +115,7 @@ def validate(
             ds.close()
 
 
-def load_paths(path: str, batch_size: int) -> List[List[str]]:
+def load_paths(path: str) -> List[str]:
     """
     Parameters
     ----------
@@ -137,14 +124,8 @@ def load_paths(path: str, batch_size: int) -> List[List[str]]:
     than the ones included in the set under validation
     """
     if path.endswith(".nc"):
-        paths = [path]
-    else:
-        paths = get_file_paths_in_folder(path)
-    batches = []
-    for i in range(0, len(paths), batch_size):
-        batch = paths[i : i + batch_size]
-        batches.append(batch)
-    return batches
+        return [path]
+    return get_file_paths_in_folder(path)
 
 
 def open_mf_dataset(paths: List[str]) -> xr.Dataset:
