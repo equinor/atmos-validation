@@ -15,6 +15,8 @@ CHECK_MIN_MAX_FULL: str = "--check-min-max-full"
 SKIP_MIN_MAX_CHECK: str = "--skip-random-min-max-check"
 SKIP_WARNINGS: str = "--skip-warnings"
 RANDOM_SEED: str = "--random-seed"
+SAMPLE_SIZE: str = "--sample-size"
+DEFAULT_SAMPLE_SIZE: int = 5000
 URL_TO_PARAMETERS: str = "https://atmos.app.radix.equinor.com/config/parameters"
 URL_TO_INST_TYPES: str = "https://atmos.app.radix.equinor.com/config/installation-types"
 URL_TO_DATA_USABILITY: str = "https://atmos.app.radix.equinor.com/config/data-usability"
@@ -24,11 +26,15 @@ _active_settings: ContextVar[FrozenSet[str]] = ContextVar(
     "validation_settings", default=frozenset()
 )
 _random_seed: ContextVar[Optional[int]] = ContextVar("random_seed", default=None)
+_sample_size: ContextVar[int] = ContextVar(
+    "sample_size", default=DEFAULT_SAMPLE_SIZE
+)
 
 
 def apply_settings(optional_args: List[str]) -> None:
     _active_settings.set(frozenset(optional_args))
     _random_seed.set(_parse_random_seed(optional_args))
+    _sample_size.set(_parse_sample_size(optional_args))
 
 
 def _parse_random_seed(optional_args: List[str]) -> int:
@@ -48,6 +54,21 @@ def _parse_random_seed(optional_args: List[str]) -> int:
 
 def get_random_seed() -> Optional[int]:
     return _random_seed.get()
+
+
+def _parse_sample_size(optional_args: List[str]) -> int:
+    for i, arg in enumerate(optional_args):
+        if arg == SAMPLE_SIZE:
+            if i + 1 >= len(optional_args):
+                raise ValueError(f"{SAMPLE_SIZE} requires an integer value")
+            return int(optional_args[i + 1])
+        if arg.startswith(f"{SAMPLE_SIZE}="):
+            return int(arg.split("=", 1)[1])
+    return DEFAULT_SAMPLE_SIZE
+
+
+def get_sample_size() -> int:
+    return _sample_size.get()
 
 
 def should_skip_min_max_check() -> bool:

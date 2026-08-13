@@ -44,6 +44,7 @@ Options:
     --{validation_settings.SKIP_MIN_MAX_CHECK} \t Skip random sample check for min/max values.
     --{validation_settings.SKIP_WARNINGS} \t\t\t Skip all checks that would only output a "WARNING".
     --{validation_settings.RANDOM_SEED} <int> \t Fix the random seed so sampled checks are reproducible.
+    --{validation_settings.SAMPLE_SIZE} <int> \t Number of timestamps to sample per variable (default {validation_settings.DEFAULT_SAMPLE_SIZE}).
 """
 
 
