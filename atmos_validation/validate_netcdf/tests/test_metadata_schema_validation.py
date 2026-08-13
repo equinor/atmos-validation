@@ -57,3 +57,34 @@ def test_missing_country_reported_on_measurement():
         errors = metadata_schema_validator(ds)
         assert len(errors) == 1
         assert "country" in errors[0]
+
+
+def test_blank_string_attribute_reported():
+    with xr.open_dataset("examples/example_netcdf_measurement.nc") as ds:
+        ds.attrs["contractor"] = ""
+        errors = metadata_schema_validator(ds)
+        assert len(errors) == 1
+        assert "contractor" in errors[0]
+
+
+def test_whitespace_only_string_attribute_reported():
+    with xr.open_dataset("examples/example_netcdf_measurement.nc") as ds:
+        ds.attrs["project_name"] = "   "
+        errors = metadata_schema_validator(ds)
+        assert len(errors) == 1
+        assert "project_name" in errors[0]
+
+
+def test_na_sentinel_allowed_for_country():
+    with xr.open_dataset("examples/example_netcdf_measurement.nc") as ds:
+        ds.attrs["country"] = "NA"
+        errors = metadata_schema_validator(ds)
+        assert errors == []
+
+
+def test_blank_union_string_field_reported():
+    with xr.open_dataset("examples/example_netcdf_measurement.nc") as ds:
+        ds.attrs["location"] = "   "
+        errors = metadata_schema_validator(ds)
+        assert len(errors) == 1
+        assert "location" in errors[0]
