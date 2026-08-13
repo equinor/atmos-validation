@@ -20,6 +20,10 @@ from typing import List, Optional
 import xarray as xr
 
 from . import validation_settings
+from .external_reference_guard import (
+    ExternalReferenceError,
+    assert_no_external_references,
+)
 from .utils import get_file_paths_in_folder
 from .validation_logger import log
 from .validators.root_validator import ValidationResult, root_validator
@@ -102,12 +106,15 @@ def validate(
 
     ds = None
     try:
+        assert_no_external_references(paths)
         ds = open_mf_dataset(paths)
         result = root_validator(ds, paths)
         return ValidationResult(
             warnings=list(set(result.warnings)),
             errors=result.errors,
         )
+    except ExternalReferenceError as err:
+        return ValidationResult(errors=[f"file:{err}"], warnings=[])
     except Exception as err:
         return ValidationResult(errors=[repr(err)], warnings=[])
     finally:
