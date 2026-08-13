@@ -5,6 +5,7 @@ import xarray as xr
 from ...utils import Severity, validation_node
 from .dimvars_validator import dimvars_validator
 from .spatial_validators import (
+    coordinate_values_validator,
     lat_lon_validator,
     south_north_validator,
     west_east_validator,
@@ -20,4 +21,5 @@ def dims_validator(ds: xr.Dataset, paths: List[str]) -> List[str]:
         + south_north_validator(ds)
         + west_east_validator(ds)
         + lat_lon_validator(ds)
+        + coordinate_values_validator(ds)
     )
