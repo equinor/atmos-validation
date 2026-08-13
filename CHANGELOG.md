@@ -1,5 +1,32 @@
 # Changelog
 
+## [2.0.8](https://github.com/equinor/atmos-validation/compare/v2.0.7...v2.0.8) (2026-08-13)
+
+
+### Bug Fixes
+
+* **validate-netcdf:** catch conflicting static coordinates across files ([#92](https://github.com/equinor/atmos-validation/issues/92)) ([23df40a](https://github.com/equinor/atmos-validation/commit/23df40a38126b985af1f0b36729369d950169f1c))
+* **validate-netcdf:** exit non-zero when validate-netcdf fails ([#90](https://github.com/equinor/atmos-validation/issues/90)) ([1151bc3](https://github.com/equinor/atmos-validation/commit/1151bc3430415497e8627ac6a07ed05c3cab1608))
+* **validate-netcdf:** Harden config downloads and remove configurable URL ([#97](https://github.com/equinor/atmos-validation/issues/97)) ([3fb5d91](https://github.com/equinor/atmos-validation/commit/3fb5d91c38a78d53a5ab135f3a8d0aa25392c5f0))
+* **validate-netcdf:** isolate settings per call with ContextVar ([#98](https://github.com/equinor/atmos-validation/issues/98)) ([3a66a78](https://github.com/equinor/atmos-validation/commit/3a66a782407a5251c88d326be623ec49ca8ec5ca))
+* **validate-netcdf:** reject blank global string attributes ([#101](https://github.com/equinor/atmos-validation/issues/101)) ([acaea56](https://github.com/equinor/atmos-validation/commit/acaea562298d8618fa57debc3fec2bdc29316855))
+* **validate-netcdf:** Reject files referencing external HDF5 storage ([#96](https://github.com/equinor/atmos-validation/issues/96)) ([4130307](https://github.com/equinor/atmos-validation/commit/41303076d464c1405688b1e37f675d95439dcedf))
+* **validate-netcdf:** Remove range-validation false negatives ([#94](https://github.com/equinor/atmos-validation/issues/94)) ([cfc5f7f](https://github.com/equinor/atmos-validation/commit/cfc5f7fde366e3a36a36bbcf38fd8154ff28e27a))
+* **validate-netcdf:** validate all local files as one sorted dataset ([#91](https://github.com/equinor/atmos-validation/issues/91)) ([752fc11](https://github.com/equinor/atmos-validation/commit/752fc11bb414c23966660e5599e09353befeee07))
+* **validate-netcdf:** validate coordinate value ranges ([#103](https://github.com/equinor/atmos-validation/issues/103)) ([125883b](https://github.com/equinor/atmos-validation/commit/125883b92902a9ddc99f27fc4d239f843c672132))
+* **validate-netcdf:** validate global attributes against pydantic schema ([#100](https://github.com/equinor/atmos-validation/issues/100)) ([1287cb0](https://github.com/equinor/atmos-validation/commit/1287cb02308376c433d7a00ff22e261032bf8452))
+
+
+### Other
+
+* drop Python 3.10 support ([#93](https://github.com/equinor/atmos-validation/issues/93)) ([1083f44](https://github.com/equinor/atmos-validation/commit/1083f4481364524ae5e6e62f7af77e12ea201b01))
+* remove recommended extensions from VSCode configuration ([#89](https://github.com/equinor/atmos-validation/issues/89)) ([91c7cce](https://github.com/equinor/atmos-validation/commit/91c7cce18c86603157b1a9a19f79767fcc839620))
+
+
+### CI/CD
+
+* pin actions to commit SHAs and harden release pipeline ([#99](https://github.com/equinor/atmos-validation/issues/99)) ([3b49051](https://github.com/equinor/atmos-validation/commit/3b49051b9c06b3d4e2efb9c883f1a55227f522df))
+
 ## [2.0.7](https://github.com/equinor/atmos-validation/compare/v2.0.6...v2.0.7) (2026-06-25)
 
 
