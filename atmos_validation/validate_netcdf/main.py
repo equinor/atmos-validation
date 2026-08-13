@@ -90,8 +90,7 @@ def validate(
         ValidationResult containing errors and warning from running validation
     """
     log.create_or_update_logger(injected_logger)
-    if additional_args:
-        validation_settings.apply_settings(additional_args)
+    validation_settings.apply_settings(additional_args or [])
 
     try:
         log.info("load dataset from path %s", path)
