@@ -41,4 +41,6 @@ def parse_measurement_attrs(file_name: str, attrs_map_path: str):
         )  # NetCDF attrs can not have Norwegian letters
         if "asset" not in attrs:
             attrs["asset"] = "NA"
+        if "country" not in attrs:
+            attrs["country"] = "NA"
         return MeasurementMetadata(**attrs, data_type=DataType.MEASUREMENT)

@@ -14,4 +14,4 @@ def test_blacklisted_attributes_not_ok():
     with xr.open_dataset("examples/example_netcdf_measurement.nc") as ds:
         ds.attrs["data_type"] = "Hindcast"
         errors = blacklisted_global_attributes_validator(ds)
-        assert len(errors) == 9
+        assert len(errors) == 10
