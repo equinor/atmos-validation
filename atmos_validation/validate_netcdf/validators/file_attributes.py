@@ -1,4 +1,3 @@
-import urllib.request
 from typing import List
 
 import xarray as xr
@@ -14,8 +13,9 @@ from ...schemas import (
 from ...schemas.data_usability_level import DataUsabilityLevel
 from ...schemas.data_usability_levels import DataUsabilityLevels
 from ...schemas.metadata import DataType
-from ..utils import Severity, is_measurement, validation_node
+from ..utils import Severity, fetch_config_bytes, is_measurement, validation_node
 from ..validation_logger import log
+from ..validation_settings import URL_TO_DATA_USABILITY, URL_TO_INST_TYPES
 
 VALID_FINAL_REPORT_EXTENSIONS = ["docx", "pdf", "ppt", "pptx"]
 
@@ -151,14 +151,12 @@ def installation_type_validator(ds: xr.Dataset) -> List[str]:
 
 
 def load_valid_installation_types() -> List[str]:
-    url = "https://atmos.app.radix.equinor.com/config/installation-types"
     log.debug("download installation types")
-    with urllib.request.urlopen(url) as response:
-        data = response.read()
-        parsed_response = InstallationTypes(
-            configs=TypeAdapter(List[InstallationType]).validate_json(data)
-        ).configs
-        return [entry.installation_type for entry in parsed_response]
+    data = fetch_config_bytes(URL_TO_INST_TYPES)
+    parsed_response = InstallationTypes(
+        configs=TypeAdapter(List[InstallationType]).validate_json(data)
+    ).configs
+    return [entry.installation_type for entry in parsed_response]
 
 
 @validation_node(severity=Severity.ERROR)
@@ -185,14 +183,12 @@ def data_usability_validator(ds: xr.Dataset) -> List[str]:
 
 
 def load_valid_data_usability_levels() -> List[str]:
-    url = "https://atmos.app.radix.equinor.com/config/data-usability"
     log.debug("download data usabilities")
-    with urllib.request.urlopen(url) as response:
-        data = response.read()
-        parsed_response = DataUsabilityLevels(
-            configs=TypeAdapter(List[DataUsabilityLevel]).validate_json(data)
-        ).configs
-        return [entry.level for entry in parsed_response]
+    data = fetch_config_bytes(URL_TO_DATA_USABILITY)
+    parsed_response = DataUsabilityLevels(
+        configs=TypeAdapter(List[DataUsabilityLevel]).validate_json(data)
+    ).configs
+    return [entry.level for entry in parsed_response]
 
 
 @validation_node(severity=Severity.ERROR)

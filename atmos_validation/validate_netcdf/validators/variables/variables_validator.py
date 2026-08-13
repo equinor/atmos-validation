@@ -1,13 +1,12 @@
-import urllib.request
 from typing import List
 
 import xarray as xr
 from pydantic import TypeAdapter
 
 from ....schemas import ParameterConfig, ParameterConfigs
-from ...utils import Severity, is_measurement, validation_node
+from ...utils import Severity, fetch_config_bytes, is_measurement, validation_node
 from ...validation_logger import log
-from ...validation_settings import get_url_to_parameters
+from ...validation_settings import URL_TO_PARAMETERS
 from .sig_dig_validator import sig_dig_validator
 from .varattrs_validator import (
     var_allowed_instruments_validator,
@@ -21,12 +20,10 @@ from .varinterval_validator import SEED, varinterval_validator
 
 
 def load_parameter_config_from_endpoint():
-    url = get_url_to_parameters()
     log.debug("download parameters config")
-    with urllib.request.urlopen(url) as response:
-        data = response.read()
-        adapter = TypeAdapter(List[ParameterConfig])
-        return ParameterConfigs(configs=adapter.validate_json(data))
+    data = fetch_config_bytes(URL_TO_PARAMETERS)
+    adapter = TypeAdapter(List[ParameterConfig])
+    return ParameterConfigs(configs=adapter.validate_json(data))
 
 
 @validation_node(severity=Severity.ERROR)
