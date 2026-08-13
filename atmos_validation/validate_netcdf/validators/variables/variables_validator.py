@@ -6,7 +6,7 @@ from pydantic import TypeAdapter
 from ....schemas import ParameterConfig, ParameterConfigs
 from ...utils import Severity, fetch_config_bytes, is_measurement, validation_node
 from ...validation_logger import log
-from ...validation_settings import URL_TO_PARAMETERS
+from ...validation_settings import URL_TO_PARAMETERS, get_random_seed
 from .sig_dig_validator import sig_dig_validator
 from .varattrs_validator import (
     var_allowed_instruments_validator,
@@ -16,7 +16,7 @@ from .varattrs_validator import (
     var_required_attr_values_validator,
 )
 from .vardims_validator import vardims_validator
-from .varinterval_validator import SEED, varinterval_validator
+from .varinterval_validator import varinterval_validator
 
 
 def load_parameter_config_from_endpoint():
@@ -31,7 +31,6 @@ def variables_validator(ds: xr.Dataset) -> List[str]:
     valids = load_parameter_config_from_endpoint().param_dict
     errors = []
 
-    log.info("using random seed: %s", SEED)
     for key in [str(k) for k in ds.keys()]:
         if key not in valids:
             errors += [f"{key} is not a valid key"]
