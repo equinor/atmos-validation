@@ -88,4 +88,3 @@ def test_blank_union_string_field_reported():
         errors = metadata_schema_validator(ds)
         assert len(errors) == 1
         assert "location" in errors[0]
-
