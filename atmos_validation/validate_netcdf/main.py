@@ -47,28 +47,33 @@ Options:
 def main():
     log.create_or_update_logger()
     log.info(sys.argv)
+    if len(sys.argv) <= 2:
+        print(DOCSTRING)
+        sys.exit(2)
+
     try:
-        if len(sys.argv) <= 2:
-            print(DOCSTRING)
-        else:
-            result = validate(sys.argv[2], additional_args=sys.argv[2:])
-            log.info("Validation finished")
-            if isinstance(result, ValidationResult):
-                if result.errors:
-                    pretty_print_result(
-                        result.errors,
-                        description=f"Found {len(result.errors)} errors. These must be fixed:",
-                    )
-                if result.warnings:
-                    pretty_print_result(
-                        result.warnings,
-                        description=f"Found {len(result.warnings)} warnings. These are FYI and can be ignored:",
-                    )
-                if not result.warnings + result.errors:
-                    print("Looks good! File validated with 0 errors and 0 warnings")
+        result = validate(sys.argv[2], additional_args=sys.argv[2:])
     except Exception as e:
         log.error(e)
-        print(DOCSTRING)
+        print(f"Validation failed with an unexpected error: {e!r}")
+        sys.exit(1)
+
+    log.info("Validation finished")
+    if result.errors:
+        pretty_print_result(
+            result.errors,
+            description=f"Found {len(result.errors)} errors. These must be fixed:",
+        )
+    if result.warnings:
+        pretty_print_result(
+            result.warnings,
+            description=f"Found {len(result.warnings)} warnings. These are FYI and can be ignored:",
+        )
+    if not result.warnings + result.errors:
+        print("Looks good! File validated with 0 errors and 0 warnings")
+
+    if result.errors:
+        sys.exit(1)
 
 
 def validate(
