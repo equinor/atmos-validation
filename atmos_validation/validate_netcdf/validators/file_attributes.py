@@ -1,7 +1,8 @@
-from typing import List
+from typing import Any, Dict, List
 
+import numpy as np
 import xarray as xr
-from pydantic import TypeAdapter
+from pydantic import TypeAdapter, ValidationError
 
 from ...schemas import (
     ClassificationLevel,
@@ -19,6 +20,17 @@ from ..validation_settings import URL_TO_DATA_USABILITY, URL_TO_INST_TYPES
 
 VALID_FINAL_REPORT_EXTENSIONS = ["docx", "pdf", "ppt", "pptx"]
 
+# Fields already covered by dedicated value-level validators. Their non-presence
+# schema errors are skipped here to avoid double-reporting; "missing" errors are
+# still reported by the schema validator.
+SCHEMA_DEFERRED_FIELDS = {
+    "data_type",
+    "classification_level",
+    "installation_type",
+    "data_usability",
+    "final_reports",
+}
+
 
 @validation_node(severity=Severity.ERROR)
 def file_attributes_validator(ds: xr.Dataset):
@@ -26,7 +38,7 @@ def file_attributes_validator(ds: xr.Dataset):
     log.debug("Launch root validator")
     return (
         []
-        + required_global_attributes_validator(ds)
+        + metadata_schema_validator(ds)
         + blacklisted_global_attributes_validator(ds)
         + data_type_validator(ds)
         + installation_type_validator(ds)
@@ -37,21 +49,36 @@ def file_attributes_validator(ds: xr.Dataset):
 
 
 @validation_node(severity=Severity.ERROR)
-def required_global_attributes_validator(ds: xr.Dataset):
-    """Validates that all required global attributes are present"""
-    if is_measurement(ds):
-        data_model = MeasurementMetadata
-        extra_requireds = ["country"]
-    else:
-        data_model = HindcastMetadata
-        extra_requireds = []
-    result = []
-    for attribute in data_model.schema()["required"] + extra_requireds:
-        try:
-            ds.attrs[attribute]
-        except KeyError:
-            result += [f"""File attribute "{attribute}" does not exist on dataset"""]
+def metadata_schema_validator(ds: xr.Dataset) -> List[str]:
+    """Validates global attributes against the pydantic metadata schema,
+    enforcing presence and field types."""
+    model = MeasurementMetadata if is_measurement(ds) else HindcastMetadata
+    attrs = _normalize_attrs(ds.attrs)
+
+    result: List[str] = []
+    try:
+        model.model_validate(attrs)
+    except ValidationError as error:
+        for err in error.errors():
+            field = str(err["loc"][0]) if err["loc"] else "<model>"
+            if err["type"] == "missing":
+                result += [f'File attribute "{field}" does not exist on dataset']
+            elif field not in SCHEMA_DEFERRED_FIELDS:
+                result += [f'Global attribute "{field}" is invalid: {err["msg"]}']
     return result
+
+
+def _normalize_attrs(attrs: Any) -> Dict[str, Any]:
+    return {str(key): _normalize_attr_value(value) for key, value in attrs.items()}
+
+
+def _normalize_attr_value(value: Any) -> Any:
+    """Convert netCDF-provided numpy scalars/arrays into plain python types."""
+    if isinstance(value, np.ndarray):
+        return value.tolist()
+    if isinstance(value, np.generic):
+        return value.item()
+    return value
 
 
 @validation_node(severity=Severity.ERROR)
@@ -62,17 +89,17 @@ def blacklisted_global_attributes_validator(ds: xr.Dataset):
     """
     data_type = ds.attrs["data_type"]
     if is_measurement(ds):
-        blacklisted_attributes = HindcastMetadata.schema()["required"]
-        required_attributes = MeasurementMetadata.schema()["required"]
+        blacklisted_attributes = HindcastMetadata.model_json_schema()["required"]
+        required_attributes = MeasurementMetadata.model_json_schema()["required"]
     else:
-        blacklisted_attributes = MeasurementMetadata.schema()["required"]
-        required_attributes = HindcastMetadata.schema()["required"]
+        blacklisted_attributes = MeasurementMetadata.model_json_schema()["required"]
+        required_attributes = HindcastMetadata.model_json_schema()["required"]
 
     result = []
     for attribute in blacklisted_attributes:
         if attribute not in required_attributes:
             try:
-                ds.attrs[attribute]  # pylint: disable=pointless-statement
+                ds.attrs[attribute]
                 result += [
                     f"""Attribute "{attribute}" should not exist on a {data_type}"""
                 ]
@@ -90,12 +117,9 @@ def data_type_validator(ds: xr.Dataset):
     try:
         data_type = ds.attrs["data_type"]
         if data_type not in list(DataType):
-            result += [
-                f"""Global attribute "data_type" must be {DataType.HINDCAST} """
-                f"""or {DataType.MEASUREMENT}. Found value: "{data_type}" """
-            ]
+            result += ["""Global attribute "data_type" must a valid DataType"""]
     except KeyError:
-        pass  # missing "data_type" is reported by "required_global_attributes_validator"
+        pass  # missing "data_type" is reported by "metadata_schema_validator"
     return result
 
 
@@ -125,7 +149,7 @@ def final_reports_validator(ds: xr.Dataset):
                     f"File extension for final_reports must be one of {VALID_FINAL_REPORT_EXTENSIONS}"
                 ]
     except KeyError:
-        pass  # missing "field_reports" is reported by "required_global_attributes_validator"
+        pass  # missing "field_reports" is reported by "metadata_schema_validator"
     except Exception:
         result += ["Could not validate final_reports on global attributes"]
     return result
@@ -136,7 +160,7 @@ def installation_type_validator(ds: xr.Dataset) -> List[str]:
     """Checks that "installation_type" is compliant with the configuration file"""
     result = []
     try:
-        valids = load_valid_installation_types()
+        valids = _load_valid_installation_types()
         installation_type = ds.attrs["installation_type"]
         if installation_type not in valids:
             result += [
@@ -144,19 +168,10 @@ def installation_type_validator(ds: xr.Dataset) -> List[str]:
                 f"""Allowed values: {valids}"""
             ]
     except KeyError:
-        pass  # required attributes is validated in 'required_global_attributes_validator'
+        pass  # required attributes is validated in 'metadata_schema_validator'
     except Exception:
         result += ["Could not validate installation_types on global attributes"]
     return result
-
-
-def load_valid_installation_types() -> List[str]:
-    log.debug("download installation types")
-    data = fetch_config_bytes(URL_TO_INST_TYPES)
-    parsed_response = InstallationTypes(
-        configs=TypeAdapter(List[InstallationType]).validate_json(data)
-    ).configs
-    return [entry.installation_type for entry in parsed_response]
 
 
 @validation_node(severity=Severity.ERROR)
@@ -164,10 +179,10 @@ def data_usability_validator(ds: xr.Dataset) -> List[str]:
     """Checks that "data_usability" is complient with the configuration file"""
     result = []
     try:
-        valids = load_valid_data_usability_levels()
+        valids = _load_valid_data_usability_levels()
         data_usability_levels: str = ds.attrs["data_usability"]
-        # split the string and test each one
 
+        # split the string and test each one
         for token in data_usability_levels.split(","):
             data_usability_level = token.strip()
             if data_usability_level not in valids:
@@ -176,19 +191,19 @@ def data_usability_validator(ds: xr.Dataset) -> List[str]:
                     f"""Allowed values: {valids}"""
                 ]
     except KeyError:
-        pass  # required attributes is validated in 'required_global_attributes_validator'
+        pass  # required attributes is validated in 'metadata_schema_validator'
     except Exception:
         result += ["Could not validate data_usability on global attributes"]
     return result
 
 
-def load_valid_data_usability_levels() -> List[str]:
-    log.debug("download data usabilities")
-    data = fetch_config_bytes(URL_TO_DATA_USABILITY)
-    parsed_response = DataUsabilityLevels(
-        configs=TypeAdapter(List[DataUsabilityLevel]).validate_json(data)
+def _load_valid_installation_types() -> List[str]:
+    log.debug("download installation types")
+    data = fetch_config_bytes(URL_TO_INST_TYPES)
+    parsed_response = InstallationTypes(
+        configs=TypeAdapter(List[InstallationType]).validate_json(data)
     ).configs
-    return [entry.level for entry in parsed_response]
+    return [entry.installation_type for entry in parsed_response]
 
 
 @validation_node(severity=Severity.ERROR)
@@ -204,7 +219,16 @@ def classification_level_validator(ds: xr.Dataset) -> List[str]:
                 f"""Allowed values: {valids}"""
             ]
     except KeyError:
-        pass  # required attributes is validated in 'required_global_attributes_validator'
+        pass  # required attributes is validated in 'metadata_schema_validator'
     except Exception:
         result += ["Could not validate classification_level on global attributes"]
     return result
+
+
+def _load_valid_data_usability_levels() -> List[str]:
+    log.debug("download data usabilities")
+    data = fetch_config_bytes(URL_TO_DATA_USABILITY)
+    parsed_response = DataUsabilityLevels(
+        configs=TypeAdapter(List[DataUsabilityLevel]).validate_json(data)
+    ).configs
+    return [entry.level for entry in parsed_response]
