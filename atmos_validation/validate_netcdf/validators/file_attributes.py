@@ -56,8 +56,9 @@ def metadata_schema_validator(ds: xr.Dataset) -> List[str]:
     attrs = _normalize_attrs(ds.attrs)
 
     result: List[str] = []
+    validated = None
     try:
-        model.model_validate(attrs)
+        validated = model.model_validate(attrs)
     except ValidationError as error:
         for err in error.errors():
             field = str(err["loc"][0]) if err["loc"] else "<model>"
@@ -65,6 +66,17 @@ def metadata_schema_validator(ds: xr.Dataset) -> List[str]:
                 result += [f'File attribute "{field}" does not exist on dataset']
             elif field not in SCHEMA_DEFERRED_FIELDS:
                 result += [f'Global attribute "{field}" is invalid: {err["msg"]}']
+    # Reject blank/whitespace-only string values; deferred fields already flag
+    # blanks as invalid values through their dedicated validators.
+    if validated is not None:
+        for field in model.model_fields:
+            if field in SCHEMA_DEFERRED_FIELDS:
+                continue
+            value = getattr(validated, field)
+            if isinstance(value, str) and not value.strip():
+                result += [
+                    f'Global attribute "{field}" must not be empty or whitespace-only'
+                ]
     return result
 
 
