@@ -26,9 +26,7 @@ _active_settings: ContextVar[FrozenSet[str]] = ContextVar(
     "validation_settings", default=frozenset()
 )
 _random_seed: ContextVar[int] = ContextVar("random_seed")
-_sample_size: ContextVar[int] = ContextVar(
-    "sample_size", default=DEFAULT_SAMPLE_SIZE
-)
+_sample_size: ContextVar[int] = ContextVar("sample_size", default=DEFAULT_SAMPLE_SIZE)
 
 
 def apply_settings(optional_args: List[str]) -> None:
