@@ -6,7 +6,7 @@ from pydantic import TypeAdapter
 from ....schemas import ParameterConfig, ParameterConfigs
 from ...utils import Severity, fetch_config_bytes, is_measurement, validation_node
 from ...validation_logger import log
-from ...validation_settings import URL_TO_PARAMETERS, get_random_seed
+from ...validation_settings import URL_TO_PARAMETERS
 from .sig_dig_validator import sig_dig_validator
 from .varattrs_validator import (
     var_allowed_instruments_validator,
