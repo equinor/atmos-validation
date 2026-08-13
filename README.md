@@ -24,7 +24,7 @@
 | atmos\_validation/schemas/tests/test\_unique\_configs.py                          |       13 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/\_\_init\_\_.py                                |        1 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/external\_reference\_guard.py                  |       34 |        3 |     91% |44, 49, 53 |
-| atmos\_validation/validate\_netcdf/main.py                                        |       72 |       23 |     68% |48-71, 100, 117, 169-172 |
+| atmos\_validation/validate\_netcdf/main.py                                        |       71 |       23 |     68% |48-71, 99, 116, 168-171 |
 | atmos\_validation/validate\_netcdf/tests/\_\_init\_\_.py                          |        0 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_blacklisted\_globals.py            |       12 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_data\_usability\_validation.py     |       25 |        0 |    100% |           |
@@ -36,7 +36,7 @@
 | atmos\_validation/validate\_netcdf/tests/test\_height\_longname\_validator.py     |       12 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_installation\_types\_validation.py |       13 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_lat\_lon\_validator.py             |       35 |        0 |    100% |           |
-| atmos\_validation/validate\_netcdf/tests/test\_main.py                            |       37 |        0 |    100% |           |
+| atmos\_validation/validate\_netcdf/tests/test\_main.py                            |       41 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_sig\_digs.py                       |       16 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_spatial\_validators.py             |       12 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_time\_validator.py                 |       21 |        0 |    100% |           |
@@ -60,7 +60,7 @@
 | atmos\_validation/validate\_netcdf/validators/variables/vardims\_validator.py     |       10 |        1 |     90% |        21 |
 | atmos\_validation/validate\_netcdf/validators/variables/variables\_validator.py   |       30 |        1 |     97% |        37 |
 | atmos\_validation/validate\_netcdf/validators/variables/varinterval\_validator.py |      110 |       18 |     84% |35-36, 70-75, 90, 101, 105, 118, 122, 144, 152-154, 156 |
-| **TOTAL**                                                                         | **1472** |  **135** | **91%** |           |
+| **TOTAL**                                                                         | **1475** |  **135** | **91%** |           |
 
 
 ## Setup coverage badge
