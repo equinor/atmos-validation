@@ -132,16 +132,26 @@ def open_mf_dataset(paths: List[str]) -> xr.Dataset:
     xr.set_options(use_new_combine_kwarg_defaults=True)
     if len(paths) > 1:
         log.info("Running open mfdataset for %s files", len(paths))
-        ds = xr.open_mfdataset(
-            paths,
-            engine="h5netcdf",
-            concat_dim="Time",
-            compat="override",
-            data_vars="minimal",
-            combine="nested",
-            chunks="auto",
-            parallel=True,
-        )
+        try:
+            ds = xr.open_mfdataset(
+                paths,
+                engine="h5netcdf",
+                concat_dim="Time",
+                compat="equals",
+                data_vars="minimal",
+                combine="nested",
+                combine_attrs="override",
+                chunks="auto",
+                parallel=True,
+            )
+        except xr.MergeError as err:
+            # Static coords (LAT/LON/height) must be identical across a dataset;
+            # compat="equals" surfaces mismatches that would otherwise be dropped.
+            raise ValueError(
+                "Conflicting static coordinates between files in the dataset. "
+                "All files in a dataset must share the same grid "
+                f"(LAT/LON/height). Details: {err}"
+            ) from err
     else:
         log.info("Running open dataset for single file %s", paths[0])
         ds = xr.open_dataset(paths[0], engine="h5netcdf")
