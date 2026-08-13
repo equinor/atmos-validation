@@ -57,8 +57,8 @@
 | atmos\_validation/validate\_netcdf/validators/variables/varattrs\_validator.py    |       68 |        3 |     96% |38, 53, 58 |
 | atmos\_validation/validate\_netcdf/validators/variables/vardims\_validator.py     |       10 |        1 |     90% |        21 |
 | atmos\_validation/validate\_netcdf/validators/variables/variables\_validator.py   |       33 |        1 |     97% |        40 |
-| atmos\_validation/validate\_netcdf/validators/variables/varinterval\_validator.py |      105 |       18 |     83% |30-31, 70-75, 90, 101, 106, 118, 121, 142, 150-152, 154 |
-| **TOTAL**                                                                         | **1388** |  **131** | **91%** |           |
+| atmos\_validation/validate\_netcdf/validators/variables/varinterval\_validator.py |      110 |       18 |     84% |35-36, 70-75, 90, 101, 105, 118, 122, 144, 152-154, 156 |
+| **TOTAL**                                                                         | **1393** |  **131** | **91%** |           |
 
 
 ## Setup coverage badge
