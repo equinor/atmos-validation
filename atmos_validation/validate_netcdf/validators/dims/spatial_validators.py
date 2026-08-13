@@ -5,9 +5,10 @@ parameters.json in the vardims_validator
 
 from typing import List
 
+import numpy as np
 import xarray as xr
 
-from ....schemas import SOUTH_NORTH, WEST_EAST
+from ....schemas import HEIGHT_DIM_PREFIX, SOUTH_NORTH, WEST_EAST
 from ...utils import Severity, validation_node
 
 REQUIRED_LAT_ATTRS = {
@@ -27,6 +28,9 @@ REQUIRED_LON_ATTRS = {
 }
 
 REQUIREDS_MAP = {"LAT": REQUIRED_LAT_ATTRS, "LON": REQUIRED_LON_ATTRS}
+
+LAT_MIN, LAT_MAX = -90.0, 90.0
+LON_MIN, LON_MAX = -180.0, 180.0
 
 
 @validation_node(severity=Severity.ERROR)
@@ -97,3 +101,46 @@ def south_north_validator(ds: xr.Dataset):
 def west_east_validator(ds: xr.Dataset):
     """Validate that the dataset has west_east as a dim with a length > 0"""
     return existence_validator(ds, WEST_EAST)
+
+
+@validation_node(severity=Severity.ERROR)
+def coordinate_values_validator(ds: xr.Dataset) -> List[str]:
+    """
+    Validates coordinate values: LAT/LON must be finite and within range,
+    and height coordinates must be finite.
+    """
+    result = []
+    result += _finite_and_in_range_validator(ds, "LAT", LAT_MIN, LAT_MAX)
+    result += _finite_and_in_range_validator(ds, "LON", LON_MIN, LON_MAX)
+    result += _height_values_validator(ds)
+    return result
+
+
+def _finite_and_in_range_validator(
+    ds: xr.Dataset, name: str, low: float, high: float
+) -> List[str]:
+    if name not in ds:
+        return []  # existence is reported by lat_lon_validator
+    values = np.asarray(ds[name].values, dtype=float)
+    result = []
+    if not np.isfinite(values).all():
+        result += [f"{name} contains non-finite values (NaN or inf)"]
+    finite = values[np.isfinite(values)]
+    if finite.size and (finite.min() < low or finite.max() > high):
+        result += [
+            f"{name} values must be within [{low}, {high}]. "
+            f"Found range [{finite.min()}, {finite.max()}]"
+        ]
+    return result
+
+
+def _height_values_validator(ds: xr.Dataset) -> List[str]:
+    result = []
+    for dim in ds.sizes:
+        dim = str(dim)
+        if not dim.startswith(HEIGHT_DIM_PREFIX) or dim not in ds:
+            continue
+        values = np.asarray(ds[dim].values, dtype=float)
+        if not np.isfinite(values).all():
+            result += [f"{dim} contains non-finite values (NaN or inf)"]
+    return result
