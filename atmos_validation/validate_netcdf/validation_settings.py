@@ -7,7 +7,7 @@ The other option would be to pass the settings down the entire tree of validator
 import random
 import sys
 from contextvars import ContextVar
-from typing import FrozenSet, List, Optional
+from typing import FrozenSet, List
 
 from .validation_logger import log
 
@@ -23,7 +23,7 @@ URL_TO_DATA_USABILITY: str = "https://atmos.app.radix.equinor.com/config/data-us
 _active_settings: ContextVar[FrozenSet[str]] = ContextVar(
     "validation_settings", default=frozenset()
 )
-_random_seed: ContextVar[Optional[int]] = ContextVar("random_seed", default=None)
+_random_seed: ContextVar[int] = ContextVar("random_seed")
 
 
 def apply_settings(optional_args: List[str]) -> None:
@@ -46,7 +46,7 @@ def _parse_random_seed(optional_args: List[str]) -> int:
     return seed
 
 
-def get_random_seed() -> Optional[int]:
+def get_random_seed() -> int:
     return _random_seed.get()
 
 
