@@ -29,7 +29,9 @@ from .validation_logger import log
 from .validators.root_validator import ValidationResult, root_validator
 
 DOCSTRING = f"""
-Usage: python -m atmos_toolkit validate-dataset DIR_OR_FILE
+Usage: python -m atmos_toolkit validate-dataset DIR_OR_FILE [OPTIONS]
+
+Example: python -m atmos_toolkit validate-dataset my_dataset/ {validation_settings.RANDOM_SEED} 42
 
 Run validation on a hindcast or measurement dataset (NetCDF standard format check)
 
@@ -41,6 +43,7 @@ Options:
     \t\t\t\t\t Can be extremely slow for large datasets. Default behaviour is taking random samples.
     --{validation_settings.SKIP_MIN_MAX_CHECK} \t Skip random sample check for min/max values.
     --{validation_settings.SKIP_WARNINGS} \t\t\t Skip all checks that would only output a "WARNING".
+    --{validation_settings.RANDOM_SEED} <int> \t Fix the random seed so sampled checks are reproducible.
 """
 
 

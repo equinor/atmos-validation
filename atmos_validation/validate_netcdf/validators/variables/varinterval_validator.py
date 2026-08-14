@@ -1,5 +1,4 @@
 import random
-import sys
 from typing import List, Tuple, Union
 
 import numpy as np
@@ -18,8 +17,6 @@ from ....schemas import (
 from ... import validation_settings
 from ...utils import Severity, validation_node
 from ...validation_logger import log
-
-SEED = random.randrange(sys.maxsize)
 
 
 def _compression_noise_tolerance(number_of_significant_decimals: int) -> float:
@@ -160,7 +157,7 @@ def varinterval_validator(
 def _check_randomly_selected_intervals_min_max(
     ds: xr.Dataset, actual: xr.DataArray, expected: ParameterConfig
 ):
-    rand = random.Random(SEED)
+    rand = random.Random(validation_settings.get_random_seed())
 
     slice_tuple = _get_slice_tuple(ds, actual, rand)
     vals = actual[slice_tuple]

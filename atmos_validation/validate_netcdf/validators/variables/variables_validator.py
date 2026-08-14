@@ -16,7 +16,7 @@ from .varattrs_validator import (
     var_required_attr_values_validator,
 )
 from .vardims_validator import vardims_validator
-from .varinterval_validator import SEED, varinterval_validator
+from .varinterval_validator import varinterval_validator
 
 
 def load_parameter_config_from_endpoint():
@@ -31,7 +31,6 @@ def variables_validator(ds: xr.Dataset) -> List[str]:
     valids = load_parameter_config_from_endpoint().param_dict
     errors = []
 
-    log.info("using random seed: %s", SEED)
     for key in [str(k) for k in ds.keys()]:
         if key not in valids:
             errors += [f"{key} is not a valid key"]
