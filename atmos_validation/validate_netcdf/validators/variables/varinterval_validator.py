@@ -25,9 +25,9 @@ def _compression_noise_tolerance(number_of_significant_decimals: int) -> float:
 
 
 def _get_random_time_slice(actual: xr.DataArray, rand: random.Random) -> slice:
-    """To save processing time we only check 5000 timestamps random samples"""
+    """To save processing time we only check a random sample of timestamps"""
     len_time = len(actual.Time)
-    sample_size = 5000
+    sample_size = validation_settings.get_sample_size()
     if len_time > sample_size * 2:
         start = rand.randint(0, len_time - sample_size - 1)
         time_slice = slice(start, start + sample_size)
