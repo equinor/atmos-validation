@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.1.0](https://github.com/equinor/atmos-validation/compare/v2.0.8...v2.1.0) (2026-08-14)
+
+
+### Features
+
+* **validate-netcdf:** add --random-seed option for deterministic sampling ([#109](https://github.com/equinor/atmos-validation/issues/109)) ([3dcb416](https://github.com/equinor/atmos-validation/commit/3dcb4161f69afd6226ca6e1e10e071c5e9b38b4f))
+* **validate-netcdf:** add --sample-size option (default 5000) ([#110](https://github.com/equinor/atmos-validation/issues/110)) ([1cf7a23](https://github.com/equinor/atmos-validation/commit/1cf7a2306c5da683ebdba79d32c747b1c4e3fa58))
+
+
+### Bug Fixes
+
+* **workflows:** update permissions for to allow write access ([#113](https://github.com/equinor/atmos-validation/issues/113)) ([cc1c6d3](https://github.com/equinor/atmos-validation/commit/cc1c6d3a55e2c07dfdcb094ee4b2ec7bd61e11e7))
+
+
+### Other
+
+* **deps-dev:** bump setuptools from 78.1.1 to 83.0.0 in the uv group across 1 directory ([#104](https://github.com/equinor/atmos-validation/issues/104)) ([f7927c3](https://github.com/equinor/atmos-validation/commit/f7927c387c0c223389528725bc72d52ff6d26eb7))
+* **workflows:** update permissions in CI workflow files ([#112](https://github.com/equinor/atmos-validation/issues/112)) ([2e581fc](https://github.com/equinor/atmos-validation/commit/2e581fc6ad7378d6ae5d1ffc050b08deff791f05))
+
 ## [2.0.8](https://github.com/equinor/atmos-validation/compare/v2.0.7...v2.0.8) (2026-08-13)
 
 
