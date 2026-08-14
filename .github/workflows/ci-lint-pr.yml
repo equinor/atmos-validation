@@ -5,6 +5,9 @@ on:
   push:
     branches: ['main']
 
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Run linting, style and type checks
