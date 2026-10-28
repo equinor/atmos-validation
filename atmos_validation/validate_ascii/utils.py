@@ -14,7 +14,7 @@ def trim_value(value: str) -> str:
 
 
 def get_all_accepted_metadata_values() -> Dict[str, Set[str]]:
-    base_url = "https://atmos.app.radix.equinor.com/config"
+    base_url = "https://api-atmos-prod.c3.radix.equinor.com/config"
     get_options = [
         ("/instrument-types", "instrument_type"),
         ("/installation-types", "installation_type"),
@@ -37,7 +37,7 @@ def get_all_accepted_metadata_values() -> Dict[str, Set[str]]:
 @lru_cache()
 def load_parameter_configs() -> List[ParameterConfig]:
     response = requests.get(
-        "https://atmos.app.radix.equinor.com/config/parameters", timeout=10
+        "https://api-atmos-prod.c3.radix.equinor.com/config/parameters", timeout=10
     )
     adapter = TypeAdapter(List[ParameterConfig])
     cfgs = ParameterConfigs(configs=adapter.validate_json(json.dumps(response.json())))

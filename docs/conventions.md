@@ -66,7 +66,7 @@
 
 ### 2.1 Naming
 
-- Shall have valid "key", i.e. be listed in the official database document: [https://atmos.app.radix.equinor.com/config/parameters]
+- Shall have valid "key", i.e. be listed in our official database: [https://api-atmos-prod.c3.radix.equinor.com/config/parameters]
 
 ### 2.2 Attributes for data variables
 
@@ -255,8 +255,8 @@ the corresponding instrument types.
 
 To avoid ambiguous terminology, "data_usability" and "installation_types" are validated against database documents, respectively:
 
-- [https://atmos.app.radix.equinor.com/config/data-usability]
-- [https://atmos.app.radix.equinor.com/config/installation-types]
+- [https://api-atmos-prod.c3.radix.equinor.com/config/data-usability]
+- [https://api-atmos-prod.c3.radix.equinor.com/config/installation-types]
 
 ### 3.4 Extras
 
