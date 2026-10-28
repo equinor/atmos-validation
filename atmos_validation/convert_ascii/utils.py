@@ -10,7 +10,9 @@ from pydantic import TypeAdapter
 
 from ..schemas import ParameterConfig, ParameterConfigs
 
-DEFAULT_URL_TO_PARAMETERS: str = "https://atmos.app.radix.equinor.com/config/parameters"
+DEFAULT_URL_TO_PARAMETERS: str = (
+    "https://api-atmos-prod.c3.radix.equinor.com/config/parameters"
+)
 
 
 def get_chunksizes(dims: Tuple[str], src: xr.Dataset) -> Union[tuple[int, ...], None]:

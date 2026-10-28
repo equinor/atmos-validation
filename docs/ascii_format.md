@@ -17,11 +17,11 @@ The following metadata shall be included in all Metocean timeseries:
 - **Averaging period**: Averaging period of measurements in minutes
 - **TotalWaterDepth**: Total water depth in meters. For wind data total water depth is NA
 - **Mooring Name**: The mooring name shall be unique for each delivered measurement file (across projects, instruments, data deliveries etc) and shall be constructed as follows: project_name + mooring_name + instrument + phase. FOXTROT_MOOR1_GPS_Ph1. Only put single instrumentation in the name in cases where there are multiple instruments
-- **Type of instrument**: Types of instruments used for the measurement location. If there are several instrument types, please, list them with comma separator. If there are no instruments available, use NA. Instrument types shall be chosen from the database list <https://atmos.app.radix.equinor.com/config/instrument-types>. If appropriate type is not available, please, contact CR to include it in the database
+- **Type of instrument**: Types of instruments used for the measurement location. If there are several instrument types, please, list them with comma separator. If there are no instruments available, use NA. Instrument types shall be chosen from the database list <https://api-atmos-prod.c3.radix.equinor.com/config/instrument-types>. If appropriate type is not available, please, contact CR to include it in the database
 - **Specification of Instrument**: Instrument specifications for given measurement locations. Instrument specifications shall be listed in the same order as the corresponding instrument types
-- **Measurement installation type**: Measurement installation type. One of the options listed in <https://atmos.app.radix.equinor.com/config/installation-types> database shall be specified
+- **Measurement installation type**: Measurement installation type. One of the options listed in <https://api-atmos-prod.c3.radix.equinor.com/config/installation-types> database shall be specified
 - **QC provider**: Company responsible for the QC. It can be different from the contractor.
-- **Data Usability Level**: Level of the data readiness. One or more options from https://atmos.app.radix.equinor.com/config/data-usability shall be chosen. These metadata reflect how good the data are.
+- **Data Usability Level**: Level of the data readiness. One or more options from https://api-atmos-prod.c3.radix.equinor.com/config/data-usability shall be chosen. These metadata reflect how good the data are.
 - **Data history**: Any information about the origin of the data (if not measured directly by the contractor) or changes made to the data (if there has been previous versions of the same data) shall be stated here. If the data has been measured directly by the contractor and it is the first version delivered “Original data” shall be stated.
 - **Missing data**: Element reflecting missing data in the measurements shall be stated. NaN is preferred.
 - **Final Reports**: A list of report file names, separated by comma, shall be provided. All stated report files shall follow the data
@@ -40,7 +40,7 @@ Parameter Related Metadata shall be given in a table. Each line of the table sha
 - **Abbrev**: Short name of the measured quantity. This name will be used in the data table as a header. Therefore, each abbreviation shall be unique in the entire file. Abbrev for the measured parameters shall be constructed as the key from the database with standardized parameter names (see Section 5.3) and absolute value of height/depth. For example, WS100, WD100, CS10, CD10 etc.
 - **Unit**: The units of all the corresponding measurements. All units shall follow the units given in Section 5.3 for the corresponding parameter.
 - **Height**: Height of the corresponding measurement in m (only number) above/below MSL. For currents, sea temperature etc the depth below mean sea level shall be given with sign ‘-‘.
-- **Base**: Key from the database with standardized parameter names (see <https://atmos.app.radix.equinor.com/config/parameters>)
+- **Base**: Key from the database with standardized parameter names (see <https://api-atmos-prod.c3.radix.equinor.com/config/parameters>)
 - **Instrument**: Instrument type used to measure given parameter at given height. If given parameter is the merge of measurements from several instrument types, please, list them with comma separator. If there are no instruments available, use NA. Instrument types shall be chosen from the list in Section 5.4.
 - **InstrSpec**: Instrument specifications for given quantity. Instrument specifications shall be listed in the same order as the corresponding instrument types.
 

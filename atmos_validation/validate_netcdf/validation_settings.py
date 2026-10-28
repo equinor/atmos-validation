@@ -17,9 +17,10 @@ SKIP_WARNINGS: str = "--skip-warnings"
 RANDOM_SEED: str = "--random-seed"
 SAMPLE_SIZE: str = "--sample-size"
 DEFAULT_SAMPLE_SIZE: int = 5000
-URL_TO_PARAMETERS: str = "https://atmos.app.radix.equinor.com/config/parameters"
-URL_TO_INST_TYPES: str = "https://atmos.app.radix.equinor.com/config/installation-types"
-URL_TO_DATA_USABILITY: str = "https://atmos.app.radix.equinor.com/config/data-usability"
+BASE_URL: str = "https://api-atmos-prod.c3.radix.equinor.com/config"
+URL_TO_PARAMETERS: str = f"{BASE_URL}/parameters"
+URL_TO_INST_TYPES: str = f"{BASE_URL}/installation-types"
+URL_TO_DATA_USABILITY: str = f"{BASE_URL}/data-usability"
 
 # Per-call, thread/async-isolated so options never leak between validate() calls.
 _active_settings: ContextVar[FrozenSet[str]] = ContextVar(
