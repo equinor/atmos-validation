@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.1.1](https://github.com/equinor/atmos-validation/compare/v2.1.0...v2.1.1) (2026-10-29)
+
+
+### Other
+
+* **deps:** bump certifi from 2026.2.25 to 2026.10.18 in the uv group across 1 directory ([#118](https://github.com/equinor/atmos-validation/issues/118)) ([1fd301e](https://github.com/equinor/atmos-validation/commit/1fd301ef3d33debefccb27a602cc6688a150a957))
+* **deps:** bump the uv group across 1 directory with 2 updates ([#116](https://github.com/equinor/atmos-validation/issues/116)) ([657000f](https://github.com/equinor/atmos-validation/commit/657000f4af968a71d787894f293255e16f44a729))
+* **deps:** bump urllib3 from 2.7.0 to 2.8.0 in the uv group across 1 directory ([#114](https://github.com/equinor/atmos-validation/issues/114)) ([2a2252d](https://github.com/equinor/atmos-validation/commit/2a2252d3bbcce84806bbcaec4daa12c3edc539ff))
+* update API URLs to use new production endpoints ([#117](https://github.com/equinor/atmos-validation/issues/117)) ([bec6d3f](https://github.com/equinor/atmos-validation/commit/bec6d3f286449a47ae86e69a1e15be26e0abc8fa))
+
 ## [2.1.0](https://github.com/equinor/atmos-validation/compare/v2.0.8...v2.1.0) (2026-08-14)
 
 
