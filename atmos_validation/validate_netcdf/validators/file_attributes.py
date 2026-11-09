@@ -45,6 +45,7 @@ def file_attributes_validator(ds: xr.Dataset):
         + data_usability_validator(ds)
         + classification_level_validator(ds)
         + final_reports_validator(ds)
+        + total_water_depth_validator(ds)
     )
 
 
@@ -244,3 +245,25 @@ def _load_valid_data_usability_levels() -> List[str]:
         configs=TypeAdapter(List[DataUsabilityLevel]).validate_json(data)
     ).configs
     return [entry.level for entry in parsed_response]
+
+
+@validation_node(severity=Severity.ERROR)
+def total_water_depth_validator(ds: xr.Dataset) -> List[str]:
+    """Checks that "total_water_depth" is a value followed by the unit "m", or "NA" for wind data"""
+    result = []
+    try:
+        value = ds.attrs["total_water_depth"]
+        if isinstance(value, str) and value.strip().upper() == "NA":
+            return result
+        tokens = str(value).split()
+        unit = tokens[-1] if len(tokens) > 1 else ""
+        if unit != "m":
+            result += [
+                f"""Total water depth unit "{unit or value}" is not allowed. """
+                """Allowed unit: "m" (or "NA" for wind data)."""
+            ]
+    except KeyError:
+        pass  # required attributes is validated in 'metadata_schema_validator'
+    except Exception:
+        result += ["Could not validate total_water_depth on global attributes"]
+    return result
