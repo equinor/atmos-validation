@@ -119,4 +119,4 @@ def assign_metadata_to_ds(source_file: str, ds: xr.Dataset):
         source_file,
         os.path.join(os.path.dirname(__file__), "measurement_metadata_to_schema.json"),
     )
-    ds.attrs = measurement_meta.dict()
+    ds.attrs = measurement_meta.model_dump(mode="json")
