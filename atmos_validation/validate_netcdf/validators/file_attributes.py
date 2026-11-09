@@ -256,7 +256,7 @@ def averaging_period_validator(ds: xr.Dataset) -> List[str]:
     try:
         value: str = ds.attrs["averaging_period"]
         tokens = value.split()
-        unit = tokens[-1].lower() if len(tokens) > 1 else ""
+        unit = tokens[-1] if len(tokens) > 1 else ""
         if unit not in AVERAGING_PERIOD_UNITS:
             result += [
                 f"""Averaging period unit "{unit or value}" is not in the allowed list. """
