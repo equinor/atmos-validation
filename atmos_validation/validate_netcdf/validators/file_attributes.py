@@ -21,22 +21,6 @@ from ..validation_settings import URL_TO_DATA_USABILITY, URL_TO_INST_TYPES
 VALID_FINAL_REPORT_EXTENSIONS = ["docx", "pdf", "ppt", "pptx"]
 
 AVERAGING_PERIOD_UNITS = ["sec", "min", "h"]
-# Common misspellings/variants mapped to the canonical unit, used to build a
-# helpful suggestion in the error message.
-AVERAGING_PERIOD_UNIT_SUGGESTIONS = {
-    "s": "sec",
-    "secs": "sec",
-    "second": "sec",
-    "seconds": "sec",
-    "m": "min",
-    "mins": "min",
-    "minute": "min",
-    "minutes": "min",
-    "hr": "h",
-    "hrs": "h",
-    "hour": "h",
-    "hours": "h",
-}
 
 # Fields already covered by dedicated value-level validators. Their non-presence
 # schema errors are skipped here to avoid double-reporting; "missing" errors are
@@ -274,14 +258,10 @@ def averaging_period_validator(ds: xr.Dataset) -> List[str]:
         tokens = value.split()
         unit = tokens[-1].lower() if len(tokens) > 1 else ""
         if unit not in AVERAGING_PERIOD_UNITS:
-            message = (
+            result += [
                 f"""Averaging period unit "{unit or value}" is not in the allowed list. """
                 f"""Allowed values: {AVERAGING_PERIOD_UNITS}"""
-            )
-            suggestion = AVERAGING_PERIOD_UNIT_SUGGESTIONS.get(unit)
-            if suggestion:
-                message += f""". Did you mean "{suggestion}"?"""
-            result += [message]
+            ]
     except KeyError:
         pass  # required attributes is validated in 'metadata_schema_validator'
     except Exception:

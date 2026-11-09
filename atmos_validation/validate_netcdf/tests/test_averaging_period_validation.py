@@ -21,14 +21,6 @@ def test_averaging_period_validations_not_ok():
         assert "not in the allowed list" in errors[0]
 
 
-def test_averaging_period_validations_suggests_canonical_unit():
-    """Tests that averaging_period_validator suggests the canonical unit for a known variant"""
-    with xr.open_dataset("examples/example_netcdf_measurement.nc") as ds:
-        ds.attrs["averaging_period"] = "10 mins"
-        errors = averaging_period_validator(ds)
-        assert 'Did you mean "min"?' in errors[0]
-
-
 def test_averaging_period_validations_missing_unit():
     """Tests that averaging_period_validator fails when no unit is given"""
     with xr.open_dataset("examples/example_netcdf_measurement.nc") as ds:
