@@ -12,7 +12,7 @@ The following metadata shall be included in all Metocean timeseries:
 
 - **Contractor/Data Responsible**: Name of data provider
 - **Project name**: Name of the project requesting data
-- **Location**: Latitude and longitude of the measurements in degrees (at least three decimals are required after ‘.’) and corresponding reference datum. Format of the location: "% Location: lat lon, reference"
+- **Location**: Latitude and longitude of the measurements, in decimal degrees with a sign and a trailing "N"/"E" (letters are fixed; the sign carries the hemisphere), plus the reference datum. Format: "% Location: lat lon, reference" where "lat"/"lon" look like "60.3589N"/"70.8764E" (north-east) or "-60.3589N"/"-70.8764E" (south-west). The datum shall be one of: 'datum uncertain', 'WGS84', 'ED50', 'ED87', 'ETRS89', 'Tokyo', 'NAD27'.
 - **Duration of data**: Start and end dates of the measurements in format dd.mm.yyyy -dd.mm.yyyy (Dates shall be in UTC and agree with Start and End dates of the data).
 - **Averaging period**: Averaging period of measurements in minutes
 - **TotalWaterDepth**: Total water depth in meters. For wind data total water depth is NA
