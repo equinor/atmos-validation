@@ -83,4 +83,3 @@ class HeaderPosition:
         if value_f < lower or value_f > upper:
             messages.append(f"{position} should be between {lower} and {upper}")
         return messages
-
