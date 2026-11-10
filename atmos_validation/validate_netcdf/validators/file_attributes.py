@@ -20,6 +20,8 @@ from ..validation_settings import URL_TO_DATA_USABILITY, URL_TO_INST_TYPES
 
 VALID_FINAL_REPORT_EXTENSIONS = ["docx", "pdf", "ppt", "pptx"]
 
+AVERAGING_PERIOD_UNITS = ["sec", "min", "h"]
+
 # Fields already covered by dedicated value-level validators. Their non-presence
 # schema errors are skipped here to avoid double-reporting; "missing" errors are
 # still reported by the schema validator.
@@ -46,6 +48,7 @@ def file_attributes_validator(ds: xr.Dataset):
         + data_usability_validator(ds)
         + classification_level_validator(ds)
         + final_reports_validator(ds)
+        + averaging_period_validator(ds)
         + instrument_counts_validator(ds)
         + total_water_depth_validator(ds)
     )
@@ -247,6 +250,26 @@ def _load_valid_data_usability_levels() -> List[str]:
         configs=TypeAdapter(List[DataUsabilityLevel]).validate_json(data)
     ).configs
     return [entry.level for entry in parsed_response]
+
+
+@validation_node(severity=Severity.ERROR)
+def averaging_period_validator(ds: xr.Dataset) -> List[str]:
+    """Checks that "averaging_period" is a value followed by one of the allowed units"""
+    result = []
+    try:
+        value: str = ds.attrs["averaging_period"]
+        tokens = value.split()
+        unit = tokens[-1] if len(tokens) > 1 else ""
+        if unit not in AVERAGING_PERIOD_UNITS:
+            result += [
+                f"""Averaging period unit "{unit or value}" is not in the allowed list. """
+                f"""Allowed values: {AVERAGING_PERIOD_UNITS}"""
+            ]
+    except KeyError:
+        pass  # required attributes is validated in 'metadata_schema_validator'
+    except Exception:
+        result += ["Could not validate averaging_period on global attributes"]
+    return result
 
 
 @validation_node(severity=Severity.ERROR)
