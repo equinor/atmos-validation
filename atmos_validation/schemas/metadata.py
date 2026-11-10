@@ -66,4 +66,4 @@ class MeasurementMetadata(CommonMetadata):
     location: Union[str, List[str]]
     mooring_name: str
     source_file: str
-    total_water_depth: Union[str, float]
+    total_water_depth: str

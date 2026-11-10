@@ -29,6 +29,7 @@ SCHEMA_DEFERRED_FIELDS = {
     "installation_type",
     "data_usability",
     "final_reports",
+    "total_water_depth",
 }
 
 
