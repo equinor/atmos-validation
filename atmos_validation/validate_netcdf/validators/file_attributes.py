@@ -29,6 +29,7 @@ SCHEMA_DEFERRED_FIELDS = {
     "installation_type",
     "data_usability",
     "final_reports",
+    "total_water_depth",
 }
 
 
@@ -46,6 +47,7 @@ def file_attributes_validator(ds: xr.Dataset):
         + classification_level_validator(ds)
         + final_reports_validator(ds)
         + instrument_counts_validator(ds)
+        + total_water_depth_validator(ds)
     )
 
 
@@ -268,4 +270,26 @@ def instrument_counts_validator(ds: xr.Dataset) -> List[str]:
         result += [
             "Could not validate instrument_types/instrument_specifications on global attributes"
         ]
+    return result
+
+
+@validation_node(severity=Severity.ERROR)
+def total_water_depth_validator(ds: xr.Dataset) -> List[str]:
+    """Checks that "total_water_depth" is a value followed by the unit "m", or "NA" for wind data"""
+    result = []
+    try:
+        value = ds.attrs["total_water_depth"]
+        if isinstance(value, str) and value.strip().upper() == "NA":
+            return result
+        tokens = str(value).split()
+        unit = tokens[-1] if len(tokens) > 1 else ""
+        if unit != "m":
+            result += [
+                f"""Total water depth unit "{unit or value}" is not allowed. """
+                """Allowed unit: "m" (or "NA" for wind data)."""
+            ]
+    except KeyError:
+        pass  # required attributes is validated in 'metadata_schema_validator'
+    except Exception:
+        result += ["Could not validate total_water_depth on global attributes"]
     return result

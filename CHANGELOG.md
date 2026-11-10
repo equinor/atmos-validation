@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2](https://github.com/equinor/atmos-validation/compare/v2.1.1...v2.1.2) (2026-11-09)
+
+
+### Bug Fixes
+
+* update metadata assignment to use model_dump for JSON serialization ([#122](https://github.com/equinor/atmos-validation/issues/122)) ([6ca0d00](https://github.com/equinor/atmos-validation/commit/6ca0d0066f02b0295e289571b4c4f66196e97706))
+
 ## [2.1.1](https://github.com/equinor/atmos-validation/compare/v2.1.0...v2.1.1) (2026-10-29)
 
 
