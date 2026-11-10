@@ -31,6 +31,7 @@ SCHEMA_DEFERRED_FIELDS = {
     "installation_type",
     "data_usability",
     "final_reports",
+    "total_water_depth",
 }
 
 
@@ -48,6 +49,8 @@ def file_attributes_validator(ds: xr.Dataset):
         + classification_level_validator(ds)
         + final_reports_validator(ds)
         + averaging_period_validator(ds)
+        + instrument_counts_validator(ds)
+        + total_water_depth_validator(ds)
     )
 
 
@@ -266,4 +269,50 @@ def averaging_period_validator(ds: xr.Dataset) -> List[str]:
         pass  # required attributes is validated in 'metadata_schema_validator'
     except Exception:
         result += ["Could not validate averaging_period on global attributes"]
+    return result
+
+
+@validation_node(severity=Severity.ERROR)
+def instrument_counts_validator(ds: xr.Dataset) -> List[str]:
+    """Checks that "instrument_types" and "instrument_specifications" list the same number of entries"""
+    result = []
+    try:
+        if not is_measurement(ds):
+            return result
+        instrument_types = ds.attrs["instrument_types"].split(",")
+        instrument_specifications = ds.attrs["instrument_specifications"].split(",")
+        if len(instrument_types) != len(instrument_specifications):
+            result += [
+                f"""instrument_types has {len(instrument_types)} entries but """
+                f"""instrument_specifications has {len(instrument_specifications)} entries. """
+                """They must list the same number of comma-separated entries."""
+            ]
+    except KeyError:
+        pass  # required attributes is validated in 'metadata_schema_validator'
+    except Exception:
+        result += [
+            "Could not validate instrument_types/instrument_specifications on global attributes"
+        ]
+    return result
+
+
+@validation_node(severity=Severity.ERROR)
+def total_water_depth_validator(ds: xr.Dataset) -> List[str]:
+    """Checks that "total_water_depth" is a value followed by the unit "m", or "NA" for wind data"""
+    result = []
+    try:
+        value = ds.attrs["total_water_depth"]
+        if isinstance(value, str) and value.strip().upper() == "NA":
+            return result
+        tokens = str(value).split()
+        unit = tokens[-1] if len(tokens) > 1 else ""
+        if unit != "m":
+            result += [
+                f"""Total water depth unit "{unit or value}" is not allowed. """
+                """Allowed unit: "m" (or "NA" for wind data)."""
+            ]
+    except KeyError:
+        pass  # required attributes is validated in 'metadata_schema_validator'
+    except Exception:
+        result += ["Could not validate total_water_depth on global attributes"]
     return result

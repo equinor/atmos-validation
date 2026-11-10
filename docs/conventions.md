@@ -226,7 +226,7 @@ class MeasurementMetadata(CommonMetadata):
     location: Union[str, List[str]]
     mooring_name: str
     source_file: str
-    total_water_depth: Union[str, float]
+    total_water_depth: str
 ```
 
 *asset*: Name of the asset which paid for the data.  In case of sharing data to the third party, permission from the asset is required.
@@ -249,7 +249,7 @@ the corresponding instrument types.
 
 *mooring_name*: The mooring name shall be unique for each delivered measurement file (across projects, instruments, data deliveries etc) and shall be constructed as follows: project_name + mooring_name + instrument + phase. FOXTROT_MOOR1_GPS_Ph1. Only put single instrumentation in the name in cases where there are multiple instruments.
 
-*total_water_depth*: Total water depth in meters. For wind data total water depth is NA (this parameter is not in the list, it should be included)
+*total_water_depth*: Total water depth, formatted as "\<value\> m" (unit must be exactly "m"). "NA" can be used for wind data where total water depth is not applicable.
 
 *source_file*: A reference to the original data file the NetCDF file was generated from. "NA" can be used if not applicable.
 
