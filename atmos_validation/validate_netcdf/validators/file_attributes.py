@@ -21,6 +21,8 @@ from ..validation_settings import URL_TO_DATA_USABILITY, URL_TO_INST_TYPES
 
 VALID_FINAL_REPORT_EXTENSIONS = ["docx", "pdf", "ppt", "pptx"]
 
+AVERAGING_PERIOD_UNITS = ["sec", "min", "h"]
+
 ALLOWED_LOCATION_DATUMS = [
     "datum uncertain",
     "WGS84",
@@ -62,6 +64,8 @@ def file_attributes_validator(ds: xr.Dataset):
         + data_usability_validator(ds)
         + classification_level_validator(ds)
         + final_reports_validator(ds)
+        + averaging_period_validator(ds)
+        + instrument_counts_validator(ds)
         + total_water_depth_validator(ds)
         + location_validator(ds)
     )
@@ -263,6 +267,50 @@ def _load_valid_data_usability_levels() -> List[str]:
         configs=TypeAdapter(List[DataUsabilityLevel]).validate_json(data)
     ).configs
     return [entry.level for entry in parsed_response]
+
+
+@validation_node(severity=Severity.ERROR)
+def averaging_period_validator(ds: xr.Dataset) -> List[str]:
+    """Checks that "averaging_period" is a value followed by one of the allowed units"""
+    result = []
+    try:
+        value: str = ds.attrs["averaging_period"]
+        tokens = value.split()
+        unit = tokens[-1] if len(tokens) > 1 else ""
+        if unit not in AVERAGING_PERIOD_UNITS:
+            result += [
+                f"""Averaging period unit "{unit or value}" is not in the allowed list. """
+                f"""Allowed values: {AVERAGING_PERIOD_UNITS}"""
+            ]
+    except KeyError:
+        pass  # required attributes is validated in 'metadata_schema_validator'
+    except Exception:
+        result += ["Could not validate averaging_period on global attributes"]
+    return result
+
+
+@validation_node(severity=Severity.ERROR)
+def instrument_counts_validator(ds: xr.Dataset) -> List[str]:
+    """Checks that "instrument_types" and "instrument_specifications" list the same number of entries"""
+    result = []
+    try:
+        if not is_measurement(ds):
+            return result
+        instrument_types = ds.attrs["instrument_types"].split(",")
+        instrument_specifications = ds.attrs["instrument_specifications"].split(",")
+        if len(instrument_types) != len(instrument_specifications):
+            result += [
+                f"""instrument_types has {len(instrument_types)} entries but """
+                f"""instrument_specifications has {len(instrument_specifications)} entries. """
+                """They must list the same number of comma-separated entries."""
+            ]
+    except KeyError:
+        pass  # required attributes is validated in 'metadata_schema_validator'
+    except Exception:
+        result += [
+            "Could not validate instrument_types/instrument_specifications on global attributes"
+        ]
+    return result
 
 
 @validation_node(severity=Severity.ERROR)
