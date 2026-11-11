@@ -1,7 +1,6 @@
 import re
 from typing import List
 
-# TODO(#2943): confirm this is the full/final list of accepted datums with the issue author.
 ALLOWED_DATUMS = [
     "datum uncertain",
     "WGS84",
