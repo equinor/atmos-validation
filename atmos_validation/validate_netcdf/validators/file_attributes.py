@@ -21,7 +21,6 @@ from ..validation_settings import URL_TO_DATA_USABILITY, URL_TO_INST_TYPES
 
 VALID_FINAL_REPORT_EXTENSIONS = ["docx", "pdf", "ppt", "pptx"]
 
-# TODO(#2943): confirm this is the full/final list of accepted datums with the issue author.
 ALLOWED_LOCATION_DATUMS = [
     "datum uncertain",
     "WGS84",
@@ -294,8 +293,6 @@ def location_validator(ds: xr.Dataset) -> List[str]:
     result = []
     try:
         value: str = ds.attrs["location"]
-        # TODO(#2943): confirm the datum is always a comma-separated suffix on
-        # "location", rather than a separate attribute, before relying on this split.
         coordinates, _, datum = value.partition(",")
         coordinates = coordinates.strip()
         datum = datum.strip()
