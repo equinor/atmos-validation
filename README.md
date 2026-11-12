@@ -5,6 +5,14 @@
 | Name                                                                              |    Stmts |     Miss |   Cover |   Missing |
 |---------------------------------------------------------------------------------- | -------: | -------: | ------: | --------: |
 | atmos\_validation/\_\_init\_\_.py                                                 |        0 |        0 |    100% |           |
+| atmos\_validation/convert\_ascii/\_\_init\_\_.py                                  |        1 |        0 |    100% |           |
+| atmos\_validation/convert\_ascii/attrs\_to\_meta.py                               |       26 |       20 |     23% |9-10, 14-46 |
+| atmos\_validation/convert\_ascii/df\_to\_nc.py                                    |       82 |       69 |     16% |21-24, 28-55, 59-89, 93-114, 118-122 |
+| atmos\_validation/convert\_ascii/main.py                                          |        9 |        5 |     44% |     16-21 |
+| atmos\_validation/convert\_ascii/parsers.py                                       |       73 |       57 |     22% |40-60, 67-113, 117-133, 143-149, 160-182 |
+| atmos\_validation/convert\_ascii/tests/\_\_init\_\_.py                            |        0 |        0 |    100% |           |
+| atmos\_validation/convert\_ascii/tests/test\_parsers.py                           |        9 |        0 |    100% |           |
+| atmos\_validation/convert\_ascii/utils.py                                         |       70 |       48 |     31% |28-39, 52-65, 70-71, 76-79, 83-87, 91-107, 111-117, 121-127, 131-132, 143-151 |
 | atmos\_validation/schemas/\_\_init\_\_.py                                         |       11 |        0 |    100% |           |
 | atmos\_validation/schemas/classification\_level.py                                |       26 |        4 |     85% |15, 20, 25, 30 |
 | atmos\_validation/schemas/data\_usability\_level.py                               |        9 |        1 |     89% |        14 |
@@ -22,6 +30,22 @@
 | atmos\_validation/schemas/tests/test\_classification\_level.py                    |        7 |        0 |    100% |           |
 | atmos\_validation/schemas/tests/test\_parameter\_configs.py                       |        8 |        0 |    100% |           |
 | atmos\_validation/schemas/tests/test\_unique\_configs.py                          |       13 |        0 |    100% |           |
+| atmos\_validation/validate\_ascii/\_\_init\_\_.py                                 |        1 |        0 |    100% |           |
+| atmos\_validation/validate\_ascii/date\_helper.py                                 |       26 |       19 |     27% |14-22, 25-38 |
+| atmos\_validation/validate\_ascii/header\_date.py                                 |       72 |       57 |     21% |9, 12-17, 20, 23, 26, 29-35, 40-71, 74-80, 83, 86, 89-101 |
+| atmos\_validation/validate\_ascii/header\_metadata.py                             |       44 |       29 |     34% |33-34, 37-42, 45-50, 53, 57-65, 68-71, 76-78 |
+| atmos\_validation/validate\_ascii/header\_names.py                                |       19 |        0 |    100% |           |
+| atmos\_validation/validate\_ascii/header\_parameter\_info.py                      |       44 |       24 |     45% |21, 25-28, 31-34, 40-44, 50-59 |
+| atmos\_validation/validate\_ascii/header\_parameter\_info\_list.py                |      102 |       86 |     16% |20-54, 59-66, 69, 72, 77, 80, 83-107, 110-123, 126-131, 135-201 |
+| atmos\_validation/validate\_ascii/header\_parser.py                               |       55 |       42 |     24% |13, 22-59, 62-67, 70, 73-128 |
+| atmos\_validation/validate\_ascii/header\_position.py                             |       50 |        5 |     90% |42-43, 57-58, 80 |
+| atmos\_validation/validate\_ascii/main.py                                         |       71 |       60 |     15% |20-69, 75-76, 80-92, 96-112 |
+| atmos\_validation/validate\_ascii/result\_file.py                                 |        3 |        0 |    100% |           |
+| atmos\_validation/validate\_ascii/row\_parser.py                                  |      147 |      122 |     17% |23-26, 29-59, 70-96, 101-126, 131-135, 140-194, 199-219, 228-234, 239-243, 252-261, 266-273, 276-277, 284-291, 303-327 |
+| atmos\_validation/validate\_ascii/tests/\_\_init\_\_.py                           |        0 |        0 |    100% |           |
+| atmos\_validation/validate\_ascii/tests/test\_header\_position.py                 |       26 |        0 |    100% |           |
+| atmos\_validation/validate\_ascii/utils.py                                        |       25 |       14 |     44% |13, 17-34, 39-44 |
+| atmos\_validation/validate\_ascii/validate\_result.py                             |       13 |        4 |     69% |12-13, 16, 19 |
 | atmos\_validation/validate\_netcdf/\_\_init\_\_.py                                |        1 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/external\_reference\_guard.py                  |       34 |        3 |     91% |44, 49, 53 |
 | atmos\_validation/validate\_netcdf/main.py                                        |       74 |       26 |     65% |52-80, 108, 125, 177-180 |
@@ -66,7 +90,7 @@
 | atmos\_validation/validate\_netcdf/validators/variables/vardims\_validator.py     |       10 |        1 |     90% |        21 |
 | atmos\_validation/validate\_netcdf/validators/variables/variables\_validator.py   |       29 |        1 |     97% |        36 |
 | atmos\_validation/validate\_netcdf/validators/variables/varinterval\_validator.py |      108 |       18 |     83% |32-33, 67-72, 87, 98, 102, 115, 119, 141, 149-151, 153 |
-| **TOTAL**                                                                         | **1819** |  **156** | **91%** |           |
+| **TOTAL**                                                                         | **2787** |  **817** | **71%** |           |
 
 
 ## Setup coverage badge
