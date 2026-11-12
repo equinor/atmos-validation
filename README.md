@@ -39,6 +39,7 @@
 | atmos\_validation/validate\_netcdf/tests/test\_installation\_types\_validation.py |       13 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_instrument\_counts\_validation.py  |       17 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_lat\_lon\_validator.py             |       35 |        0 |    100% |           |
+| atmos\_validation/validate\_netcdf/tests/test\_location\_validation.py            |       25 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_main.py                            |       41 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_metadata\_schema\_validation.py    |       63 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/tests/test\_sig\_digs.py                       |       16 |        0 |    100% |           |
@@ -57,7 +58,7 @@
 | atmos\_validation/validate\_netcdf/validators/dims/dimvars\_validator.py          |       26 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/validators/dims/spatial\_validators.py         |       83 |        4 |     95% |53, 57, 62, 64 |
 | atmos\_validation/validate\_netcdf/validators/dims/time\_validator.py             |      100 |       26 |     74% |18, 49, 72-83, 97-105, 129-131, 133, 147, 157, 167 |
-| atmos\_validation/validate\_netcdf/validators/file\_attributes.py                 |      194 |       23 |     88% |138-140, 169-172, 190-191, 213-214, 239-242, 270-271, 290-293, 316-317 |
+| atmos\_validation/validate\_netcdf/validators/file\_attributes.py                 |      214 |       25 |     88% |155-157, 186-189, 207-208, 230-231, 256-259, 287-288, 307-310, 333-334, 359-360 |
 | atmos\_validation/validate\_netcdf/validators/root\_validator.py                  |       17 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/validators/variables/\_\_init\_\_.py           |        0 |        0 |    100% |           |
 | atmos\_validation/validate\_netcdf/validators/variables/sig\_dig\_validator.py    |       39 |        5 |     87% |     67-72 |
@@ -65,7 +66,7 @@
 | atmos\_validation/validate\_netcdf/validators/variables/vardims\_validator.py     |       10 |        1 |     90% |        21 |
 | atmos\_validation/validate\_netcdf/validators/variables/variables\_validator.py   |       29 |        1 |     97% |        36 |
 | atmos\_validation/validate\_netcdf/validators/variables/varinterval\_validator.py |      108 |       18 |     83% |32-33, 67-72, 87, 98, 102, 115, 119, 141, 149-151, 153 |
-| **TOTAL**                                                                         | **1774** |  **154** | **91%** |           |
+| **TOTAL**                                                                         | **1819** |  **156** | **91%** |           |
 
 
 ## Setup coverage badge
