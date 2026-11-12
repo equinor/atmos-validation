@@ -271,10 +271,12 @@ def _load_valid_data_usability_levels() -> List[str]:
 
 @validation_node(severity=Severity.ERROR)
 def averaging_period_validator(ds: xr.Dataset) -> List[str]:
-    """Checks that "averaging_period" is a value followed by one of the allowed units"""
+    """Checks that "averaging_period" is a value followed by one of the allowed units, or "NA" """
     result = []
     try:
         value: str = ds.attrs["averaging_period"]
+        if value.strip().upper() == "NA":
+            return result
         tokens = value.split()
         unit = tokens[-1] if len(tokens) > 1 else ""
         if unit not in AVERAGING_PERIOD_UNITS:

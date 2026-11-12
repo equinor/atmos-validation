@@ -231,7 +231,7 @@ class MeasurementMetadata(CommonMetadata):
 
 *asset*: Name of the asset which paid for the data.  In case of sharing data to the third party, permission from the asset is required.
 
-*averaging_period*: Averaging period of measurements, formatted as "\<value\> \<unit\>" where unit is one of "sec", "min", "h" (case-sensitive, exact match)
+*averaging_period*: Averaging period of measurements, formatted as "\<value\> \<unit\>" where unit is one of "sec", "min", "h" (case-sensitive, exact match). "NA" can also be used.
 
 *country*: Country name on which territory data are acquired. In case of sharing data to the third party, one need obey to country regulation rules related to data sharing.
 
