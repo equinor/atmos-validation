@@ -1,3 +1,4 @@
+import re
 from typing import Any, Dict, List
 
 import numpy as np
@@ -21,6 +22,21 @@ from ..validation_settings import URL_TO_DATA_USABILITY, URL_TO_INST_TYPES
 VALID_FINAL_REPORT_EXTENSIONS = ["docx", "pdf", "ppt", "pptx"]
 
 AVERAGING_PERIOD_UNITS = ["sec", "min", "h"]
+
+ALLOWED_LOCATION_DATUMS = [
+    "datum uncertain",
+    "WGS84",
+    "ED50",
+    "ED87",
+    "ETRS89",
+    "Tokyo",
+    "NAD27",
+]
+
+# Matches "<lat>N <lon>E" with an optional leading "-" on either number, e.g.
+# "60.3589N 70.8764E" or "-60.3589N -70.8764E". The sign carries the
+# hemisphere; the letters N/E are fixed and do not flip to S/W.
+LOCATION_COORDINATES_PATTERN = re.compile(r"^-?[0-9]+\.[0-9]+N -?[0-9]+\.[0-9]+E$")
 
 # Fields already covered by dedicated value-level validators. Their non-presence
 # schema errors are skipped here to avoid double-reporting; "missing" errors are
@@ -51,6 +67,7 @@ def file_attributes_validator(ds: xr.Dataset):
         + averaging_period_validator(ds)
         + instrument_counts_validator(ds)
         + total_water_depth_validator(ds)
+        + location_validator(ds)
     )
 
 
@@ -315,4 +332,30 @@ def total_water_depth_validator(ds: xr.Dataset) -> List[str]:
         pass  # required attributes is validated in 'metadata_schema_validator'
     except Exception:
         result += ["Could not validate total_water_depth on global attributes"]
+    return result
+
+
+@validation_node(severity=Severity.ERROR)
+def location_validator(ds: xr.Dataset) -> List[str]:
+    """Checks that "location" follows "<lat>N <lon>E, <datum>" notation with an allowed datum"""
+    result = []
+    try:
+        value: str = ds.attrs["location"]
+        coordinates, _, datum = value.partition(",")
+        coordinates = coordinates.strip()
+        datum = datum.strip()
+        if not LOCATION_COORDINATES_PATTERN.match(coordinates):
+            result += [
+                f"""Location "{coordinates}" does not match the required notation """
+                """"<lat>N <lon>E" (e.g. "60.3589N 70.8764E" or "-60.3589N -70.8764E")"""
+            ]
+        if datum not in ALLOWED_LOCATION_DATUMS:
+            result += [
+                f"""Location datum "{datum}" is not in the allowed list. """
+                f"""Allowed values: {ALLOWED_LOCATION_DATUMS}"""
+            ]
+    except KeyError:
+        pass  # required attributes is validated in 'metadata_schema_validator'
+    except Exception:
+        result += ["Could not validate location on global attributes"]
     return result
