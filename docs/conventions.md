@@ -237,8 +237,8 @@ class MeasurementMetadata(CommonMetadata):
 
 *data_usability*: Level of the data readiness
 
-*location*: Latitude and longitude of the measurements in degrees (at least three decimals are required after ‘.’)  and corresponding reference datum.  
-Format of the location: lat lon, reference
+*location*: Latitude and longitude of the measurements, in decimal degrees with a sign and a trailing "N"/"E" (letters are fixed; the sign carries the hemisphere), and corresponding reference datum.  
+Format of the location: "\<lat\>N \<lon\>E, reference", e.g. "60.3589N 70.8764E, WGS84" (north-east) or "-60.3589N -70.8764E, WGS84" (south-west). The reference datum shall be one of: 'datum uncertain', 'WGS84', 'ED50', 'ED87', 'ETRS89', 'Tokyo', 'NAD27'.
 
 *instrument_specifications*:  Instrument specifications for given measurement locations. Instrument specifications shall be listed in the same order as
 the corresponding instrument types.

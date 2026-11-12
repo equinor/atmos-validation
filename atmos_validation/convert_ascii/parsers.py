@@ -13,22 +13,18 @@ MISSING_HEIGHT = -99999
 def parse_location_text(line_content: str) -> Tuple[float, float]:
     """Parses Location text into a float tuple (lat, lon)
 
+    Expects the new "<lat>N <lon>E" decimal notation (sign carries the
+    hemisphere), e.g. "60.3589N 70.8764E" or "-60.3589N -70.8764E".
+
     Args:
         line_content: the raw location text line
 
     Returns:
         float numbers tuple (lat, lon)
     """
-    location_text = line_content.split(":", 1)[1].split(",")[0]
-    location_text = location_text.replace("Â", "")
-    match = re.findall(r"[-+]?(?:\d*\.*\d+)", location_text)
-    is_east = 1
-    is_north = 1
-    if "S" in location_text:
-        is_north = -1
-    if "W" in location_text:
-        is_east = -1
-    return (float(match[0]) * is_north, float(match[1]) * is_east)
+    location_text = line_content.split(":", 1)[1].split(",")[0].strip()
+    match = re.findall(r"-?[0-9]+\.[0-9]+", location_text)
+    return (float(match[0]), float(match[1]))
 
 
 def data_frame_parser(header_line: str, data_lines: List[List[str]]) -> pd.DataFrame:
