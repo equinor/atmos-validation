@@ -12,6 +12,14 @@ def test_averaging_period_validations_ok():
             assert len(errors) == 0
 
 
+def test_averaging_period_validations_na_ok():
+    """Tests that averaging_period_validator allows "NA" """
+    with xr.open_dataset("examples/example_netcdf_measurement.nc") as ds:
+        ds.attrs["averaging_period"] = "NA"
+        errors = averaging_period_validator(ds)
+        assert len(errors) == 0
+
+
 def test_averaging_period_validations_not_ok():
     """Tests that averaging_period_validator fails for a disallowed unit"""
     with xr.open_dataset("examples/example_netcdf_measurement.nc") as ds:
