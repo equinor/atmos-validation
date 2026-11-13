@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.2.0](https://github.com/equinor/atmos-validation/compare/v2.1.2...v2.2.0) (2026-11-13)
+
+
+### Features
+
+* Add contractor validation and ascii -&gt; netcdf conversion ([#128](https://github.com/equinor/atmos-validation/issues/128)) ([43769dd](https://github.com/equinor/atmos-validation/commit/43769dd40c3e5c6aa07cfe28f92341fd63c48089))
+* **validate-ascii:** standardize location notation and datum ([#126](https://github.com/equinor/atmos-validation/issues/126)) ([fb2e5e5](https://github.com/equinor/atmos-validation/commit/fb2e5e551fc230ed453e87c58cd984313dc376f2))
+* **validate-netcdf:** validate averaging_period units ([#120](https://github.com/equinor/atmos-validation/issues/120)) ([11d2431](https://github.com/equinor/atmos-validation/commit/11d2431e6c8105a82975def1ed4c80aa6b7dfc9c))
+* **validate-netcdf:** validate instrument_types/instrument_specifications count match ([#119](https://github.com/equinor/atmos-validation/issues/119)) ([47a95b1](https://github.com/equinor/atmos-validation/commit/47a95b1a8e56836bcd2d770db66def5e6864f7e7))
+* **validate-netcdf:** validate location notation and datum ([#125](https://github.com/equinor/atmos-validation/issues/125)) ([6ab4c15](https://github.com/equinor/atmos-validation/commit/6ab4c15a72463fc134dd3714ab1de53880e1bf5f))
+* **validate-netcdf:** validate total_water_depth unit ([#121](https://github.com/equinor/atmos-validation/issues/121)) ([a8a3a98](https://github.com/equinor/atmos-validation/commit/a8a3a984a6f7afc04f1a4aa1b2226cc51316b92d))
+
+
+### Bug Fixes
+
+* Update contractor and division handling  ([#129](https://github.com/equinor/atmos-validation/issues/129)) ([a8ce84f](https://github.com/equinor/atmos-validation/commit/a8ce84f3f408b0e6dd39da52fd05c44ad7de343f))
+* **validate-netcdf:** allow "NA" for averaging_period ([#127](https://github.com/equinor/atmos-validation/issues/127)) ([bc64afb](https://github.com/equinor/atmos-validation/commit/bc64afb97f837a19e3afacba9c9a2b68fa546369))
+
 ## [2.1.2](https://github.com/equinor/atmos-validation/compare/v2.1.1...v2.1.2) (2026-11-09)
 
 
