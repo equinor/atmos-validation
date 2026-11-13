@@ -64,7 +64,7 @@ class MeasurementMetadata(CommonMetadata):
     instrument_types: str
     instrument_specifications: str
     installation_type: str
-    location: str
+    location: Union[str, List[str]]
     mooring_name: str
     source_file: str
     total_water_depth: str
