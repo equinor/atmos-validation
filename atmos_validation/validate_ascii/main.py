@@ -1,9 +1,10 @@
 import sys
 from typing import List, Optional, Tuple
 
+from ..schemas import validate_contractor_metadata
 from .header_parser import HeaderMetaData, HeaderParser
 from .row_parser import RowParser
-from .utils import load_parameter_configs
+from .utils import load_contractor_configs, load_parameter_configs
 from .validate_result import ValidateMeasurementResult, ValidateResult
 
 DOCSTRING = """
@@ -51,6 +52,9 @@ def main():
 
     messages = header_info.validate()
     messages += validate_with_parameter_configs(header_info)
+    messages += validate_contractor_header(
+        header_info.contractor, header_info.contractor_division
+    )
     if messages:
         print(ValidateMeasurementResult(ValidateResult.ERROR, messages))
         sys.exit(1)
@@ -110,3 +114,18 @@ def validate_with_parameter_configs(header_info: HeaderMetaData) -> List[str]:
                 f"The unit {unit} is incorrect for base parameter {key}. The unit should be {cfg.units}"
             )
     return messages
+
+
+def validate_contractor_header(contractor: str, contractor_division: str) -> List[str]:
+    contractor_names = [name.strip() for name in contractor.split(",")]
+    raw_divisions = contractor_division.strip()
+    divisions = (
+        []
+        if not raw_divisions or raw_divisions.upper() == "NA"
+        else [division.strip() for division in raw_divisions.split(",")]
+    )
+    return validate_contractor_metadata(
+        contractor_names,
+        divisions,
+        load_contractor_configs(),
+    )

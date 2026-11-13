@@ -18,6 +18,7 @@ class HeaderParser:
         errors: List[str],
         accepted_values: Optional[Set[str]] = None,
         split_by: Optional[str] = None,
+        optional: bool = False,
     ) -> str:
         real_valued = [
             Headers.LOCATION,
@@ -50,6 +51,8 @@ class HeaderParser:
                     # No colon to separate key from value in metadata line
                     errors.append(f'Missing Colon in line: "{line}"')
         # Could not find the key
+        if optional:
+            return ""
         if key in real_valued:
             errors.append(f"Metadata must include a real value for {key}")
         else:
@@ -90,6 +93,11 @@ class HeaderParser:
             errors,
             accepted_values[Headers.INSTALLATION_TYPE],
         )
+        contractor_division = self.get_simple_value(
+            Headers.CONTRACTOR_DIVISION,
+            errors,
+            optional=True,
+        )
 
         parameters = HeaderParameterInfoList(
             self.get_lines_from(
@@ -106,6 +114,7 @@ class HeaderParser:
         data = HeaderMetaData(
             number_of_header_lines=len(self.lines),
             contractor=self.get_simple_value(Headers.CONTRACTOR, errors),
+            contractor_division=contractor_division,
             final_report=self.get_simple_value(Headers.FINAL_REPORT, errors),
             qc=self.get_simple_value(Headers.QC, errors),
             duration=HeaderDate(self.get_simple_value(Headers.DURATION, errors)),

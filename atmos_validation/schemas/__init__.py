@@ -1,3 +1,4 @@
+from .contractor import *
 from .data_usability_level import *
 from .data_usability_levels import *
 from .dim_constants import *

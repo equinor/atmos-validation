@@ -23,7 +23,8 @@ class CommonMetadata(BaseModel):
     model_config = ConfigDict(use_enum_values=True)
 
     comments: Union[List[str], str]
-    contractor: str
+    contractor: Union[List[str], str] = Field(default_factory=list)
+    contractor_division: Union[List[str], str] = Field(default_factory=list)
     classification_level: ClassificationLevel = Field(
         default=ClassificationLevel.INTERNAL
     )
@@ -40,10 +41,10 @@ class HindcastMetadata(CommonMetadata, UnprotectedNamespaceModel):
     calibration: str
     delivery_date: str
     forcing_data: str
-    memos: Union[str, List[str]]
+    memos: List[str]
     modelling_software: str
     model_name: str
-    nests: Union[str, List[str]]
+    nests: List[str] = Field(default_factory=list)
     setup: str
     spatial_resolution: Union[str, List[str]]
     sst_source: str
@@ -63,7 +64,7 @@ class MeasurementMetadata(CommonMetadata):
     instrument_types: str
     instrument_specifications: str
     installation_type: str
-    location: Union[str, List[str]]
+    location: str
     mooring_name: str
     source_file: str
     total_water_depth: str

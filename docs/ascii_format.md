@@ -10,7 +10,8 @@ Common Metadata shall be given in the header lines of the timeseries. All header
 
 The following metadata shall be included in all Metocean timeseries:
 
-- **Contractor/Data Responsible**: Name of data provider
+- **Contractor/Data Responsible**: Data providers, separated by commas. Each name must be listed in the [contractors configuration](https://api-atmos-prod.c3.radix.equinor.com/config/contractors). Use `NA` when no contractor is specified.
+- **Contractor Division**: Optional contractor division names, separated by commas. Use `NA` when no division is specified. Each division must be listed under at least one of the selected contractors in the contractors configuration. If the selected contractors have no configured divisions, no division may be specified.
 - **Project name**: Name of the project requesting data
 - **Location**: Latitude and longitude of the measurements, in decimal degrees with a sign and a trailing "N"/"E" (letters are fixed; the sign carries the hemisphere), plus the reference datum. Format: "% Location: lat lon, reference" where "lat"/"lon" look like "60.3589N"/"70.8764E" (north-east) or "-60.3589N"/"-70.8764E" (south-west). The datum shall be one of: 'datum uncertain', 'WGS84', 'ED50', 'ED87', 'ETRS89', 'Tokyo', 'NAD27'.
 - **Duration of data**: Start and end dates of the measurements in format dd.mm.yyyy -dd.mm.yyyy (Dates shall be in UTC and agree with Start and End dates of the data).

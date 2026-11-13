@@ -3,6 +3,7 @@ from enum import Enum
 
 class Headers(str, Enum):
     CONTRACTOR = "Contractor/Data Responsible"
+    CONTRACTOR_DIVISION = "Contractor Division"
     FINAL_REPORT = "Final Reports"
     QC = "QC Provider"
     DURATION = "Duration of Data"
