@@ -120,7 +120,7 @@ class CommonMetadata(BaseModel):
 
 *contractor*: Data provider names, represented as a string or a list of strings. An empty list or the string `NA` means no contractor is specified. Each actual name shall be listed in the [contractors configuration](https://api-atmos-prod.c3.radix.equinor.com/config/contractors). Divisions cannot be specified without a contractor.
 
-*contractor_division*: Optional division name or list of names. Every division must be listed under at least one selected contractor in the contractors configuration. Multiple divisions are allowed regardless of the number of selected contractors.
+*contractor_division*: Optional division name or list of names. An empty list means no division information is available. A non-empty list must have the same length and order as `contractor`: each division must be configured for its corresponding contractor, or be `NA`. `NA` is always allowed, even when that contractor has configured divisions. For example, contractors `["Fugro", "RPS"]` may have divisions `["Fugro GB Ltd.", "NA"]` or `["Fugro GB Ltd.", "RPS Group Inc."]`. ASCII-to-NetCDF conversion always produces lists for these fields, preserving `NA` entries.
 
 *classification_level*: Signifies data access according to classification level
 

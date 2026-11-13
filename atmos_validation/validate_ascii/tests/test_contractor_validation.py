@@ -9,7 +9,7 @@ from atmos_validation.validate_ascii.header_parser import HeaderParser
 ascii_main = import_module("atmos_validation.validate_ascii.main")
 
 
-def test_ascii_contractor_and_multiple_divisions_pass(monkeypatch):
+def test_ascii_contractor_and_multiple_divisions_are_rejected(monkeypatch):
     monkeypatch.setattr(
         ascii_main,
         "load_contractor_configs",
@@ -25,7 +25,8 @@ def test_ascii_contractor_and_multiple_divisions_pass(monkeypatch):
         "Oceanweather Inc.", "Marine, Offshore, Wind, Wave, Current"
     )
 
-    assert errors == []
+    assert len(errors) == 1
+    assert "same length" in errors[0]
 
 
 def test_ascii_unknown_contractor_is_rejected(monkeypatch):
@@ -58,11 +59,16 @@ def test_ascii_na_contractor_means_no_contractor(monkeypatch, division):
         assert errors == []
 
 
-def test_ascii_na_division_is_not_validated_as_a_division(monkeypatch):
+@pytest.mark.parametrize("configured_divisions", [None, [], ["Marine"]])
+def test_ascii_na_division_is_not_validated_as_a_division(
+    monkeypatch, configured_divisions
+):
     monkeypatch.setattr(
         ascii_main,
         "load_contractor_configs",
-        lambda: [Contractor(contractor="Oceanweather Inc.", divisions=None)],
+        lambda: [
+            Contractor(contractor="Oceanweather Inc.", divisions=configured_divisions)
+        ],
     )
 
     assert validate_contractor_header("Oceanweather Inc.", "NA") == []
@@ -84,7 +90,23 @@ def test_ascii_division_not_allowed_by_selected_contractor_is_rejected(monkeypat
     assert "Marine" in errors[0]
 
 
-def test_ascii_division_may_belong_to_any_selected_contractor(monkeypatch):
+@pytest.mark.parametrize(
+    ("divisions", "error_count"),
+    [
+        ("Marine, Offshore", 0),
+        ("Marine, NA", 0),
+        ("NA, Offshore", 0),
+        ("NA, NA", 0),
+        ("", 0),
+        ("Offshore, Marine", 2),
+        ("Marine", 1),
+        ("NA", 1),
+        ("Marine, Offshore, Marine", 1),
+    ],
+)
+def test_ascii_divisions_match_contractors_by_position(
+    monkeypatch, divisions, error_count
+):
     monkeypatch.setattr(
         ascii_main,
         "load_contractor_configs",
@@ -95,10 +117,13 @@ def test_ascii_division_may_belong_to_any_selected_contractor(monkeypatch):
     )
 
     errors = validate_contractor_header(
-        "Oceanweather Inc., Example Contractor", "Marine, Offshore, Marine"
+        "Oceanweather Inc., Example Contractor", divisions
     )
 
-    assert errors == []
+    assert len(errors) == error_count
+    if divisions == "Offshore, Marine":
+        assert 'contractor "Oceanweather Inc."' in errors[0]
+        assert 'contractor "Example Contractor"' in errors[1]
 
 
 def test_contractor_division_header_is_optional():

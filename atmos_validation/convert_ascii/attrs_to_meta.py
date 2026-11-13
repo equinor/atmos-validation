@@ -21,9 +21,7 @@ def parse_measurement_attrs(file_name: str, attrs_map_path: str):
             if line.startswith("%"):
                 attrs.update(
                     {
-                        metadata: (
-                            *map(lambda s: s.strip(), filter(None, line.split(":"))),
-                        )[-1]
+                        metadata: line.partition(":")[2].strip()
                         for metadata, attr in attrs_map.items()
                         if line.replace("%", "")
                         .strip()
@@ -41,14 +39,12 @@ def parse_measurement_attrs(file_name: str, attrs_map_path: str):
         )  # NetCDF attrs can not have Norwegian letters
         contractor = attrs.pop("contractor", "NA")
         attrs["contractor"] = (
-            []
-            if contractor.strip().upper() == "NA"
-            else [c.strip() for c in contractor.split(",")]
+            [c.strip() for c in contractor.split(",")] if contractor.strip() else []
         )
-        contractor_division = attrs.pop("contractor_division", "NA")
+        contractor_division = attrs.pop("contractor_division", "")
         attrs["contractor_division"] = (
             []
-            if contractor_division.strip().upper() in ("", "NA")
+            if not contractor_division.strip()
             else [c.strip() for c in contractor_division.split(",")]
         )
         if "asset" not in attrs:

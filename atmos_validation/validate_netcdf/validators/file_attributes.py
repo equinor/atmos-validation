@@ -133,12 +133,6 @@ def contractors_validator(ds: xr.Dataset) -> List[str]:
 
     contractors = list(contractors)
     contractor_divisions = list(contractor_divisions)
-    if (
-        len(contractor_divisions) == 1
-        and contractor_divisions[0].strip().upper() == "NA"
-    ):
-        contractor_divisions = []
-
     return validate_contractor_metadata(
         [contractor.strip() for contractor in contractors],
         [division.strip() for division in contractor_divisions],
