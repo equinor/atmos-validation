@@ -7,17 +7,23 @@ from pydantic import TypeAdapter, ValidationError
 
 from ...schemas import (
     ClassificationLevel,
+    Contractor,
     HindcastMetadata,
     InstallationType,
     InstallationTypes,
     MeasurementMetadata,
 )
+from ...schemas.contractor import validate_contractor_metadata
 from ...schemas.data_usability_level import DataUsabilityLevel
 from ...schemas.data_usability_levels import DataUsabilityLevels
 from ...schemas.metadata import DataType
 from ..utils import Severity, fetch_config_bytes, is_measurement, validation_node
 from ..validation_logger import log
-from ..validation_settings import URL_TO_DATA_USABILITY, URL_TO_INST_TYPES
+from ..validation_settings import (
+    URL_TO_CONTRACTORS,
+    URL_TO_DATA_USABILITY,
+    URL_TO_INST_TYPES,
+)
 
 VALID_FINAL_REPORT_EXTENSIONS = ["docx", "pdf", "ppt", "pptx"]
 
@@ -58,6 +64,7 @@ def file_attributes_validator(ds: xr.Dataset):
     return (
         []
         + metadata_schema_validator(ds)
+        + contractors_validator(ds)
         + blacklisted_global_attributes_validator(ds)
         + data_type_validator(ds)
         + installation_type_validator(ds)
@@ -101,6 +108,48 @@ def metadata_schema_validator(ds: xr.Dataset) -> List[str]:
                     f'Global attribute "{field}" must not be empty or whitespace-only'
                 ]
     return result
+
+
+@validation_node(severity=Severity.ERROR)
+def contractors_validator(ds: xr.Dataset) -> List[str]:
+    """Checks contractor names and divisions against the configuration file."""
+    contractors = _normalize_attr_value(ds.attrs.get("contractor", []))
+    contractor_divisions = _normalize_attr_value(
+        ds.attrs.get("contractor_division", [])
+    )
+
+    if isinstance(contractors, str):
+        contractors = [contractors]
+    if isinstance(contractor_divisions, str):
+        contractor_divisions = [contractor_divisions]
+    if not isinstance(contractors, (list, tuple)) or not all(
+        isinstance(contractor, str) for contractor in contractors
+    ):
+        return []
+    if not isinstance(contractor_divisions, (list, tuple)) or not all(
+        isinstance(division, str) for division in contractor_divisions
+    ):
+        return []
+
+    contractors = list(contractors)
+    contractor_divisions = list(contractor_divisions)
+    if (
+        len(contractor_divisions) == 1
+        and contractor_divisions[0].strip().upper() == "NA"
+    ):
+        contractor_divisions = []
+
+    return validate_contractor_metadata(
+        [contractor.strip() for contractor in contractors],
+        [division.strip() for division in contractor_divisions],
+        _load_contractors(),
+    )
+
+
+def _load_contractors() -> List[Contractor]:
+    log.debug("download contractors config")
+    data = fetch_config_bytes(URL_TO_CONTRACTORS)
+    return TypeAdapter(List[Contractor]).validate_json(data)
 
 
 def _normalize_attrs(attrs: Any) -> Dict[str, Any]:

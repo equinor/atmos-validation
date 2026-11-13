@@ -23,7 +23,8 @@ class CommonMetadata(BaseModel):
     model_config = ConfigDict(use_enum_values=True)
 
     comments: Union[List[str], str]
-    contractor: str
+    contractor: Union[List[str], str] = Field(default_factory=list)
+    contractor_division: Union[List[str], str] = Field(default_factory=list)
     classification_level: ClassificationLevel = Field(
         default=ClassificationLevel.INTERNAL
     )

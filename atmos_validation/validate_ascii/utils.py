@@ -5,7 +5,7 @@ from typing import Dict, List, Set
 import requests
 from pydantic import TypeAdapter
 
-from ..schemas import ParameterConfig, ParameterConfigs
+from ..schemas import Contractor, ParameterConfig, ParameterConfigs
 from .header_names import Headers
 
 
@@ -32,6 +32,16 @@ def get_all_accepted_metadata_values() -> Dict[str, Set[str]]:
         for item in items:
             result[key].add(item[get_key])
     return result
+
+
+@lru_cache()
+def load_contractor_configs() -> List[Contractor]:
+    response = requests.get(
+        "https://api-atmos-prod.c3.radix.equinor.com/config/contractors",
+        timeout=10,
+    )
+    response.raise_for_status()
+    return TypeAdapter(List[Contractor]).validate_json(response.content)
 
 
 @lru_cache()

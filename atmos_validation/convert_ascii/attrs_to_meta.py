@@ -39,6 +39,18 @@ def parse_measurement_attrs(file_name: str, attrs_map_path: str):
         attrs["source_file"] = (
             file_name.replace("ø", "oe").replace("æ", "ae").replace("å", "aa")
         )  # NetCDF attrs can not have Norwegian letters
+        contractor = attrs.pop("contractor", "NA")
+        attrs["contractor"] = (
+            []
+            if contractor.strip().upper() == "NA"
+            else [c.strip() for c in contractor.split(",")]
+        )
+        contractor_division = attrs.pop("contractor_division", "NA")
+        attrs["contractor_division"] = (
+            []
+            if contractor_division.strip().upper() in ("", "NA")
+            else [c.strip() for c in contractor_division.split(",")]
+        )
         if "asset" not in attrs:
             attrs["asset"] = "NA"
         if "country" not in attrs:

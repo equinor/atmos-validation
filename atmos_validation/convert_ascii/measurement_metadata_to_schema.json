@@ -2,6 +2,7 @@
   "asset": "Asset",
   "comments": "Comments",
   "contractor": "Contractor/Data Responsible",
+  "contractor_division": "Contractor Division",
   "country": "Country",
   "data_history": "Data history",
   "final_reports": "Final Reports",

@@ -12,6 +12,7 @@ from .header_position import HeaderPosition
 class HeaderMetaData:
     number_of_header_lines: int
     contractor: str
+    contractor_division: str
     final_report: str
     qc: str
     duration: HeaderDate
