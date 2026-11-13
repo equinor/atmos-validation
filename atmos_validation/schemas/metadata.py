@@ -41,10 +41,10 @@ class HindcastMetadata(CommonMetadata, UnprotectedNamespaceModel):
     calibration: str
     delivery_date: str
     forcing_data: str
-    memos: List[str]
+    memos: Union[str, List[str]]
     modelling_software: str
     model_name: str
-    nests: List[str] = Field(default_factory=list)
+    nests: Union[str, List[str]]
     setup: str
     spatial_resolution: Union[str, List[str]]
     sst_source: str

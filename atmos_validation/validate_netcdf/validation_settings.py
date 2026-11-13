@@ -19,6 +19,7 @@ SAMPLE_SIZE: str = "--sample-size"
 DEFAULT_SAMPLE_SIZE: int = 5000
 BASE_URL: str = "https://api-atmos-prod.c3.radix.equinor.com/config"
 URL_TO_PARAMETERS: str = f"{BASE_URL}/parameters"
+URL_TO_CONTRACTORS: str = f"{BASE_URL}/contractors"
 URL_TO_INST_TYPES: str = f"{BASE_URL}/installation-types"
 URL_TO_DATA_USABILITY: str = f"{BASE_URL}/data-usability"
 

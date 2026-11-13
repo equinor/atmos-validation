@@ -31,7 +31,7 @@ def test_wrong_type_reported():
     with xr.open_dataset("examples/example_netcdf_measurement.nc") as ds:
         ds.attrs["contractor"] = 123
         errors = metadata_schema_validator(ds)
-        assert len(errors) == 1
+        assert len(errors) == 2
         assert "contractor" in errors[0]
 
 

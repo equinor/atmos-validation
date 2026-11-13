@@ -89,14 +89,14 @@ If data source is "measurement", then:
 
 ## 3 Global attributes
 
-General instruction: When information is not available "NA" shall be used in place.
+General instruction: When information is not available "NA" shall be used in place for string attributes. An empty list shall be used in place for list attributes.
 
 ### 3.1 Common
 
 The required common attributes can be seen underneath,
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L20-L34
+# ../atmos_validation/schemas/metadata.py#L20-L35
 
 class CommonMetadata(BaseModel):
     """Common required attributes for all data types"""
@@ -104,7 +104,8 @@ class CommonMetadata(BaseModel):
     model_config = ConfigDict(use_enum_values=True)
 
     comments: Union[List[str], str]
-    contractor: str
+    contractor: Union[List[str], str] = Field(default_factory=list)
+    contractor_division: Union[List[str], str] = Field(default_factory=list)
     classification_level: ClassificationLevel = Field(
         default=ClassificationLevel.INTERNAL
     )
@@ -117,7 +118,9 @@ class CommonMetadata(BaseModel):
 
 *comments*: Any relevant comments related to how the data has been treated shall be provided. It could be basic preprocessing steps etc.
 
-*contractor*: Name of data provider
+*contractor*: Data provider names, represented as a string or a list of strings. An empty list or the string `NA` means no contractor is specified. Each actual name shall be listed in the [contractors configuration](https://api-atmos-prod.c3.radix.equinor.com/config/contractors). Divisions cannot be specified without a contractor.
+
+*contractor_division*: Optional division name or list of names. Every division must be listed under at least one selected contractor in the contractors configuration. Multiple divisions are allowed regardless of the number of selected contractors.
 
 *classification_level*: Signifies data access according to classification level
 
@@ -160,7 +163,7 @@ class ClassificationLevel(OrderedEnum):
 Single point hindcast and hindcast both use the hindcast metadata schema.
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L36-L53
+# ../atmos_validation/schemas/metadata.py#L37-L54
 
 
 class HindcastMetadata(CommonMetadata, UnprotectedNamespaceModel):
@@ -211,7 +214,7 @@ class HindcastMetadata(CommonMetadata, UnprotectedNamespaceModel):
 ### 3.3 Measurement
 
 ```py
-# ../atmos_validation/schemas/metadata.py#L56-L69
+# ../atmos_validation/schemas/metadata.py#L57-L70
 
 class MeasurementMetadata(CommonMetadata):
     """Extra global attributes if data_type == "Measurement"."""
@@ -223,7 +226,7 @@ class MeasurementMetadata(CommonMetadata):
     instrument_types: str
     instrument_specifications: str
     installation_type: str
-    location: Union[str, List[str]]
+    location: str
     mooring_name: str
     source_file: str
     total_water_depth: str
