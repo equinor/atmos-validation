@@ -113,10 +113,7 @@ def metadata_schema_validator(ds: xr.Dataset) -> List[str]:
 @validation_node(severity=Severity.ERROR)
 def contractors_validator(ds: xr.Dataset) -> List[str]:
     """Checks contractor names and divisions against the configuration file."""
-    try:
-        contractors = _normalize_attr_value(ds.attrs["contractor"])
-    except KeyError:
-        return []
+    contractors = _normalize_attr_value(ds.attrs.get("contractor", []))
     contractor_divisions = _normalize_attr_value(
         ds.attrs.get("contractor_division", [])
     )

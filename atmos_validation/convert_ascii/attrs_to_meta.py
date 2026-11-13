@@ -48,7 +48,7 @@ def parse_measurement_attrs(file_name: str, attrs_map_path: str):
         contractor_division = attrs.pop("contractor_division", "NA")
         attrs["contractor_division"] = (
             []
-            if contractor_division.strip().upper() == "NA"
+            if contractor_division.strip().upper() in ("", "NA")
             else [c.strip() for c in contractor_division.split(",")]
         )
         if "asset" not in attrs:
