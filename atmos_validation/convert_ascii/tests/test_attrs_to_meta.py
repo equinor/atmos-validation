@@ -1,7 +1,37 @@
+import numpy as np
+import pytest
+import xarray as xr
+
 from atmos_validation.convert_ascii import attrs_to_meta
+from atmos_validation.convert_ascii.df_to_nc import assign_metadata_to_ds
+from atmos_validation.convert_ascii.utils import store_netcdf
 
 
-def test_ascii_contractor_is_converted_to_single_item_list(tmp_path, monkeypatch):
+@pytest.mark.parametrize(
+    ("contractor", "division", "expected_contractors", "expected_divisions"),
+    [
+        ("Oceanweather Inc.", "Marine", ["Oceanweather Inc."], ["Marine"]),
+        ("NA", "NA", ["NA"], ["NA"]),
+        ("Fugro, RPS", "Fugro GB Ltd., NA", ["Fugro", "RPS"], ["Fugro GB Ltd.", "NA"]),
+        (
+            "Fugro, RPS",
+            "NA, RPS Group Inc.",
+            ["Fugro", "RPS"],
+            ["NA", "RPS Group Inc."],
+        ),
+        ("Fugro, RPS", "NA, NA", ["Fugro", "RPS"], ["NA", "NA"]),
+        ("Fugro, RPS", "", ["Fugro", "RPS"], []),
+        ("Fugro, RPS", None, ["Fugro", "RPS"], []),
+    ],
+)
+def test_ascii_contractors_are_converted_to_lists(
+    tmp_path,
+    monkeypatch,
+    contractor,
+    division,
+    expected_contractors,
+    expected_divisions,
+):
     attrs_map = {
         "comments": "Comments",
         "contractor": "Contractor/Data Responsible",
@@ -27,8 +57,12 @@ def test_ascii_contractor_is_converted_to_single_item_list(tmp_path, monkeypatch
         "\n".join(
             [
                 "% Comments: processed",
-                "% Contractor/Data Responsible: Oceanweather Inc.",
-                "% Contractor Division: Marine",
+                f"% Contractor/Data Responsible: {contractor}",
+                *(
+                    [f"% Contractor Division: {division}"]
+                    if division is not None
+                    else []
+                ),
                 "% History: Original data",
                 "% Final reports: NA",
                 "% Project: Example",
@@ -49,5 +83,19 @@ def test_ascii_contractor_is_converted_to_single_item_list(tmp_path, monkeypatch
 
     metadata = attrs_to_meta.parse_measurement_attrs(str(source), "unused")
 
-    assert metadata.contractor == ["Oceanweather Inc."]
-    assert metadata.contractor_division == ["Marine"]
+    assert metadata.contractor == expected_contractors
+    assert metadata.contractor_division == expected_divisions
+
+    ds = xr.Dataset(coords={"Time": [np.datetime64("2026-01-01", "ns")]})
+    assign_metadata_to_ds(str(source), ds)
+    assert ds.attrs["contractor"] == expected_contractors
+    assert ds.attrs["contractor_division"] == expected_divisions
+
+    path = store_netcdf(str(source), ds)
+    with xr.open_dataset(path, engine="h5netcdf") as reopened:
+        for key, expected in (
+            ("contractor", expected_contractors),
+            ("contractor_division", expected_divisions),
+        ):
+            actual = reopened.attrs[key]
+            assert ([actual] if isinstance(actual, str) else list(actual)) == expected

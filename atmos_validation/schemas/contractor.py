@@ -37,26 +37,37 @@ def validate_contractor_metadata(
     contractor_divisions: list[str],
     configs: list[Contractor],
 ) -> list[str]:
-    """Validate contractor names and divisions allowed by those contractors."""
-    if len(contractor_names) == 1 and contractor_names[0].strip().upper() == "NA":
-        contractor_names = []
+    """Validate contractor names and their positionally corresponding divisions."""
     configs_by_name = {config.contractor: config for config in configs}
     errors = [
         f'Contractor "{name}" is not in the allowed list.'
         for name in contractor_names
-        if name not in configs_by_name
+        if name.upper() != "NA" and name not in configs_by_name
     ]
 
-    allowed_divisions = {
-        division
-        for name in contractor_names
-        if name in configs_by_name
-        for division in configs_by_name[name].divisions or []
-    }
-    for division in contractor_divisions:
+    if not contractor_names:
+        return [
+            f'Division "{division}" is not allowed without a contractor.'
+            for division in contractor_divisions
+            if division.upper() != "NA"
+        ]
+    if not contractor_divisions:
+        return errors
+    if len(contractor_names) != len(contractor_divisions):
+        errors.append(
+            "Contractor and contractor_division lists must have the same length "
+            "when divisions are provided. Use NA for unspecified divisions."
+        )
+        return errors
+
+    for name, division in zip(contractor_names, contractor_divisions):
+        if division.upper() == "NA":
+            continue
+        config = configs_by_name.get(name)
+        allowed_divisions = (config.divisions or []) if config is not None else []
         if division not in allowed_divisions:
             errors.append(
-                f'Division "{division}" is not allowed for the selected contractors. '
+                f'Division "{division}" is not allowed for contractor "{name}". '
                 f"Allowed values: {sorted(allowed_divisions)}"
             )
     return errors

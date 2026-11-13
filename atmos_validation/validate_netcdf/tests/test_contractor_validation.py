@@ -101,7 +101,7 @@ def test_null_divisions_do_not_allow_any_division(monkeypatch):
     assert "Marine" in errors[0]
 
 
-def test_valid_multiple_divisions_pass(monkeypatch):
+def test_multiple_divisions_for_one_contractor_are_rejected(monkeypatch):
     _mock_contractor_config(monkeypatch)
     ds = xr.Dataset(
         attrs={
@@ -110,10 +110,27 @@ def test_valid_multiple_divisions_pass(monkeypatch):
         }
     )
 
-    assert contractors_validator(ds) == []
+    errors = contractors_validator(ds)
+
+    assert len(errors) == 1
+    assert "same length" in errors[0]
 
 
-def test_divisions_may_belong_to_any_selected_contractor(monkeypatch):
+@pytest.mark.parametrize(
+    ("divisions", "error_count"),
+    [
+        (["Marine", "Offshore"], 0),
+        (["Marine", "NA"], 0),
+        (["NA", "Offshore"], 0),
+        (["NA", "NA"], 0),
+        ([], 0),
+        (["Offshore", "Marine"], 2),
+        (["Marine"], 1),
+        (["NA"], 1),
+        (["Marine", "Offshore", "Marine"], 1),
+    ],
+)
+def test_divisions_match_contractors_by_position(monkeypatch, divisions, error_count):
     monkeypatch.setattr(
         "atmos_validation.validate_netcdf.validators.file_attributes.fetch_config_bytes",
         lambda _: (
@@ -124,11 +141,16 @@ def test_divisions_may_belong_to_any_selected_contractor(monkeypatch):
     ds = xr.Dataset(
         attrs={
             "contractor": ["Oceanweather Inc.", "Example Contractor"],
-            "contractor_division": ["Offshore", "Marine", "Offshore"],
+            "contractor_division": divisions,
         }
     )
 
-    assert contractors_validator(ds) == []
+    errors = contractors_validator(ds)
+
+    assert len(errors) == error_count
+    if divisions == ["Offshore", "Marine"]:
+        assert 'contractor "Oceanweather Inc."' in errors[0]
+        assert 'contractor "Example Contractor"' in errors[1]
 
 
 @pytest.mark.parametrize("division", ["Marine", "Aviation"])
@@ -150,7 +172,8 @@ def test_string_contractor_and_division_are_validated(monkeypatch, division):
 @pytest.mark.parametrize(
     "divisions",
     [
-        ["Marine", "Offshore", "Wind", "Wave", "Current"],
+        ["Marine"],
+        ["NA"],
         ["Aviation"],
     ],
 )
@@ -175,6 +198,24 @@ def test_divisions_are_validated_after_netcdf_round_trip(
         assert "Aviation" in errors[0]
     else:
         assert errors == []
+
+
+@pytest.mark.parametrize("divisions", [["Marine", "NA"], ["NA", "NA"], []])
+def test_multiple_contractors_and_na_survive_netcdf_round_trip(
+    monkeypatch, tmp_path, divisions
+):
+    _mock_contractor_config(monkeypatch)
+    ds = xr.Dataset(
+        attrs={
+            "contractor": ["Oceanweather Inc.", "Example Contractor"],
+            "contractor_division": divisions,
+        }
+    )
+    path = tmp_path / "contractors.nc"
+    ds.to_netcdf(path, engine="h5netcdf")
+
+    with xr.open_dataset(path, engine="h5netcdf") as reopened:
+        assert contractors_validator(reopened) == []
 
 
 def test_file_attributes_validator_reports_invalid_division(monkeypatch):

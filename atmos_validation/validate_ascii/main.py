@@ -121,7 +121,7 @@ def validate_contractor_header(contractor: str, contractor_division: str) -> Lis
     raw_divisions = contractor_division.strip()
     divisions = (
         []
-        if not raw_divisions or raw_divisions.upper() == "NA"
+        if not raw_divisions
         else [division.strip() for division in raw_divisions.split(",")]
     )
     return validate_contractor_metadata(
